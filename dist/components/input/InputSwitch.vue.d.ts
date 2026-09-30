@@ -31,6 +31,10 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         type: BooleanConstructor;
         default: boolean;
     };
+    loading: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }>, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
     "update:modelValue": (...args: any[]) => void;
     change: (...args: any[]) => void;
@@ -67,6 +71,10 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         type: BooleanConstructor;
         default: boolean;
     };
+    loading: {
+        type: BooleanConstructor;
+        default: boolean;
+    };
 }>> & Readonly<{
     "onUpdate:modelValue"?: ((...args: any[]) => any) | undefined;
     onChange?: ((...args: any[]) => any) | undefined;
@@ -74,6 +82,7 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
     label: string;
     disabled: boolean;
     modelValue: string | number | boolean;
+    loading: boolean;
     trueValue: string | number | boolean;
     falseValue: string | number | boolean;
     trueLabel: string;

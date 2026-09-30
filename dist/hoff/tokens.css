@@ -40,10 +40,18 @@
   /* ═══ TẦNG 2 · SEMANTIC — component chỉ dùng từ đây trở xuống ═════ */
 
   /* nền & bề mặt */
-  --background:        var(--gray-100);   /* nền trang — một nấc tối hơn card để card nổi rõ */
+  /* Ba bậc bề mặt phải là BA giá trị khác nhau, nếu không card/bảng sẽ tan vào nền:
+         --background  gray-200  nền trang      (dưới cùng)
+         --card        #FFFFFF   card, bảng     (nổi lên trên)
+         --muted       gray-100  vùng chìm TRONG card: thead, hover, code
+     Trước đây --background và --muted cùng là gray-100, nên thead tô --muted
+     trùng đúng màu nền trang và mép bảng biến mất.
+     --page-surface do Theme Studio ghi đè (mỗi preset có giá trị riêng cho sáng/tối),
+     nên lựa chọn ở chế độ sáng không rò sang chế độ tối. */
+  --background:        var(--page-surface, var(--gray-200));
   --card:              #FFFFFF;           /* card, bảng, form, popover */
   --muted:             var(--gray-100);   /* vùng chìm: thead, hover, code (trong card trắng) */
-  --sunken:            var(--gray-200);   /* chìm sâu hơn: track, well */
+  --sunken:            var(--gray-300);   /* chìm sâu hơn: track, well */
 
   /* chữ */
   --foreground:        var(--gray-900);   /* chữ chính */
@@ -62,6 +70,16 @@
   --primary-foreground: #FFFFFF;          /* chữ trên nền primary */
   --primary-soft:       var(--brand-100); /* hàng chọn, chip nhẹ */
   --link:               var(--brand-600);
+
+  /* hành động phụ / BỀ MẶT CẤU TRÚC — dải menu, header bảng, sidebar.
+     Là màu brand PHA XÁM: giữ sắc thương hiệu nhưng hạ chroma, nên trải rộng
+     cả một vạch ngang vẫn không chói như --primary. Hai núm độc lập:
+       · nấc brand (900 → 800 → 700…)  = đậm/nhạt
+       · tỉ lệ %                        = rực/trầm (brand % thấp = trầm hơn) */
+  --secondary:            color-mix(in srgb, var(--brand-700) 40%, var(--gray-600));
+  --secondary-hover:      color-mix(in srgb, var(--brand-700) 55%, var(--gray-600));
+  --secondary-foreground: #FFFFFF;          /* chữ trên nền secondary */
+  --secondary-soft:       var(--brand-50);  /* nền chip/hàng nhấn rất nhẹ */
 
   /* trạng thái — nói TRẠNG THÁI, không trang trí */
   --success:      var(--green-600);  --success-soft: var(--green-100);  --success-border: var(--green-300);
@@ -98,8 +116,12 @@
   --container: 1680px;               /* header + trang Shell (.page-container) */
   --touch: 44px;
   --header-h: 52px;                  /* shell bar; scale theo cỡ chữ + mật độ */
-  /* table header — đậm hơn nền trang (--muted trùng --background nên bị chìm) */
-  --table-head-bg: var(--gray-800);  --table-head-fg: var(--gray-100);
+  /* table header — xám nhẹ (--muted là vùng chìm trong card trắng); đường kẻ dày ở
+     dưới neo nó xuống thân bảng. Mực lấy --brand-900 chứ KHÔNG dùng --secondary:
+     --secondary là màu của một BỀ MẶT rộng (dải menu) nên phải trầm và nhạt, còn
+     mực chữ cần đậm. Buộc chung một token thì mỗi lần chỉnh dải menu là header bảng
+     lại phai theo. */
+  --table-head-bg: var(--muted);  --table-head-fg: var(--brand-900);
   --z-sticky: 30; --z-overlay: 40; --z-modal: 50; --z-toast: 60;
 
   /* ═══ ALIAS CŨ — tương thích bản trước, sẽ bỏ; đừng dùng cho UI mới ═ */
@@ -117,8 +139,13 @@
 /* ═══ DARK — chỉ remap SEMANTIC, primitive giữ nguyên ═══════════════ */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --background: var(--gray-950);   --card: var(--gray-900);
-    --table-head-bg: var(--gray-700); --table-head-fg: var(--gray-100);
+    --background: var(--page-surface-dark, var(--gray-950));   --card: var(--gray-900);
+    /* dark: bề mặt cấu trúc phải SÁNG hơn nền trang thì mới nổi lên được */
+    --secondary: color-mix(in srgb, var(--brand-700) 40%, var(--gray-600));
+    --secondary-hover: color-mix(in srgb, var(--brand-600) 40%, var(--gray-600));
+    --secondary-foreground: var(--gray-100);
+    --secondary-soft: var(--brand-950);
+    --table-head-bg: var(--muted); --table-head-fg: var(--brand-200);
     --muted: var(--gray-800);        --sunken: #0B1116;
     --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
     --faint: var(--gray-500);
@@ -138,8 +165,12 @@
   }
 }
 :root[data-theme="dark"] {
-  --background: var(--gray-950);   --card: var(--gray-900);
-  --table-head-bg: var(--gray-700); --table-head-fg: var(--gray-100);
+  --background: var(--page-surface-dark, var(--gray-950));   --card: var(--gray-900);
+  --secondary: color-mix(in srgb, var(--brand-700) 40%, var(--gray-600));
+  --secondary-hover: color-mix(in srgb, var(--brand-600) 40%, var(--gray-600));
+  --secondary-foreground: var(--gray-100);
+  --secondary-soft: var(--brand-950);
+  --table-head-bg: var(--muted); --table-head-fg: var(--brand-200);
   --muted: var(--gray-800);        --sunken: #0B1116;
   --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
   --faint: var(--gray-500);

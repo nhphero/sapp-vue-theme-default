@@ -143,7 +143,7 @@ const ownedSource: DataTableSource | null = props.source
       sort: props.sort,
     });
 
-const src = computed<DataTableSource>(() => props.source ?? (ownedSource as DataTableSource));
+const src = computed((): DataTableSource => props.source ?? (ownedSource as DataTableSource));
 
 /**
  * Columns arrive as a prop and can change — a locale switch relabels every one of them.
@@ -468,7 +468,7 @@ const handleHeaderContextMenu = (e: MouseEvent, col: string) => {
 
 const copyColumnData = () => {
   if (!activeContextColumn.value) return;
-  const values = src.value.displayItems.value.map(item => {
+  const values = src.value.displayItems.value.map((item: Record<string, any>) => {
     const val = item[activeContextColumn.value];
     return val === null ? 'NULL' : String(val);
   });

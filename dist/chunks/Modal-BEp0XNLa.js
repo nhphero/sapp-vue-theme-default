@@ -1,4 +1,4 @@
-import { defineComponent as w, computed as r, openBlock as o, createBlock as _, Transition as v, withCtx as b, createElementBlock as s, withModifiers as k, normalizeStyle as c, createElementVNode as l, renderSlot as d, toDisplayString as p, createCommentVNode as a, createVNode as g, unref as z } from "vue";
+import { defineComponent as w, computed as m, openBlock as o, createBlock as _, Transition as v, withCtx as k, createElementBlock as l, withModifiers as b, normalizeStyle as c, createElementVNode as a, renderSlot as d, toDisplayString as p, createCommentVNode as s, createVNode as g, unref as z } from "vue";
 import { X as V } from "lucide-vue-next";
 import { _ as W } from "./_plugin-vue_export-helper-CHgC5LLL.js";
 const $ = ["aria-label"], B = {
@@ -23,9 +23,9 @@ const $ = ["aria-label"], B = {
   },
   emits: ["close", "update:modelValue"],
   setup(x, { emit: u }) {
-    const t = x, n = u, f = r(() => !!(t.modelValue || t.show)), i = () => {
+    const t = x, n = u, f = m(() => !!(t.modelValue || t.show)), i = () => {
       n("update:modelValue", !1), n("close");
-    }, m = {
+    }, r = {
       "max-w-sm": "400px",
       "max-w-md": "450px",
       "max-w-lg": "550px",
@@ -38,34 +38,35 @@ const $ = ["aria-label"], B = {
       lg: "800px",
       xl: "1000px",
       full: "95vw"
-    }, h = r(() => t.maxWidth ? m[t.maxWidth] ?? t.maxWidth.replace(/^max-w-\[(.+)\]$/, "$1") : m[t.size ?? "md"]), y = (e) => {
+    }, h = m(() => t.maxWidth ? r[t.maxWidth] ?? t.maxWidth.replace(/^max-w-\[(.+)\]$/, "$1") : r[t.size ?? "md"]), y = (e) => {
       e.key === "Escape" && i();
     };
     return (e, D) => (o(), _(v, { name: "modal" }, {
-      default: b(() => [
-        f.value ? (o(), s("div", {
+      default: k(() => [
+        f.value ? (o(), l("div", {
           key: 0,
           class: "overlay",
+          "data-portal": "",
           style: c({ zIndex: t.zIndex }),
           role: "dialog",
           "aria-modal": "true",
           "aria-label": e.title,
           tabindex: "-1",
-          onClick: k(i, ["self"]),
+          onClick: b(i, ["self"]),
           onKeydown: y
         }, [
-          l("div", {
+          a("div", {
             class: "modal flex flex-col gap-4",
             style: c({ maxWidth: h.value })
           }, [
-            e.title || e.$slots.header ? (o(), s("div", B, [
+            e.title || e.$slots.header ? (o(), l("div", B, [
               d(e.$slots, "header", {}, () => [
-                l("div", C, [
-                  l("h3", I, p(e.title), 1),
-                  e.description ? (o(), s("p", S, p(e.description), 1)) : a("", !0)
+                a("div", C, [
+                  a("h3", I, p(e.title), 1),
+                  e.description ? (o(), l("p", S, p(e.description), 1)) : s("", !0)
                 ])
               ], !0),
-              l("button", {
+              a("button", {
                 type: "button",
                 class: "icon-btn -mr-2 -mt-1",
                 "aria-label": "Đóng",
@@ -73,21 +74,21 @@ const $ = ["aria-label"], B = {
               }, [
                 g(z(V), { size: 18 })
               ])
-            ])) : a("", !0),
-            l("div", E, [
+            ])) : s("", !0),
+            a("div", E, [
               d(e.$slots, "default", {}, void 0, !0)
             ]),
-            e.$slots.footer ? (o(), s("div", M, [
+            e.$slots.footer ? (o(), l("div", M, [
               d(e.$slots, "footer", {}, void 0, !0)
-            ])) : a("", !0)
+            ])) : s("", !0)
           ], 4)
-        ], 44, $)) : a("", !0)
+        ], 44, $)) : s("", !0)
       ]),
       _: 3
     }));
   }
-}), H = /* @__PURE__ */ W(N, [["__scopeId", "data-v-3a19f5b9"]]);
+}), H = /* @__PURE__ */ W(N, [["__scopeId", "data-v-77a76ece"]]);
 export {
   H as default
 };
-//# sourceMappingURL=Modal-Bh_xjaON.js.map
+//# sourceMappingURL=Modal-BEp0XNLa.js.map

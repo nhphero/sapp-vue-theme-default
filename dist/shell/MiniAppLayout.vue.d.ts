@@ -17,6 +17,13 @@ export interface MiniNavItem {
     path: string;
     icon?: any;
     badge?: string | number;
+    /** Section this item sits under (items sharing a label are grouped, in first-seen order): a collapsible sidebar
+     *  section, or a dropdown tab in the Shell header band. Ignored by the in-app tabs variant. */
+    group?: string;
+    /** Icon of the item's group (the first item of a group that sets it wins). */
+    groupIcon?: any;
+    /** Listed but not navigable — a screen that is not available yet. */
+    disabled?: boolean;
 }
 type __VLS_Props = {
     /** App name (sidebar head, or page title in the tabs variant). */
@@ -35,13 +42,13 @@ type __VLS_Props = {
     /** Content sits in `.page-container` (aligned with the Shell header); set false for full-bleed. */
     contained?: boolean;
 };
-declare var __VLS_9: {}, __VLS_11: {}, __VLS_17: {};
+declare var __VLS_17: {}, __VLS_19: {}, __VLS_25: {};
 type __VLS_Slots = {} & {
-    footer?: (props: typeof __VLS_9) => any;
+    footer?: (props: typeof __VLS_17) => any;
 } & {
-    actions?: (props: typeof __VLS_11) => any;
+    actions?: (props: typeof __VLS_19) => any;
 } & {
-    default?: (props: typeof __VLS_17) => any;
+    default?: (props: typeof __VLS_25) => any;
 };
 declare const __VLS_component: import("vue").DefineComponent<__VLS_Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {} & {
     navigate: (path: string) => any;

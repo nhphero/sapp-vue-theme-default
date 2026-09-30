@@ -1,7 +1,10 @@
 type __VLS_Props = {
     align?: 'start' | 'center' | 'end';
 };
-declare var __VLS_1: {};
+declare var __VLS_1: {
+    close: () => void;
+    isOpen: boolean;
+};
 type __VLS_Slots = {} & {
     default?: (props: typeof __VLS_1) => any;
 };

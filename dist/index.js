@@ -1,57 +1,52 @@
-import { reactive as N, watch as W, ref as w, defineComponent as q, inject as X, computed as j, openBlock as h, createBlock as C, resolveDynamicComponent as x, withCtx as b, createElementBlock as F, createElementVNode as S, toDisplayString as U, withKeys as Q, createCommentVNode as k, createTextVNode as _, normalizeClass as H, defineAsyncComponent as n } from "vue";
-import { createAppState as Y } from "@nhphero/vue-sapp";
-import { defineStore as Z } from "pinia";
-import { MessageSquare as A, HelpCircle as ee, Zap as oe, AlertTriangle as K, CheckCircle2 as te, Info as J, ShieldCheck as ne, User as re, Lock as ie, ArrowRight as ae, Search as se, Settings as ce, Bell as me, LogOut as le, ChevronDown as ge, ChevronRight as de, Check as ue, X as fe } from "lucide-vue-next";
-import { clsx as pe } from "clsx";
-import { twMerge as ye } from "tailwind-merge";
-function he(o) {
+import { reactive as _, watch as q, ref as T, defineComponent as Z, inject as A, computed as V, openBlock as C, createBlock as x, resolveDynamicComponent as b, withCtx as v, createElementBlock as D, createElementVNode as S, toDisplayString as U, withKeys as ee, createCommentVNode as k, createTextVNode as H, normalizeClass as L, defineAsyncComponent as t } from "vue";
+import { createAppState as oe } from "@nhphero/vue-sapp";
+import { defineStore as te } from "pinia";
+import { MessageSquare as ne, HelpCircle as re, Zap as ie, AlertTriangle as X, CheckCircle2 as ae, Info as Q, ShieldCheck as se, User as ce, Lock as le, ArrowRight as me, Search as de, Settings as ge, Bell as ue, LogOut as fe, ChevronDown as pe, ChevronRight as ye, Check as he, X as Ce } from "lucide-vue-next";
+import { clsx as xe } from "clsx";
+import { twMerge as be } from "tailwind-merge";
+function ve(o) {
+  const i = (e) => (a, l, u = {}) => o.showToast({ id: u.id || a, message: l ? `${a}: ${l}` : a, type: e, ...u });
   return {
-    show: (t) => o.showToast(t),
-    success: (t, e, i = {}) => o.showToast({ id: i.id || t, message: e ? `${t}: ${e}` : t, type: "success", ...i }),
-    error: (t, e, i = {}) => o.showToast({ id: i.id || t, message: e ? `${t}: ${e}` : t, type: "error", ...i }),
-    info: (t, e, i = {}) => o.showToast({ id: i.id || t, message: e ? `${t}: ${e}` : t, type: "info", ...i }),
-    warning: (t, e, i = {}) => o.showToast({ id: i.id || t, message: e ? `${t}: ${e}` : t, type: "warning", ...i })
-  };
-}
-function Ce(o) {
-  return {
-    show: (t) => o.showMessage(t),
-    confirm: (t) => new Promise((e) => {
+    success: i("success"),
+    error: i("error"),
+    info: i("info"),
+    warning: i("warning"),
+    toast: (e) => o.showToast(e),
+    alert: (e) => o.showMessage(e),
+    confirm: (e) => new Promise((a) => {
       o.showMessage({
-        ...t,
+        ...e,
         type: "confirm",
         onConfirm: () => {
-          t.onConfirm && t.onConfirm(), e(!0);
+          e.onConfirm && e.onConfirm(), a(!0);
         },
         onCancel: () => {
-          t.onCancel && t.onCancel(), e(!1);
+          e.onCancel && e.onCancel(), a(!1);
         }
       });
     }),
-    prompt: (t) => new Promise((e) => {
+    prompt: (e) => new Promise((a) => {
       o.showMessage({
-        ...t,
+        ...e,
         type: "prompt",
-        onConfirm: (i) => {
-          t.onConfirm && t.onConfirm(i), e(i);
+        onConfirm: (l) => {
+          e.onConfirm && e.onConfirm(l), a(l);
         },
         onCancel: () => {
-          t.onCancel && t.onCancel(), e(null);
+          e.onCancel && e.onCancel(), a(null);
         }
       });
-    }),
-    success: (t, e) => o.showMessage({ title: t, description: e, type: "success" }),
-    error: (t, e) => o.showMessage({ title: t, description: e, type: "error" })
+    })
   };
 }
-function xe(o) {
+function Ie(o) {
   return {
-    open: (t) => o.openDialog(t),
-    close: (t) => o.closeDialog(t),
+    open: (i) => o.openDialog(i),
+    close: (i) => o.closeDialog(i),
     closeAll: () => o.closeAllDialogs()
   };
 }
-const V = "sapp.theme.config", B = { "--text-xs": 12, "--text-sm": 14, "--text-base": 16, "--text-lg": 18, "--text-xl": 20, "--text-2xl": 24, "--text-3xl": 30 }, P = { "--sp-1": 4, "--sp-2": 8, "--sp-3": 12, "--sp-4": 16, "--sp-5": 24, "--sp-6": 32, "--sp-7": 48, "--sp-8": 64, "--touch": 44, "--header-h": 52 }, E = { 50: 96, 100: 92, 200: 84, 300: 72, 400: 58, 500: 47, 600: 39, 700: 32, 800: 27, 900: 23, 950: 13 }, T = 6, $ = 1, be = [
+const R = "sapp.theme.config", M = { "--text-xs": 12, "--text-sm": 14, "--text-base": 16, "--text-lg": 18, "--text-xl": 20, "--text-2xl": 24, "--text-3xl": 30 }, E = { "--sp-1": 4, "--sp-2": 8, "--sp-3": 12, "--sp-4": 16, "--sp-5": 24, "--sp-6": 32, "--sp-7": 48, "--sp-8": 64, "--touch": 44, "--header-h": 52 }, N = { 50: 96, 100: 92, 200: 84, 300: 72, 400: 58, 500: 47, 600: 39, 700: 32, 800: 27, 900: 23, 950: 13 }, $ = 6, F = 1, Se = [
   { name: "Teal", hex: "#256B65" },
   { name: "Blue", hex: "#2563EB" },
   { name: "Indigo", hex: "#4F46E5" },
@@ -60,6 +55,29 @@ const V = "sapp.theme.config", B = { "--text-xs": 12, "--text-sm": 14, "--text-b
   { name: "Amber", hex: "#B45309" },
   { name: "Green", hex: "#15803D" },
   { name: "Slate", hex: "#3D4B54" }
+], j = {
+  "Be Vietnam Pro": "Be+Vietnam+Pro:wght@400;500;600;700",
+  // drawn for Vietnamese
+  Inter: "Inter:wght@400;500;600;700",
+  "Plus Jakarta Sans": "Plus+Jakarta+Sans:wght@400;500;600;700",
+  Manrope: "Manrope:wght@400;500;600;700",
+  Lexend: "Lexend:wght@400;500;600;700",
+  "Public Sans": "Public+Sans:wght@400;500;600;700",
+  "IBM Plex Sans": "IBM+Plex+Sans:wght@400;500;600;700",
+  "Source Sans 3": "Source+Sans+3:wght@400;500;600;700",
+  "Nunito Sans": "Nunito+Sans:wght@400;500;600;700",
+  "Noto Serif": "Noto+Serif:wght@400;500;600;700"
+}, G = /* @__PURE__ */ new Set(), Ue = (o) => {
+  const i = j[o];
+  if (!i || G.has(o) || typeof document > "u") return;
+  G.add(o);
+  const e = document.createElement("link");
+  e.rel = "stylesheet", e.href = `https://fonts.googleapis.com/css2?family=${i}&display=swap`, e.dataset.sappFont = o, document.head.appendChild(e);
+}, w = [
+  { id: "", label: "theme.surfaceDefault", light: "", dark: "" },
+  { id: "paper", label: "theme.surfacePaper", light: "var(--gray-100)", dark: "#0B1116" },
+  { id: "deep", label: "theme.surfaceDeep", light: "var(--gray-300)", dark: "#06090C" },
+  { id: "tint", label: "theme.surfaceTint", light: "var(--brand-100)", dark: "var(--brand-950)" }
 ], O = {
   "System UI": "",
   "Neo-Grotesque": '"Inter", "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif',
@@ -68,241 +86,248 @@ const V = "sapp.theme.config", B = { "--text-xs": 12, "--text-sm": 14, "--text-b
   Classical: '"Optima", "Candara", "Noto Sans", "Source Sans 3", "Segoe UI", sans-serif',
   Rounded: 'ui-rounded, "Hiragino Maru Gothic ProN", "Quicksand", "Comfortaa", "Varela Round", sans-serif',
   Serif: '"Charter", "Bitstream Charter", "Sitka Text", "Cambria", Georgia, serif'
-}, v = Object.freeze({
+}, I = Object.freeze({
   mode: "light",
   brand: "",
   font: 1,
   density: 1,
   fontFamily: "System UI",
-  radius: T,
-  shadow: $
-}), ve = (o) => {
-  const t = /^#?([0-9a-f]{6})$/i.exec(o);
-  if (!t) return null;
-  const e = parseInt(t[1], 16), i = (e >> 16) / 255, m = (e >> 8 & 255) / 255, u = (e & 255) / 255, p = Math.max(i, m, u), r = Math.min(i, m, u), s = (p + r) / 2;
-  let a = 0, g = 0;
-  if (p !== r) {
-    const l = p - r;
-    g = s > 0.5 ? l / (2 - p - r) : l / (p + r), a = p === i ? (m - u) / l + (m < u ? 6 : 0) : p === m ? (u - i) / l + 2 : (i - m) / l + 4, a *= 60;
+  radius: $,
+  shadow: F,
+  surface: ""
+}), ke = (o) => {
+  const i = /^#?([0-9a-f]{6})$/i.exec(o);
+  if (!i) return null;
+  const e = parseInt(i[1], 16), a = (e >> 16) / 255, l = (e >> 8 & 255) / 255, u = (e & 255) / 255, f = Math.max(a, l, u), n = Math.min(a, l, u), s = (f + n) / 2;
+  let c = 0, g = 0;
+  if (f !== n) {
+    const m = f - n;
+    g = s > 0.5 ? m / (2 - f - n) : m / (f + n), c = f === a ? (l - u) / m + (l < u ? 6 : 0) : f === l ? (u - a) / m + 2 : (a - l) / m + 4, c *= 60;
   }
-  return { h: a, s: g * 100, l: s * 100 };
-}, L = (o) => {
-  const t = ve(o);
-  if (!t) return null;
+  return { h: c, s: g * 100, l: s * 100 };
+}, z = (o) => {
+  const i = ke(o);
+  if (!i) return null;
   const e = {};
-  for (const i of Object.keys(E)) {
-    const m = E[i], u = t.s * (m > 85 ? 0.55 : m > 70 ? 0.75 : 1);
-    e[`--brand-${i}`] = `hsl(${t.h.toFixed(0)} ${u.toFixed(0)}% ${m}%)`;
+  for (const a of Object.keys(N)) {
+    const l = N[a], u = i.s * (l > 85 ? 0.55 : l > 70 ? 0.75 : 1);
+    e[`--brand-${a}`] = `hsl(${i.h.toFixed(0)} ${u.toFixed(0)}% ${l}%)`;
   }
   return e;
-}, R = (o) => ({ "--radius-sm": Math.max(0, Math.round(o * 0.5)), "--radius": o, "--radius-lg": Math.round(o * 1.7) }), G = (o) => {
+}, W = (o) => ({ "--radius-sm": Math.max(0, Math.round(o * 0.5)), "--radius": o, "--radius-lg": Math.round(o * 1.7) }), J = (o) => {
   if (o <= 0) return { "--shadow-sm": "none", "--shadow": "none", "--shadow-lg": "none" };
-  const t = (e) => Math.min(0.6, e * o).toFixed(3);
+  const i = (e) => Math.min(0.6, e * o).toFixed(3);
   return {
-    "--shadow-sm": `0 1px 2px rgba(0,0,0,${t(0.1)})`,
-    "--shadow": `0 1px 2px rgba(0,0,0,${t(0.08)}), 0 2px 8px rgba(0,0,0,${t(0.07)})`,
-    "--shadow-lg": `0 4px 14px rgba(0,0,0,${t(0.1)}), 0 14px 36px rgba(0,0,0,${t(0.13)})`
+    "--shadow-sm": `0 1px 2px rgba(0,0,0,${i(0.1)})`,
+    "--shadow": `0 1px 2px rgba(0,0,0,${i(0.08)}), 0 2px 8px rgba(0,0,0,${i(0.07)})`,
+    "--shadow-lg": `0 4px 14px rgba(0,0,0,${i(0.1)}), 0 14px 36px rgba(0,0,0,${i(0.13)})`
   };
-}, z = (o) => !o || o === "System UI" ? "" : O[o] != null ? O[o] : `"${o.replace(/"/g, "")}", system-ui, sans-serif`;
-function Ie() {
-  const o = N({ ...v });
+}, K = (o) => !o || o === "System UI" ? "" : j[o] ? (Ue(o), `"${o}", system-ui, sans-serif`) : O[o] != null ? O[o] : `"${o.replace(/"/g, "")}", system-ui, sans-serif`;
+function we() {
+  const o = _({ ...I });
   try {
-    const r = JSON.parse(localStorage.getItem(V) || "{}");
-    for (const s of Object.keys(v))
-      r[s] !== void 0 && typeof r[s] == typeof v[s] && (o[s] = r[s]);
+    const n = JSON.parse(localStorage.getItem(R) || "{}");
+    for (const s of Object.keys(I))
+      n[s] !== void 0 && typeof n[s] == typeof I[s] && (o[s] = n[s]);
   } catch {
   }
-  const t = N({ open: !1 }), e = () => document.documentElement, i = (r, s = "", a = !1) => {
+  const i = _({ open: !1 }), e = () => document.documentElement, a = (n, s = "", c = !1) => {
     const g = e().style;
-    for (const l of Object.keys(r)) a ? g.removeProperty(l) : g.setProperty(l, `${r[l]}${s}`);
-  }, m = () => {
-    const r = e();
-    o.mode === "system" ? r.removeAttribute("data-theme") : r.setAttribute("data-theme", o.mode);
-    const s = o.brand ? L(o.brand) : null;
-    for (const y of Object.keys(E))
-      s ? r.style.setProperty(`--brand-${y}`, s[`--brand-${y}`]) : r.style.removeProperty(`--brand-${y}`);
-    const a = Number(o.font) || 1, g = a * (Number(o.density) || 1), l = (y, I) => Object.fromEntries(Object.entries(y).map(([D, M]) => [D, (M * I).toFixed(1)]));
-    i(l(B, a), "px", a === 1), i(l(P, g), "px", g === 1), r.style.setProperty("--scale-text", a.toFixed(3)), r.style.setProperty("--scale-space", g.toFixed(3));
-    const f = z(o.fontFamily);
-    f ? r.style.setProperty("--font-sans", f) : r.style.removeProperty("--font-sans");
-    const c = Number.isFinite(o.radius) ? o.radius : T;
-    i(R(c), "px", c === T);
-    const d = Number.isFinite(o.shadow) ? o.shadow : $;
-    i(G(d), "", d === $);
+    for (const m of Object.keys(n)) c ? g.removeProperty(m) : g.setProperty(m, `${n[m]}${s}`);
+  }, l = () => {
+    const n = e();
+    o.mode === "system" ? n.removeAttribute("data-theme") : n.setAttribute("data-theme", o.mode);
+    const s = o.brand ? z(o.brand) : null;
+    for (const y of Object.keys(N))
+      s ? n.style.setProperty(`--brand-${y}`, s[`--brand-${y}`]) : n.style.removeProperty(`--brand-${y}`);
+    const c = Number(o.font) || 1, g = c * (Number(o.density) || 1), m = (y, P) => Object.fromEntries(Object.entries(y).map(([B, Y]) => [B, (Y * P).toFixed(1)]));
+    a(m(M, c), "px", c === 1), a(m(E, g), "px", g === 1), n.style.setProperty("--scale-text", c.toFixed(3)), n.style.setProperty("--scale-space", g.toFixed(3));
+    const p = w.find((y) => y.id === o.surface) ?? w[0];
+    p.light ? (n.style.setProperty("--page-surface", p.light), n.style.setProperty("--page-surface-dark", p.dark)) : (n.style.removeProperty("--page-surface"), n.style.removeProperty("--page-surface-dark"));
+    const r = K(o.fontFamily);
+    r ? n.style.setProperty("--font-sans", r) : n.style.removeProperty("--font-sans");
+    const d = Number.isFinite(o.radius) ? o.radius : $;
+    a(W(d), "px", d === $);
+    const h = Number.isFinite(o.shadow) ? o.shadow : F;
+    a(J(h), "", h === F);
     try {
-      localStorage.setItem(V, JSON.stringify(o));
+      localStorage.setItem(R, JSON.stringify(o));
     } catch {
     }
-  }, p = {
+  }, f = {
     state: o,
     get open() {
-      return t.open;
+      return i.open;
     },
-    set open(r) {
-      t.open = r;
+    set open(n) {
+      i.open = n;
     },
-    defaults: v,
-    swatches: be,
+    defaults: I,
+    swatches: Se,
     fontStacks: O,
-    set(r) {
-      Object.assign(o, r);
+    webFonts: j,
+    surfaces: w,
+    set(n) {
+      Object.assign(o, n);
     },
     reset() {
-      Object.assign(o, v);
+      Object.assign(o, I);
     },
-    apply: m,
-    toggle(r) {
-      t.open = r ?? !t.open;
+    apply: l,
+    toggle(n) {
+      i.open = n ?? !i.open;
     },
     exportTokens: () => {
-      const r = ["/* Tokens exported from the theme panel — paste into packages/sapp-theme-default/src/hoff/tokens.css */"], s = o.brand ? L(o.brand) : null;
-      if (s) for (const f of Object.keys(s)) r.push(`${f}: ${s[f]};`);
-      const a = Number(o.font) || 1;
-      if (a !== 1) for (const f of Object.keys(B)) r.push(`${f}: ${(B[f] * a).toFixed(1)}px;`);
-      const g = a * (Number(o.density) || 1);
-      if (g !== 1) for (const f of Object.keys(P)) r.push(`${f}: ${(P[f] * g).toFixed(1)}px;`);
-      if (o.radius !== T) for (const [f, c] of Object.entries(R(o.radius))) r.push(`${f}: ${c}px;`);
-      if (o.shadow !== $) for (const [f, c] of Object.entries(G(o.shadow))) r.push(`${f}: ${c};`);
-      const l = z(o.fontFamily);
-      return l && r.push(`--font-sans: ${l};`), r.length === 1 && r.push("/* nothing differs from the defaults */"), r.join(`
+      const n = ["/* Tokens exported from the theme panel — paste into packages/sapp-theme-default/src/hoff/tokens.css */"], s = o.brand ? z(o.brand) : null;
+      if (s) for (const r of Object.keys(s)) n.push(`${r}: ${s[r]};`);
+      const c = Number(o.font) || 1;
+      if (c !== 1) for (const r of Object.keys(M)) n.push(`${r}: ${(M[r] * c).toFixed(1)}px;`);
+      const g = c * (Number(o.density) || 1);
+      if (g !== 1) for (const r of Object.keys(E)) n.push(`${r}: ${(E[r] * g).toFixed(1)}px;`);
+      if (o.radius !== $) for (const [r, d] of Object.entries(W(o.radius))) n.push(`${r}: ${d}px;`);
+      if (o.shadow !== F) for (const [r, d] of Object.entries(J(o.shadow))) n.push(`${r}: ${d};`);
+      const m = w.find((r) => r.id === o.surface);
+      m?.light && n.push(`--background: ${m.light};   /* dark: ${m.dark} */`);
+      const p = K(o.fontFamily);
+      return p && n.push(`--font-sans: ${p};`), n.length === 1 && n.push("/* nothing differs from the defaults */"), n.join(`
 `);
     }
   };
-  return W(o, m, { deep: !0 }), m(), p;
+  return q(o, l, { deep: !0 }), l(), f;
 }
-const Se = Z("ui", () => {
-  const o = w([]);
-  let t = 0;
-  const e = /* @__PURE__ */ new Map(), i = (c) => {
-    const d = c.id || ++t, y = { ...c, id: d, type: c.type || "info" };
+const Te = te("ui", () => {
+  const o = T([]);
+  let i = 0;
+  const e = /* @__PURE__ */ new Map(), a = (r) => {
+    const d = r.id || ++i, h = { ...r, id: d, type: r.type || "info" };
     e.has(d) && (clearTimeout(e.get(d)), e.delete(d));
-    const I = o.value.findIndex((M) => M.id === d);
-    I !== -1 ? o.value[I] = y : o.value.push(y);
-    const D = setTimeout(() => {
-      m(d);
-    }, c.duration || 5e3);
-    e.set(d, D);
-  }, m = (c) => {
-    o.value = o.value.filter((d) => d.id !== c), e.has(c) && (clearTimeout(e.get(c)), e.delete(c));
-  }, u = w(null), p = (c) => {
-    console.log("💬 [uiStore] showMessage:", c.title), u.value = c;
-  }, r = () => {
+    const y = o.value.findIndex((B) => B.id === d);
+    y !== -1 ? o.value[y] = h : o.value.push(h);
+    const P = setTimeout(() => {
+      l(d);
+    }, r.duration || 5e3);
+    e.set(d, P);
+  }, l = (r) => {
+    o.value = o.value.filter((d) => d.id !== r), e.has(r) && (clearTimeout(e.get(r)), e.delete(r));
+  }, u = T(null), f = (r) => {
+    console.log("💬 [uiStore] showMessage:", r.title), u.value = r;
+  }, n = () => {
     console.log("💬 [uiStore] closeMessage"), u.value = null;
-  }, s = w([]);
-  let a = 0;
+  }, s = T([]);
+  let c = 0;
   return {
     toasts: o,
-    showToast: i,
-    removeToast: m,
+    showToast: a,
+    removeToast: l,
     activeMessage: u,
-    showMessage: p,
-    closeMessage: r,
+    showMessage: f,
+    closeMessage: n,
     activeDialogs: s,
-    openDialog: (c) => {
-      console.log("🏗️ [uiStore] openDialog:", c.title);
-      const d = c.id || `dialog-${++a}`;
-      return s.value.push({ ...c, id: d }), d;
+    openDialog: (r) => {
+      console.log("🏗️ [uiStore] openDialog:", r.title);
+      const d = r.id || `dialog-${++c}`;
+      return s.value.push({ ...r, id: d }), d;
     },
-    closeDialog: (c) => {
-      const d = s.value.find((y) => y.id === c);
-      d?.onClose && d.onClose(), s.value = s.value.filter((y) => y.id !== c);
+    closeDialog: (r) => {
+      const d = s.value.find((h) => h.id === r);
+      d?.onClose && d.onClose(), s.value = s.value.filter((h) => h.id !== r);
     },
     closeAllDialogs: () => {
-      s.value.forEach((c) => c.onClose?.()), s.value = [];
+      s.value.forEach((r) => r.onClose?.()), s.value = [];
     }
   };
-}), Ue = {
+}), $e = {
   key: 0,
   class: "flex items-center gap-3"
-}, ke = { class: "modal-title !m-0" }, we = {
+}, Fe = { class: "modal-title !m-0" }, Pe = {
   key: 0,
   class: "py-2"
-}, Te = { class: "text-sm text-muted-foreground leading-relaxed mb-2" }, $e = {
+}, Be = { class: "text-sm text-muted-foreground leading-relaxed mb-2" }, De = {
   key: 0,
   class: "mt-4"
-}, De = { class: "flex items-center justify-end gap-2 w-full" }, Me = /* @__PURE__ */ q({
+}, Me = { class: "flex items-center justify-end gap-2 w-full" }, Ee = /* @__PURE__ */ Z({
   __name: "MessageProvider",
   setup(o) {
-    const t = X("ui-store"), e = j(() => t?.activeMessage || null), i = w("");
-    W(e, (a) => {
-      a?.type === "prompt" && (i.value = a.defaultValue || "");
+    const i = A("ui-store"), e = V(() => i?.activeMessage || null), a = T("");
+    q(e, (c) => {
+      c?.type === "prompt" && (a.value = c.defaultValue || "");
     });
-    const m = {
-      info: { icon: J, color: "text-info", bg: "bg-info-soft" },
-      success: { icon: te, color: "text-success", bg: "bg-success-soft" },
-      warning: { icon: K, color: "text-warning", bg: "bg-warning-soft" },
-      error: { icon: oe, color: "text-danger", bg: "bg-danger-soft" },
-      confirm: { icon: ee, color: "text-primary", bg: "bg-primary-soft" },
-      prompt: { icon: A, color: "text-primary", bg: "bg-primary-soft" }
+    const l = {
+      info: { icon: Q, color: "text-info", bg: "bg-info-soft" },
+      success: { icon: ae, color: "text-success", bg: "bg-success-soft" },
+      warning: { icon: X, color: "text-warning", bg: "bg-warning-soft" },
+      error: { icon: ie, color: "text-danger", bg: "bg-danger-soft" },
+      confirm: { icon: re, color: "text-primary", bg: "bg-primary-soft" },
+      prompt: { icon: ne, color: "text-primary", bg: "bg-primary-soft" }
     }, u = () => {
-      t?.closeMessage();
-    }, p = async () => {
-      e.value?.type === "prompt" && !i.value?.trim() || (e.value?.onConfirm && (e.value.type === "prompt" ? await e.value.onConfirm(i.value) : await e.value.onConfirm()), u());
-    }, r = () => {
+      i?.closeMessage();
+    }, f = async () => {
+      e.value?.type === "prompt" && !a.value?.trim() || (e.value?.onConfirm && (e.value.type === "prompt" ? await e.value.onConfirm(a.value) : await e.value.onConfirm()), u());
+    }, n = () => {
       e.value?.onCancel && e.value.onCancel(), u();
-    }, s = j(() => e.value ? m[e.value.type] || m.info : null);
-    return (a, g) => (h(), C(x(a.$c("ui.modal")), {
+    }, s = V(() => e.value ? l[e.value.type] || l.info : null);
+    return (c, g) => (C(), x(b(c.$c("ui.modal")), {
       key: e.value?.title || "none",
       show: !!e.value,
       onClose: u,
       maxWidth: "max-w-md",
       zIndex: 99999
     }, {
-      header: b(() => [
-        e.value ? (h(), F("div", Ue, [
+      header: v(() => [
+        e.value ? (C(), D("div", $e, [
           S("div", {
-            class: H(["w-10 h-10 rounded-lg flex items-center justify-center shrink-0", s.value?.bg])
+            class: L(["w-10 h-10 rounded-lg flex items-center justify-center shrink-0", s.value?.bg])
           }, [
-            (h(), C(x(s.value?.icon), {
+            (C(), x(b(s.value?.icon), {
               size: 20,
               "stroke-width": "2",
-              class: H(s.value?.color)
+              class: L(s.value?.color)
             }, null, 8, ["class"]))
           ], 2),
-          S("h3", ke, U(e.value.title), 1)
+          S("h3", Fe, U(e.value.title), 1)
         ])) : k("", !0)
       ]),
-      footer: b(() => [
-        S("div", De, [
-          e.value?.type === "confirm" || e.value?.type === "prompt" ? (h(), C(x(a.$c("ui.button")), {
+      footer: v(() => [
+        S("div", Me, [
+          e.value?.type === "confirm" || e.value?.type === "prompt" ? (C(), x(b(c.$c("ui.button")), {
             key: 0,
             variant: "default",
-            onClick: r
+            onClick: n
           }, {
-            default: b(() => [
-              _(U(e.value.cancelText || a.$t("common.cancel")), 1)
+            default: v(() => [
+              H(U(e.value.cancelText || c.$t("common.cancel")), 1)
             ]),
             _: 1
           })) : k("", !0),
-          (h(), C(x(a.$c("ui.button")), {
+          (C(), x(b(c.$c("ui.button")), {
             variant: e.value?.type === "error" ? "danger" : "primary",
-            onClick: p,
-            disabled: e.value?.type === "prompt" && !i.value?.trim()
+            onClick: f,
+            disabled: e.value?.type === "prompt" && !a.value?.trim()
           }, {
-            default: b(() => [
-              _(U(e.value?.type === "prompt" ? a.$t("common.submit") : e.value?.confirmText || a.$t("common.understood")), 1)
+            default: v(() => [
+              H(U(e.value?.type === "prompt" ? c.$t("common.submit") : e.value?.confirmText || c.$t("common.understood")), 1)
             ]),
             _: 1
           }, 8, ["variant", "disabled"]))
         ])
       ]),
-      default: b(() => [
-        e.value ? (h(), F("div", we, [
-          S("p", Te, U(e.value.description), 1),
-          e.value.type === "prompt" ? (h(), F("div", $e, [
-            e.value.inputType === "textarea" ? (h(), C(x(a.$c("form.textarea")), {
+      default: v(() => [
+        e.value ? (C(), D("div", Pe, [
+          S("p", Be, U(e.value.description), 1),
+          e.value.type === "prompt" ? (C(), D("div", De, [
+            e.value.inputType === "textarea" ? (C(), x(b(c.$c("form.textarea")), {
               key: 0,
-              modelValue: i.value,
-              "onUpdate:modelValue": g[0] || (g[0] = (l) => i.value = l),
+              modelValue: a.value,
+              "onUpdate:modelValue": g[0] || (g[0] = (m) => a.value = m),
               placeholder: e.value.placeholder,
               rows: "4",
               class: "resize-none"
-            }, null, 8, ["modelValue", "placeholder"])) : (h(), C(x(a.$c("form.input")), {
+            }, null, 8, ["modelValue", "placeholder"])) : (C(), x(b(c.$c("form.input")), {
               key: 1,
-              modelValue: i.value,
-              "onUpdate:modelValue": g[1] || (g[1] = (l) => i.value = l),
+              modelValue: a.value,
+              "onUpdate:modelValue": g[1] || (g[1] = (m) => a.value = m),
               placeholder: e.value.placeholder,
-              onKeyup: g[2] || (g[2] = Q((l) => i.value?.trim() ? p() : null, ["enter"]))
+              onKeyup: g[2] || (g[2] = ee((m) => a.value?.trim() ? f() : null, ["enter"]))
             }, null, 40, ["modelValue", "placeholder"]))
           ])) : k("", !0)
         ])) : k("", !0)
@@ -310,7 +335,7 @@ const Se = Z("ui", () => {
       _: 1
     }, 40, ["show"]));
   }
-}), _e = {
+}), Re = {
   // --- 🌈 PREMIUM COLOR PALETTE ---
   colors: {
     // Brand Identity (Cyber Technical)
@@ -436,45 +461,44 @@ const Se = Z("ui", () => {
     maxWidth: "1600px"
   }
 };
-function He(...o) {
-  return ye(pe(o));
+function Ge(...o) {
+  return be(xe(o));
 }
-class Fe {
+class Ne {
   id = "default";
   name = "Standard Enterprise Slate";
-  register(t, e, i = {}) {
-    const m = i.uiStore ?? Se(), u = he(m), p = Ce(m), r = xe(m), s = Y(), a = Ie();
-    t.config.globalProperties.$toast = u, t.config.globalProperties.$message = p, t.config.globalProperties.$appState = s, t.config.globalProperties.$superApp = e, e.$appState = s, e.$themeConfig = a, t.config.globalProperties.$themeConfig = a, t.provide("$themeConfig", a), e.registerComponent({ id: "layout.theme-panel", category: "Shell UI", component: n(() => import("./chunks/ThemePanel-BKir-qxo.js")) }), e.registerCommand({ id: "theme.customize", name: "Tuỳ chỉnh giao diện", category: "Theme", shortcut: "⌘⇧T", handler: () => a.toggle() }), e.registerCommand({ id: "theme.studio", name: "Theme Studio", description: "Trang tuỳ chỉnh giao diện đầy đủ", category: "Theme", handler: () => {
+  register(i, e, a = {}) {
+    const l = a.uiStore ?? Te(), u = ve(l), f = Ie(l), n = oe(), s = we();
+    i.config.globalProperties.$message = u, i.config.globalProperties.$appState = n, i.config.globalProperties.$superApp = e, e.$appState = n, e.$themeConfig = s, i.config.globalProperties.$themeConfig = s, i.provide("$themeConfig", s), e.registerComponent({ id: "layout.theme-panel", category: "Shell UI", component: t(() => import("./chunks/ThemePanel-BGYFWrcC.js")) }), e.registerCommand({ id: "theme.customize", name: "Tuỳ chỉnh giao diện", category: "Theme", shortcut: "⌘⇧T", handler: () => s.toggle() }), e.registerCommand({ id: "theme.studio", name: "Theme Studio", description: "Trang tuỳ chỉnh giao diện đầy đủ", category: "Theme", handler: () => {
       e.$router?.push("/system/theme");
     } });
-    const g = n(() => import("./chunks/Header-0EKz5UN7.js"));
-    e.registerComponent({ id: "Header", category: "Shell UI", component: g }), e.registerComponent({ id: "layout.header", category: "Shell UI", component: g });
-    const l = n(() => import("./chunks/Sidebar-CCmpwaOA.js"));
-    e.registerComponent({ id: "Sidebar", category: "Shell UI", component: l }), e.registerComponent({ id: "layout.sidebar", category: "Shell UI", component: l });
-    const f = n(() => import("./chunks/ModulePageLayout-CuSYrWur.js"));
-    e.registerComponent({ id: "ModulePageLayout", category: "Shell UI", component: f }), e.registerComponent({ id: "layout.module-page", category: "Shell UI", component: f });
-    const c = n(() => import("./chunks/ModuleHeader-BnrOpukT.js"));
-    e.registerComponent({ id: "ModuleHeader", category: "Shell UI", component: c }), e.registerComponent({ id: "layout.module-header", category: "Shell UI", component: c });
-    const d = n(() => import("./chunks/DualSidebarLayout-BH2tOx6j.js"));
-    e.registerComponent({ id: "DualSidebarLayout", category: "Shell UI", component: d }), e.registerComponent({ id: "layout.dual-sidebar", category: "Shell UI", component: d });
-    const y = n(() => import("./chunks/ErpCommandPalette-fx4Q0Amc.js"));
-    return e.registerComponent({ id: "CommandPalette", category: "Shell UI", component: y }), e.registerComponent({ id: "layout.command-palette", category: "Shell UI", component: y }), e.registerComponent({ id: "layout.app-container", category: "Shell UI", component: n(() => import("./chunks/AppContainer-LSa7vCxm.js")) }), e.registerComponent({ id: "ThemeConnector", category: "Shell UI", component: n(() => import("./chunks/ThemeConnector-CDbJXNMh.js")) }), e.registerComponent({ id: "ToastContainer", category: "Shell UI", component: n(() => import("./chunks/ToastContainer-JGwl3S_m.js")) }), e.registerComponent({ id: "MessageProvider", category: "Shell UI", component: Me }), e.registerComponent({ id: "DialogProvider", category: "Shell UI", component: n(() => import("./chunks/DialogProvider-C21AipJt.js")) }), e.registerComponent({ id: "layout.action-bar", category: "Layout UI", component: n(() => import("./chunks/ErpActionBar-DR8NVTx-.js")) }), e.registerComponent({ id: "display.data-grid", category: "Display UI", component: n(() => import("./chunks/ErpDataGrid-A4UGQwRU.js")) }), e.registerComponent({ id: "form.entity-selector", category: "Form UI", component: n(() => import("./chunks/ErpEntitySelector-XLEStx_M.js")) }), e.registerComponent({ id: "ui.card", category: "UI Blocks", component: n(() => import("./chunks/Card-sv8WQzvB.js")) }), e.registerComponent({ id: "ui.button", category: "UI Blocks", component: n(() => import("./chunks/Button-Cud5Nfh1.js")) }), e.registerComponent({ id: "ui.button-copy", category: "UI Blocks", component: n(() => import("./chunks/ButtonCopy-DHLLo4Pm.js")) }), e.registerComponent({ id: "ui.text", category: "UI Blocks", component: n(() => import("./chunks/Typography-CNI1yScN.js")) }), e.registerComponent({ id: "ui.skeleton", category: "UI Blocks", component: n(() => import("./chunks/Skeleton-CfLyDGWt.js")) }), e.registerComponent({ id: "form.input", category: "Form UI", component: n(() => import("./chunks/Input-B0IfgsVG.js")) }), e.registerComponent({ id: "form.input-number", category: "Form UI", component: n(() => import("./chunks/InputNumber-DBRTF-wJ.js")) }), e.registerComponent({ id: "form.switch", category: "Form UI", component: n(() => import("./chunks/InputSwitch-BT6wq4iq.js")) }), e.registerComponent({ id: "InputSwitch", category: "Form UI", component: n(() => import("./chunks/InputSwitch-BT6wq4iq.js")) }), e.registerComponent({ id: "form.textarea", category: "Form UI", component: n(() => import("./chunks/Textarea-BVKFbpBu.js")) }), e.registerComponent({ id: "ui.modal", category: "UI Blocks", component: n(() => import("./chunks/Modal-Bh_xjaON.js")) }), e.registerComponent({ id: "ui.search-input", category: "UI Blocks", component: n(() => import("./chunks/SearchInput-CHiFQN2g.js")) }), e.registerComponent({ id: "ui.avatar", category: "UI Blocks", component: n(() => import("./chunks/UserAvatar-DRE3opnT.js")) }), e.registerComponent({ id: "ui.badge", category: "UI Blocks", component: n(() => import("./chunks/Badge-ZzsVRpNl.js")) }), e.registerComponent({ id: "ui.alert", category: "UI Blocks", component: n(() => import("./chunks/Alert-DylOuBAF.js")) }), e.registerComponent({ id: "layout.section-header", category: "Layout UI", component: n(() => import("./chunks/SectionHeader-C8ufun_t.js")) }), e.registerComponent({ id: "layout.mini-app", category: "Layout UI", component: n(() => import("./chunks/MiniAppLayout-DEmrq9oq.js")) }), e.registerComponent({ id: "form.code-editor", category: "Form UI", component: n(() => import("./chunks/CodeEditor-BiENsVj5.js")) }), e.registerComponent({ id: "runtime.studio", category: "Form UI", component: n(() => import("./chunks/CodeEditor-BiENsVj5.js")) }), e.registerComponent({ id: "button.copy", category: "UI Blocks", component: n(() => import("./chunks/ButtonCopy-DHLLo4Pm.js")) }), e.registerComponent({ id: "ui.popover", category: "UI Blocks", component: n(() => import("./chunks/Popover-Cj2uYSMk.js")) }), e.registerComponent({ id: "ui.popover-trigger", category: "UI Blocks", component: n(() => import("./chunks/PopoverTrigger-CTa-i7wG.js")) }), e.registerComponent({ id: "ui.popover-content", category: "UI Blocks", component: n(() => import("./chunks/PopoverContent-CMU8J2kl.js")) }), e.registerComponent({ id: "ui.context-menu", category: "UI Blocks", component: n(() => import("./chunks/ContextMenu-B4gNeut2.js")) }), e.registerComponent({ id: "ui.list-manager", category: "UI Blocks", component: n(() => import("./chunks/ListManager-BbjjcqOm.js")) }), e.registerComponent({ id: "ui.dropdown", category: "UI Blocks", component: n(() => import("./chunks/Dropdown-wKllpTqE.js")) }), e.registerComponent({ id: "display.chart", category: "Display UI", component: n(() => import("./chunks/InsightChart-BlF0mgf_.js")) }), e.registerComponent({ id: "display.data-table", category: "Display UI", component: n(() => import("./chunks/DataTable-DCFx8TGK.js")) }), e.registerComponent({ id: "display.column-settings", category: "Display UI", component: n(() => import("./chunks/ColumnSettings-7c2CSqKT.js")) }), e.registerComponent({ id: "display.simple-pagination", category: "Display UI", component: n(() => import("./chunks/SimplePagination-DpkIfSxT.js")) }), e.registerComponent({ id: "Table", category: "Table UI", component: n(() => import("./chunks/Table-BLZjeVVX.js")) }), e.registerComponent({ id: "TableBody", category: "Table UI", component: n(() => import("./chunks/TableBody-B62z8Jcx.js")) }), e.registerComponent({ id: "TableCell", category: "Table UI", component: n(() => import("./chunks/TableCell-DEzqxj9e.js")) }), e.registerComponent({ id: "TableHead", category: "Table UI", component: n(() => import("./chunks/TableHead-DFpbn3fx.js")) }), e.registerComponent({ id: "TableHeader", category: "Table UI", component: n(() => import("./chunks/TableHeader-C6oE9KYG.js")) }), e.registerComponent({ id: "TableRow", category: "Table UI", component: n(() => import("./chunks/TableRow-BT1dHX61.js")) }), e.registerComponent({ id: "form.select", category: "Form UI", component: n(() => import("./chunks/Select-DDUhkQv2.js")) }), e.registerComponent({ id: "form.select-content", category: "Form UI", component: n(() => import("./chunks/SelectContent-tzsySqUy.js")) }), e.registerComponent({ id: "form.select-item", category: "Form UI", component: n(() => import("./chunks/SelectItem-ExBV4X2S.js")) }), e.registerComponent({ id: "form.select-trigger", category: "Form UI", component: n(() => import("./chunks/SelectTrigger-VqHMXKN7.js")) }), e.registerComponent({ id: "form.select-value", category: "Form UI", component: n(() => import("./chunks/SelectValue-Bo98YXZE.js")) }), e.registerComponent({ id: "ui.icon.shield-check", category: "Icons", component: ne }), e.registerComponent({ id: "ui.icon.user", category: "Icons", component: re }), e.registerComponent({ id: "ui.icon.lock", category: "Icons", component: ie }), e.registerComponent({ id: "ui.icon.arrow-right", category: "Icons", component: ae }), e.registerComponent({ id: "ui.icon.search", category: "Icons", component: se }), e.registerComponent({ id: "ui.icon.settings", category: "Icons", component: ce }), e.registerComponent({ id: "ui.icon.bell", category: "Icons", component: me }), e.registerComponent({ id: "ui.icon.logout", category: "Icons", component: le }), e.registerComponent({ id: "ui.icon.chevron-down", category: "Icons", component: ge }), e.registerComponent({ id: "ui.icon.chevron-right", category: "Icons", component: de }), e.registerComponent({ id: "ui.icon.check", category: "Icons", component: ue }), e.registerComponent({ id: "ui.icon.alert-triangle", category: "Icons", component: K }), e.registerComponent({ id: "ui.icon.info", category: "Icons", component: J }), e.registerComponent({ id: "ui.icon.x", category: "Icons", component: fe }), { toastService: u, messageService: p, dialogService: r, appState: s, themeConfig: a, uiStore: m };
+    const c = t(() => import("./chunks/Header-kpvG96QB.js"));
+    e.registerComponent({ id: "Header", category: "Shell UI", component: c }), e.registerComponent({ id: "layout.header", category: "Shell UI", component: c });
+    const g = t(() => import("./chunks/Sidebar-CCmpwaOA.js"));
+    e.registerComponent({ id: "Sidebar", category: "Shell UI", component: g }), e.registerComponent({ id: "layout.sidebar", category: "Shell UI", component: g });
+    const m = t(() => import("./chunks/ModulePageLayout-CuSYrWur.js"));
+    e.registerComponent({ id: "ModulePageLayout", category: "Shell UI", component: m }), e.registerComponent({ id: "layout.module-page", category: "Shell UI", component: m });
+    const p = t(() => import("./chunks/ModuleHeader-BnrOpukT.js"));
+    e.registerComponent({ id: "ModuleHeader", category: "Shell UI", component: p }), e.registerComponent({ id: "layout.module-header", category: "Shell UI", component: p });
+    const r = t(() => import("./chunks/DualSidebarLayout-BH2tOx6j.js"));
+    e.registerComponent({ id: "DualSidebarLayout", category: "Shell UI", component: r }), e.registerComponent({ id: "layout.dual-sidebar", category: "Shell UI", component: r });
+    const d = t(() => import("./chunks/ErpCommandPalette-fx4Q0Amc.js"));
+    return e.registerComponent({ id: "CommandPalette", category: "Shell UI", component: d }), e.registerComponent({ id: "layout.command-palette", category: "Shell UI", component: d }), e.registerComponent({ id: "layout.app-container", category: "Shell UI", component: t(() => import("./chunks/AppContainer-LSa7vCxm.js")) }), e.registerComponent({ id: "ThemeConnector", category: "Shell UI", component: t(() => import("./chunks/ThemeConnector-ZAqIUWMw.js")) }), e.registerComponent({ id: "ToastContainer", category: "Shell UI", component: t(() => import("./chunks/ToastContainer-JGwl3S_m.js")) }), e.registerComponent({ id: "MessageProvider", category: "Shell UI", component: Ee }), e.registerComponent({ id: "DialogProvider", category: "Shell UI", component: t(() => import("./chunks/DialogProvider-C21AipJt.js")) }), e.registerComponent({ id: "layout.action-bar", category: "Layout UI", component: t(() => import("./chunks/ErpActionBar-DR8NVTx-.js")) }), e.registerComponent({ id: "display.data-grid", category: "Display UI", component: t(() => import("./chunks/ErpDataGrid-A4UGQwRU.js")) }), e.registerComponent({ id: "form.entity-selector", category: "Form UI", component: t(() => import("./chunks/ErpEntitySelector-XLEStx_M.js")) }), e.registerComponent({ id: "ui.card", category: "UI Blocks", component: t(() => import("./chunks/Card-sv8WQzvB.js")) }), e.registerComponent({ id: "ui.button", category: "UI Blocks", component: t(() => import("./chunks/Button-Cud5Nfh1.js")) }), e.registerComponent({ id: "ui.button-copy", category: "UI Blocks", component: t(() => import("./chunks/ButtonCopy-DsdzXkaa.js")) }), e.registerComponent({ id: "ui.text", category: "UI Blocks", component: t(() => import("./chunks/Typography-CNI1yScN.js")) }), e.registerComponent({ id: "ui.skeleton", category: "UI Blocks", component: t(() => import("./chunks/Skeleton-CfLyDGWt.js")) }), e.registerComponent({ id: "form.input", category: "Form UI", component: t(() => import("./chunks/Input-B0IfgsVG.js")) }), e.registerComponent({ id: "form.input-number", category: "Form UI", component: t(() => import("./chunks/InputNumber-DBRTF-wJ.js")) }), e.registerComponent({ id: "form.switch", category: "Form UI", component: t(() => import("./chunks/InputSwitch-BPvOZo9w.js")) }), e.registerComponent({ id: "InputSwitch", category: "Form UI", component: t(() => import("./chunks/InputSwitch-BPvOZo9w.js")) }), e.registerComponent({ id: "form.textarea", category: "Form UI", component: t(() => import("./chunks/Textarea-BVKFbpBu.js")) }), e.registerComponent({ id: "form.field", category: "Form UI", component: t(() => import("./chunks/FormField-DnQICIpP.js")) }), e.registerComponent({ id: "ui.modal", category: "UI Blocks", component: t(() => import("./chunks/Modal-BEp0XNLa.js")) }), e.registerComponent({ id: "ui.search-input", category: "UI Blocks", component: t(() => import("./chunks/SearchInput-CHiFQN2g.js")) }), e.registerComponent({ id: "ui.avatar", category: "UI Blocks", component: t(() => import("./chunks/UserAvatar-DRE3opnT.js")) }), e.registerComponent({ id: "ui.badge", category: "UI Blocks", component: t(() => import("./chunks/Badge-ZzsVRpNl.js")) }), e.registerComponent({ id: "ui.alert", category: "UI Blocks", component: t(() => import("./chunks/Alert-DylOuBAF.js")) }), e.registerComponent({ id: "layout.section-header", category: "Layout UI", component: t(() => import("./chunks/SectionHeader-C8ufun_t.js")) }), e.registerComponent({ id: "layout.mini-app", category: "Layout UI", component: t(() => import("./chunks/MiniAppLayout-DGqGVVq6.js")) }), e.registerComponent({ id: "form.code-editor", category: "Form UI", component: t(() => import("./chunks/CodeEditor-0g7paalJ.js")) }), e.registerComponent({ id: "runtime.studio", category: "Form UI", component: t(() => import("./chunks/CodeEditor-0g7paalJ.js")) }), e.registerComponent({ id: "button.copy", category: "UI Blocks", component: t(() => import("./chunks/ButtonCopy-DsdzXkaa.js")) }), e.registerComponent({ id: "ui.popover", category: "UI Blocks", component: t(() => import("./chunks/Popover-DgBGd8bu.js")) }), e.registerComponent({ id: "ui.popover-trigger", category: "UI Blocks", component: t(() => import("./chunks/PopoverTrigger-CTa-i7wG.js")) }), e.registerComponent({ id: "ui.popover-content", category: "UI Blocks", component: t(() => import("./chunks/PopoverContent-YSyq__72.js")) }), e.registerComponent({ id: "ui.context-menu", category: "UI Blocks", component: t(() => import("./chunks/ContextMenu-B4gNeut2.js")) }), e.registerComponent({ id: "ui.list-manager", category: "UI Blocks", component: t(() => import("./chunks/ListManager-BbjjcqOm.js")) }), e.registerComponent({ id: "ui.dropdown", category: "UI Blocks", component: t(() => import("./chunks/Dropdown-wKllpTqE.js")) }), e.registerComponent({ id: "display.chart", category: "Display UI", component: t(() => import("./chunks/InsightChart-BlF0mgf_.js")) }), e.registerComponent({ id: "display.data-table", category: "Display UI", component: t(() => import("./chunks/DataTable-CihzO6Ph.js")) }), e.registerComponent({ id: "display.column-settings", category: "Display UI", component: t(() => import("./chunks/ColumnSettings-7c2CSqKT.js")) }), e.registerComponent({ id: "display.simple-pagination", category: "Display UI", component: t(() => import("./chunks/SimplePagination-DfueDTCj.js")) }), e.registerComponent({ id: "Table", category: "Table UI", component: t(() => import("./chunks/Table-BLZjeVVX.js")) }), e.registerComponent({ id: "TableBody", category: "Table UI", component: t(() => import("./chunks/TableBody-B62z8Jcx.js")) }), e.registerComponent({ id: "TableCell", category: "Table UI", component: t(() => import("./chunks/TableCell-DEzqxj9e.js")) }), e.registerComponent({ id: "TableHead", category: "Table UI", component: t(() => import("./chunks/TableHead-DFpbn3fx.js")) }), e.registerComponent({ id: "TableHeader", category: "Table UI", component: t(() => import("./chunks/TableHeader-C6oE9KYG.js")) }), e.registerComponent({ id: "TableRow", category: "Table UI", component: t(() => import("./chunks/TableRow-BT1dHX61.js")) }), e.registerComponent({ id: "form.select", category: "Form UI", component: t(() => import("./chunks/Select-DDUhkQv2.js")) }), e.registerComponent({ id: "form.select-content", category: "Form UI", component: t(() => import("./chunks/SelectContent-tzsySqUy.js")) }), e.registerComponent({ id: "form.select-item", category: "Form UI", component: t(() => import("./chunks/SelectItem-ExBV4X2S.js")) }), e.registerComponent({ id: "form.select-trigger", category: "Form UI", component: t(() => import("./chunks/SelectTrigger-VqHMXKN7.js")) }), e.registerComponent({ id: "form.select-value", category: "Form UI", component: t(() => import("./chunks/SelectValue-Bo98YXZE.js")) }), e.registerComponent({ id: "ui.icon.shield-check", category: "Icons", component: se }), e.registerComponent({ id: "ui.icon.user", category: "Icons", component: ce }), e.registerComponent({ id: "ui.icon.lock", category: "Icons", component: le }), e.registerComponent({ id: "ui.icon.arrow-right", category: "Icons", component: me }), e.registerComponent({ id: "ui.icon.search", category: "Icons", component: de }), e.registerComponent({ id: "ui.icon.settings", category: "Icons", component: ge }), e.registerComponent({ id: "ui.icon.bell", category: "Icons", component: ue }), e.registerComponent({ id: "ui.icon.logout", category: "Icons", component: fe }), e.registerComponent({ id: "ui.icon.chevron-down", category: "Icons", component: pe }), e.registerComponent({ id: "ui.icon.chevron-right", category: "Icons", component: ye }), e.registerComponent({ id: "ui.icon.check", category: "Icons", component: he }), e.registerComponent({ id: "ui.icon.alert-triangle", category: "Icons", component: X }), e.registerComponent({ id: "ui.icon.info", category: "Icons", component: Q }), e.registerComponent({ id: "ui.icon.x", category: "Icons", component: Ce }), { messageService: u, dialogService: f, appState: n, themeConfig: s, uiStore: l };
   }
 }
-const Ve = new Fe();
+const ze = new Ne();
 export {
-  Fe as DefaultTheme,
+  Ne as DefaultTheme,
   O as FONT_STACKS,
-  be as SWATCHES,
-  _e as THEME,
-  v as THEME_CONFIG_DEFAULTS,
-  L as brandScale,
-  He as cn,
-  xe as createDialogService,
-  Ce as createMessageService,
-  Ie as createThemeConfig,
-  he as createToastService,
-  Ve as defaultTheme,
-  Se as useUiStore
+  Se as SWATCHES,
+  Re as THEME,
+  I as THEME_CONFIG_DEFAULTS,
+  z as brandScale,
+  Ge as cn,
+  Ie as createDialogService,
+  ve as createMessageService,
+  we as createThemeConfig,
+  ze as defaultTheme,
+  Te as useUiStore
 };
 //# sourceMappingURL=index.js.map

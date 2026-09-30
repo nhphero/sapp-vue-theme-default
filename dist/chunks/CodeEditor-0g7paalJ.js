@@ -32,9 +32,9 @@ const ce = { class: "code-editor-wrapper h-full flex flex-col relative group" },
       try {
         await navigator.clipboard.writeText(String(a.modelValue || "")), f.value = !0, setTimeout(() => {
           f.value = !1;
-        }, 2e3), y.$toast.success("COPIED TO CLIPBOARD");
+        }, 2e3), y.$message.success("COPIED TO CLIPBOARD");
       } catch {
-        y.$toast.error("FAILED TO COPY");
+        y.$message.error("FAILED TO COPY");
       }
     }, M = (n) => ne.fromClass(class {
       decorations;
@@ -331,4 +331,4 @@ const ce = { class: "code-editor-wrapper h-full flex flex-col relative group" },
 export {
   we as default
 };
-//# sourceMappingURL=CodeEditor-BiENsVj5.js.map
+//# sourceMappingURL=CodeEditor-0g7paalJ.js.map

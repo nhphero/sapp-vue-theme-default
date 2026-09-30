@@ -28,14 +28,38 @@
   letter-spacing: var(--tracking-wide); color: var(--muted-foreground); }
 
 /* ── table (scoped to .table-wrap so foreign tables are untouched) ─ */
-.table-wrap { overflow-x: auto; border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--card); }
+/* Bảng là một card: ngoài viền còn cần bóng đổ để tách khỏi nền trang, nếu không
+   nó chỉ là một hình chữ nhật trắng nằm cạnh các hình chữ nhật trắng khác. */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-sm); }
 .table-wrap table { border-collapse: collapse; width: 100%; font-size: var(--text-sm); }
-.table-wrap th, .table-wrap td { text-align: left; padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
-.table-wrap th { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .07em; color: var(--table-head-fg); background: var(--table-head-bg); white-space: nowrap; font-weight: 600; }
+/* Hàng compact: một dòng một bản ghi. Padding lấy từ --sp-* nên vẫn co theo mật độ
+   trong Theme Studio; th giữ padding cũ để dải tiêu đề không bị bóp. */
+.table-wrap th, .table-wrap td { text-align: left; padding: var(--sp-1) var(--sp-3); border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
+.table-wrap th { padding-top: var(--sp-2); padding-bottom: var(--sp-2); }
+.table-wrap td { line-height: 1.35; }
+/* Header carries no fill: it is set apart by weight, case, tracking, colour and a
+   heavier rule. `background` stays opaque (the table surface) rather than
+   `transparent`, because the header is `position: sticky` — a see-through one
+   lets the rows scroll underneath it. */
+.table-wrap th { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .07em; color: var(--table-head-fg); background: var(--table-head-bg); white-space: nowrap; font-weight: 700; border-bottom: 2px solid var(--border); }
 .table-wrap tr:last-child td { border-bottom: 0; }
 .table-wrap tbody tr:hover { background: var(--muted); }
-.table-wrap tbody tr[data-state="selected"] { background: var(--primary-soft); }
+/* Hàng đang chọn: xám trung tính, pha từ --foreground nên không mang sắc brand.
+   --primary-soft (brand-100) tô đặc khiến 20 dòng được chọn biến cả bảng thành
+   một mảng màu. 16% nằm DƯỚI --muted (hover, gray-100) một bậc nên bốn trạng thái
+   nghỉ / hover / chọn / chọn+hover đều tách được bằng mắt. */
+.table-wrap tbody tr[data-state="selected"] { background: color-mix(in srgb, var(--foreground) 16%, var(--card)); }
 .table-wrap td.num, .table-wrap th.num { text-align: right; font-variant-numeric: var(--tabular); }
+
+/* ── link text ────────────────────────────────────────────────────
+   Chữ dẫn đi nơi khác. MÀU là tín hiệu chính, gạch chân chỉ xuất hiện khi hover:
+   một cột toàn link mà gạch chân sẵn sẽ biến thành một cột kẻ ngang. Dùng cho
+   tên bản ghi trong bảng, tham chiếu chéo, breadcrumb — không dùng cho nút. */
+.link-text { color: var(--link); font-weight: 500; cursor: pointer; text-decoration: none;
+  background: none; border: 0; padding: 0; font: inherit; font-weight: 500; text-align: left; }
+.link-text:hover { color: var(--primary-hover); text-decoration: underline; text-underline-offset: 2px; }
+.link-text:focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; border-radius: var(--radius-sm); }
+.link-text[aria-disabled="true"], .link-text:disabled { color: var(--faint); cursor: not-allowed; text-decoration: none; }
 
 /* ── badge: status always with text, never colour only ───────────── */
 .badge { display: inline-flex; align-items: center; gap: var(--sp-1); font-size: var(--text-xs);
@@ -76,6 +100,17 @@
   border: 0; border-radius: var(--radius); background: none; cursor: pointer; color: var(--muted-foreground); }
 .icon-btn:hover { background: var(--muted); color: var(--foreground); }
 .icon-btn svg { width: 18px; height: 18px; }
+/* row-level icon button: small enough to sit inside a compact table row.
+   Here, not in a feature — a view that writes `style="width:28px"` freezes at that
+   size the moment the theme panel changes density (demo-app/.rules/ui.md). */
+.icon-btn.sm { width: 28px; height: 28px; }
+.icon-btn.sm svg { width: 14px; height: 14px; }
+
+/* Toolbar control widths, in `ch` so they follow --text-* instead of fighting it.
+   A feature picks one of these instead of `w-44`, which is frozen in rem. */
+.control-sm { width: 16ch; }
+.control-md { width: 22ch; }
+.control-lg { width: 32ch; }
 
 /* ── form ────────────────────────────────────────────────────────── */
 .label { display: block; font-size: var(--text-sm); font-weight: 600; color: var(--foreground); }
@@ -197,17 +232,29 @@ input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; accent-
 /* ── pagination · tabs ───────────────────────────────────────────── */
 .pagination { display: flex; align-items: center; gap: var(--sp-2); justify-content: flex-end; font-size: var(--text-sm); color: var(--muted-foreground); }
 .pagination .btn { min-height: 32px; padding: 0 var(--sp-3); }
-.tabs { display: flex; gap: var(--sp-1); border-bottom: 1px solid var(--border-soft); }
-.tab { padding: var(--sp-2) var(--sp-3); border: 0; background: none; cursor: pointer;
+.tabs { display: flex; gap: var(--sp-2); border-bottom: 1px solid var(--border-soft); }
+/* Room around each label and between its parts (label · count badge · status dot), so a tab strip
+   reads as separate targets rather than one run of text. */
+.tab { display: inline-flex; align-items: center; gap: var(--sp-2); padding: var(--sp-3) var(--sp-4); border: 0; background: none; cursor: pointer;
   font: 600 var(--text-sm)/1 var(--font-sans); color: var(--muted-foreground); border-bottom: 2px solid transparent; margin-bottom: -1px; }
 .tab:hover { color: var(--foreground); }
 .tab[aria-selected="true"] { color: var(--primary); border-bottom-color: var(--primary); }
-/* mouse-driven controls: no outline box, a soft fill is enough */
-.tab:focus-visible, .pop-item:focus-visible, .icon-btn:focus-visible { outline: none; background: var(--muted); }
+/* Focus bàn phím: nền pha từ currentColor nên TỰ THEO bề mặt đang đứng — trên nền
+   sáng ra vệt tối, trên dải menu tối ra vệt sáng. --muted là một màu xám cố định,
+   đặt lên nền tối sẽ thành mảng sáng lạc lõng (đó là cái "xấu" khi tab tới).
+   Giữ lại outline vì đây là dấu focus duy nhất người dùng bàn phím có. */
+.tab:focus-visible, .pop-item:focus-visible, .icon-btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -2px;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
 
 /* ── overlay + modal ─────────────────────────────────────────────── */
 .overlay { position: fixed; inset: 0; background: color-mix(in srgb, var(--foreground) 45%, transparent);
-  z-index: var(--z-overlay); display: flex; align-items: center; justify-content: center; padding: var(--sp-4); }
+  z-index: var(--z-overlay); display: flex; align-items: center; justify-content: center; padding: var(--sp-4);
+  /* Hosts (DialogProvider's sentinel) are `pointer-events: none` so an empty host never blocks the
+     page; the property inherits, so the overlay must take events back or the dialog is click-through. */
+  pointer-events: auto; }
 .modal { background: var(--card); color: var(--foreground); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
   max-width: 440px; width: 100%; padding: var(--sp-5); }
 .modal > h3, .modal .modal-title { margin: 0 0 var(--sp-2); font-size: var(--text-lg); font-weight: 650; }
