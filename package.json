@@ -1,0 +1,88 @@
+{
+  "name": "@nhphero/sapp-theme-default",
+  "version": "0.1.0",
+  "description": "Default theme for the Super App shell: hoff-kit design tokens, component classes, UI kit and UI services.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/nhphero/sapp-vue-theme-default.git"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "*.vue"
+  ],
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./theme.css": "./dist/theme.css",
+    "./utilities.css": "./dist/utilities.css",
+    "./hoff/tokens.css": "./dist/hoff/tokens.css",
+    "./hoff/core.css": "./dist/hoff/core.css",
+    "./dist/*": "./dist/*",
+    "./src/*": "./src/*"
+  },
+  "scripts": {
+    "build": "rimraf dist && vite build && vue-tsc -p tsconfig.build.json && node ./scripts/copy-css.mjs",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "@codemirror/autocomplete": ">=6",
+    "@codemirror/commands": ">=6",
+    "@codemirror/state": ">=6",
+    "@codemirror/view": ">=6",
+    "@nhphero/vue-sapp": "^0.1.0",
+    "@vueuse/core": ">=10",
+    "chart.js": "^4.4.0",
+    "class-variance-authority": ">=0.7",
+    "clsx": ">=2",
+    "codemirror": ">=6",
+    "lucide-vue-next": ">=0.400",
+    "pinia": ">=2",
+    "radix-vue": ">=1.5",
+    "tailwind-merge": ">=2",
+    "vue": "^3.4.0",
+    "vue-router": ">=4"
+  },
+  "devDependencies": {
+    "@codemirror/autocomplete": "^6.18.4",
+    "@codemirror/commands": "^6.8.0",
+    "@codemirror/lang-sql": "^6.8.0",
+    "@codemirror/language": "^6.10.8",
+    "@codemirror/search": "^6.5.7",
+    "@codemirror/state": "^6.5.1",
+    "@codemirror/view": "^6.36.2",
+    "@nhphero/vue-sapp": "*",
+    "@types/node": "^20.11.30",
+    "@vitejs/plugin-vue": "^5.0.4",
+    "@vueuse/core": "10.11.1",
+    "chart.js": "^4.4.0",
+    "class-variance-authority": "0.7.0",
+    "clsx": "2.1.1",
+    "codemirror": "^6.0.1",
+    "lucide-vue-next": "0.453.0",
+    "pinia": "2.3.1",
+    "radix-vue": "1.5.3",
+    "rimraf": "^6.0.1",
+    "tailwind-merge": "2.5.4",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.2",
+    "vue": "3.5.13",
+    "vue-router": "4.5.1",
+    "vue-tsc": "^2.0.7"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

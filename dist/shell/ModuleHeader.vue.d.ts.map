@@ -1,0 +1,1 @@
+{"version":3,"file":"ModuleHeader.vue.d.ts","sourceRoot":"","sources":["../../src/shell/ModuleHeader.vue"],"names":[],"mappings":"AAuDA;;;;GAIG;AACH,KAAK,WAAW,GAAG;IACjB,KAAK,EAAE,KAAK,CAAC;QAAE,EAAE,EAAE,MAAM,CAAC;QAAC,KAAK,EAAE,MAAM,CAAC;QAAC,IAAI,CAAC,EAAE,GAAG,CAAA;KAAE,CAAC,CAAC;IACxD,UAAU,EAAE,MAAM,CAAA;CACnB,CAAC;;;;;;;;AAkHF,wBAOG"}

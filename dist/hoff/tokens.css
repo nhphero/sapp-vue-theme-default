@@ -1,0 +1,163 @@
+/* Copied from hoff-kit (ai-agents/template/UI-TEMPLATES/hoff-kit/tokens.css). Edit brand here: the 11 --brand-* values. */
+/*
+ * Design tokens — NGUỒN SỰ THẬT duy nhất cho UI của dự án.
+ * File CỦA BẠN: sửa theo brand, `hoff update` không đè.
+ *
+ * KIẾN TRÚC 2 TẦNG (theo cách shadcn/ui · Tailwind Catalyst · Radix làm):
+ *
+ *   Tầng 1 · PRIMITIVE  — thang màu thô 50→950. KHÔNG dùng trực tiếp trong component.
+ *   Tầng 2 · SEMANTIC   — tên theo VAI TRÒ (--background, --primary, --border…).
+ *                         Component CHỈ dùng tầng này.
+ *
+ *   Dark mode chỉ remap tầng semantic — primitive giữ nguyên. Nhờ vậy đổi brand = sửa
+ *   thang --brand-*, đổi cảm giác sáng/tối = sửa mapping, không đụng component nào.
+ *
+ * Đổi brand nhanh: thay 11 giá trị --brand-* (sinh thang từ màu gốc bằng uicolors.app
+ * hoặc tints.dev), xong. Mọi thứ khác tự theo.
+ */
+
+:root {
+  /* ═══ TẦNG 1 · PRIMITIVE — không dùng trực tiếp ═══════════════════ */
+
+  /* xám lạnh có sắc xanh (kiểu slate) — nền, chữ, viền */
+  --gray-50:  #F6F8F9;  --gray-100: #EDF1F3;  --gray-200: #DFE5E8;
+  --gray-300: #C8D1D6;  --gray-400: #9AA7AF;  --gray-500: #6E7D87;
+  --gray-600: #51606A;  --gray-700: #3D4B54;  --gray-800: #26313A;
+  --gray-900: #172128;  --gray-950: #0E151A;
+
+  /* brand — teal trầm. ĐỔI BRAND = ĐỔI 11 DÒNG NÀY */
+  --brand-50:  #EFF7F6;  --brand-100: #D8ECEA;  --brand-200: #B3DAD6;
+  --brand-300: #83C0BA;  --brand-400: #52A29B;  --brand-500: #33857E;
+  --brand-600: #256B65;  --brand-700: #215751;  --brand-800: #1E4642;
+  --brand-900: #1C3B38;  --brand-950: #0C2220;
+
+  /* trạng thái — mỗi màu 3 nấc: đậm (chữ/icon) · nền nhạt · viền nhạt */
+  --green-600: #1F7A3D;  --green-100: #DFF0E4;  --green-300: #A9D8B8;
+  --amber-700: #935F0C;  --amber-100: #F6EBD3;  --amber-300: #E3C88E;
+  --red-600:   #A63A2E;  --red-100:   #F7E2DE;  --red-300:   #E4AFA7;
+  --blue-600:  #2F5E8F;  --blue-100:  #E0EAF4;  --blue-300:  #A9C4DD;
+
+  /* ═══ TẦNG 2 · SEMANTIC — component chỉ dùng từ đây trở xuống ═════ */
+
+  /* nền & bề mặt */
+  --background:        var(--gray-100);   /* nền trang — một nấc tối hơn card để card nổi rõ */
+  --card:              #FFFFFF;           /* card, bảng, form, popover */
+  --muted:             var(--gray-100);   /* vùng chìm: thead, hover, code (trong card trắng) */
+  --sunken:            var(--gray-200);   /* chìm sâu hơn: track, well */
+
+  /* chữ */
+  --foreground:        var(--gray-900);   /* chữ chính */
+  --muted-foreground:  var(--gray-700);   /* chữ phụ — 8.9:1 trên trắng */
+  --faint:             var(--gray-600);   /* chú thích, placeholder, disabled — 6.4:1 trên trắng */
+
+  /* viền & input */
+  --border:            var(--gray-400);   /* viền control, phân vùng chính — thấy rõ trên trắng */
+  --border-soft:       var(--gray-300);   /* kẻ bảng, viền card */
+  --input:             var(--gray-400);   /* viền field */
+  --ring:              var(--brand-500);  /* focus ring */
+
+  /* hành động chính — MỘT màu, dùng tiết chế */
+  --primary:            var(--brand-600);
+  --primary-hover:      var(--brand-700);
+  --primary-foreground: #FFFFFF;          /* chữ trên nền primary */
+  --primary-soft:       var(--brand-100); /* hàng chọn, chip nhẹ */
+  --link:               var(--brand-600);
+
+  /* trạng thái — nói TRẠNG THÁI, không trang trí */
+  --success:      var(--green-600);  --success-soft: var(--green-100);  --success-border: var(--green-300);
+  --warning:      var(--amber-700);  --warning-soft: var(--amber-100);  --warning-border: var(--amber-300);
+  --danger:       var(--red-600);    --danger-soft:  var(--red-100);    --danger-border:  var(--red-300);
+  --info:         var(--blue-600);   --info-soft:    var(--blue-100);   --info-border:    var(--blue-300);
+
+  /* ═══ CHỮ ═════════════════════════════════════════════════════════ */
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* thang chuẩn gốc 16px (đọc thoải mái trên màn lớn); Theme Studio scale bằng --scale-text */
+  --text-xs: 12px;   --text-sm: 14px;    --text-base: 16px;
+  --text-lg: 18px;   --text-xl: 20px;    --text-2xl: 24px;   --text-3xl: 30px;
+  --leading-tight: 1.25;  --leading: 1.55;
+  --tracking-wide: .08em;            /* nhãn uppercase */
+  --tabular: tabular-nums;           /* bắt buộc cho cột số */
+
+  /* ═══ KHOẢNG CÁCH — thang 4px ═════════════════════════════════════ */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px;  --sp-8: 64px;
+
+  /* ═══ HÌNH KHỐI ═══════════════════════════════════════════════════ */
+  --radius-sm: 3px;   /* badge, chip */
+  --radius:    6px;   /* nút, input, cell */
+  --radius-lg: 10px;  /* card, modal */
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgba(14,21,26,.06);
+  --shadow:    0 1px 2px rgba(14,21,26,.08), 0 2px 8px rgba(14,21,26,.07);
+  --shadow-lg: 0 4px 12px rgba(14,21,26,.08), 0 12px 32px rgba(14,21,26,.10);
+
+  /* ═══ CHUYỂN ĐỘNG · LAYOUT · Z ════════════════════════════════════ */
+  --ease: cubic-bezier(.2,.7,.3,1);
+  --dur-fast: 120ms;  --dur: 200ms;  --dur-slow: 320ms;
+  --container: 1680px;               /* header + trang Shell (.page-container) */
+  --touch: 44px;
+  --header-h: 52px;                  /* shell bar; scale theo cỡ chữ + mật độ */
+  /* table header — đậm hơn nền trang (--muted trùng --background nên bị chìm) */
+  --table-head-bg: var(--gray-800);  --table-head-fg: var(--gray-100);
+  --z-sticky: 30; --z-overlay: 40; --z-modal: 50; --z-toast: 60;
+
+  /* ═══ ALIAS CŨ — tương thích bản trước, sẽ bỏ; đừng dùng cho UI mới ═ */
+  --bg: var(--background);      --surface: var(--card);      --surface-2: var(--muted);
+  --ink: var(--foreground);     --ink-2: var(--muted-foreground);  --ink-3: var(--faint);
+  --line: var(--border);        --line-2: var(--border-soft);
+  --accent: var(--primary);     --accent-ink: var(--primary-foreground);
+  --accent-soft: var(--primary-soft);
+  --ok: var(--success);         --ok-soft: var(--success-soft);
+  --warn: var(--warning);       --warn-soft: var(--warning-soft);
+  --danger-soft-alias: var(--danger-soft);
+  --text-md: var(--text-base);
+}
+
+/* ═══ DARK — chỉ remap SEMANTIC, primitive giữ nguyên ═══════════════ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: var(--gray-950);   --card: var(--gray-900);
+    --table-head-bg: var(--gray-700); --table-head-fg: var(--gray-100);
+    --muted: var(--gray-800);        --sunken: #0B1116;
+    --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
+    --faint: var(--gray-500);
+    --border: var(--gray-700);       --border-soft: var(--gray-800);
+    --input: var(--gray-700);        --ring: var(--brand-400);
+    --primary: var(--brand-400);     --primary-hover: var(--brand-300);
+    --primary-foreground: var(--gray-950);
+    --primary-soft: var(--brand-950);
+    --link: var(--brand-300);
+    --success: #66B57F; --success-soft: #14281B; --success-border: #2C5138;
+    --warning: #D9A75A; --warning-soft: #2B2210; --warning-border: #5C4A22;
+    --danger:  #DA8578; --danger-soft:  #2E1B17; --danger-border:  #613229;
+    --info:    #7BA7D0; --info-soft:    #152230; --info-border:    #2F4A66;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
+    --shadow:    0 1px 2px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.35);
+    --shadow-lg: 0 4px 14px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"] {
+  --background: var(--gray-950);   --card: var(--gray-900);
+  --table-head-bg: var(--gray-700); --table-head-fg: var(--gray-100);
+  --muted: var(--gray-800);        --sunken: #0B1116;
+  --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
+  --faint: var(--gray-500);
+  --border: var(--gray-700);       --border-soft: var(--gray-800);
+  --input: var(--gray-700);        --ring: var(--brand-400);
+  --primary: var(--brand-400);     --primary-hover: var(--brand-300);
+  --primary-foreground: var(--gray-950);
+  --primary-soft: var(--brand-950);
+  --link: var(--brand-300);
+  --success: #66B57F; --success-soft: #14281B; --success-border: #2C5138;
+  --warning: #D9A75A; --warning-soft: #2B2210; --warning-border: #5C4A22;
+  --danger:  #DA8578; --danger-soft:  #2E1B17; --danger-border:  #613229;
+  --info:    #7BA7D0; --info-soft:    #152230; --info-border:    #2F4A66;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
+  --shadow:    0 1px 2px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.35);
+  --shadow-lg: 0 4px 14px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur: 0ms; --dur-slow: 0ms; }
+}

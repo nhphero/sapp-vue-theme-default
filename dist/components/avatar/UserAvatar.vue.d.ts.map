@@ -1,0 +1,1 @@
+{"version":3,"file":"UserAvatar.vue.d.ts","sourceRoot":"","sources":["../../../src/components/avatar/UserAvatar.vue"],"names":[],"mappings":"AAkCA,qHAAqH;AACrH,KAAK,WAAW,GAAG;IACjB,GAAG,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;IACpB,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,IAAI,CAAC,EAAE,MAAM,CAAC;IACd,OAAO,CAAC,EAAE,MAAM,GAAG,IAAI,CAAC;CACzB,CAAC;;UAFO,MAAM;aACH,MAAM,GAAG,IAAI;;AA8EzB,wBAOG"}
