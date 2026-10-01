@@ -48,11 +48,17 @@ const appSections = (q?: string) => {
 }
 
 /**
- * Recently opened apps — the switcher's top row (newest first, at most RECENT_MAX, the open app left
- * out). Kept per browser in localStorage; every access is guarded (private mode, blocked storage).
+ * Recently opened apps — the switcher's top row (newest first, at most recentMax, the open app left
+ * out). How many: Admin → Config (`apps.recentCount`, 0 hides the row), else RECENT_MAX. Kept per
+ * browser in localStorage; every access is guarded (private mode, blocked storage).
  */
 const RECENT_KEY = 'sapp:recent-apps'
 const RECENT_MAX = 5
+const LIMIT = 10
+const recentMax = computed(() => {
+  const n = Number(($s as any).state?.platformConfig?.apps?.recentCount)
+  return Number.isFinite(n) ? Math.min(LIMIT, Math.max(0, Math.round(n))) : RECENT_MAX
+})
 const readRecent = (): string[] => {
   try {
     const value = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]')
@@ -64,7 +70,7 @@ const readRecent = (): string[] => {
 const recentIds = ref<string[]>(readRecent())
 const rememberApp = (appId: string) => {
   // One more than shown: the open app is listed but not displayed.
-  recentIds.value = [appId, ...recentIds.value.filter(id => id !== appId)].slice(0, RECENT_MAX + 1)
+  recentIds.value = [appId, ...recentIds.value.filter(id => id !== appId)].slice(0, LIMIT + 1)
   try {
     localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds.value))
   } catch {
@@ -77,7 +83,7 @@ const recentTiles = (q?: string) => {
     .filter(id => id !== currentApp.value.id)
     .map(id => tiles.value.find((t: any) => t.id === id))
     .filter((t): t is NonNullable<typeof t> => !!t && (!s || `${t.label} ${t.detail || ''} ${t.id}`.toLowerCase().includes(s)))
-    .slice(0, RECENT_MAX)
+    .slice(0, recentMax.value)
 }
 
 const showAppsMenu = ref(false)

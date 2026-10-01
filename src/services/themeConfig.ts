@@ -4,8 +4,11 @@ import type { IThemeConfig, ThemeConfigState } from '@nhphero/vue-sapp/contracts
 /**
  * Live theme customization — ported from hoff-kit theme-config.js.
  * Everything is expressed as CSS variables on <html>, so it works for the Shell and every
- * mini app at once. State persists in localStorage; `exportTokens()` gives the CSS to paste
- * into hoff/tokens.css when the look is final.
+ * mini app at once. `exportTokens()` gives the CSS to paste into hoff/tokens.css when the look is final.
+ *
+ * Two layers: the base (the theme defaults, or the platform's look from Admin → Config through
+ * `useDefaults`) and the user's own changes on top. Only those changes go to localStorage, so a later
+ * platform change reaches everyone who did not touch that setting.
  */
 const STORAGE_KEY = 'sapp.theme.config';
 
@@ -124,16 +127,37 @@ const fontStack = (name: string) => {
   return `"${name.replace(/"/g, '')}", system-ui, sans-serif`;
 };
 
-export function createThemeConfig(): IThemeConfig {
-  const state = reactive<ThemeConfigState>({ ...THEME_CONFIG_DEFAULTS });
-  try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
-    for (const k of Object.keys(THEME_CONFIG_DEFAULTS) as (keyof ThemeConfigState)[]) {
-      if (saved[k] !== undefined && typeof saved[k] === typeof THEME_CONFIG_DEFAULTS[k]) (state as any)[k] = saved[k];
-    }
-  } catch { /* ignore corrupt storage */ }
+const KEYS = Object.keys(THEME_CONFIG_DEFAULTS) as (keyof ThemeConfigState)[];
 
-  const ui = reactive({ open: false });
+/** Known keys with the right type only. */
+const pick = (input: Record<string, any> | null | undefined): Partial<ThemeConfigState> => {
+  const out: Record<string, any> = {};
+  for (const k of KEYS) {
+    if (input?.[k] !== undefined && typeof input[k] === typeof THEME_CONFIG_DEFAULTS[k]) out[k] = input[k];
+  }
+  return out as Partial<ThemeConfigState>;
+};
+
+export function createThemeConfig(): IThemeConfig {
+  const readSaved = (): Partial<ThemeConfigState> => {
+    try { return pick(JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}')); } catch { return {}; }
+  };
+  // Older versions saved the whole state: values equal to the theme defaults were never real changes.
+  const overrides = Object.fromEntries(Object.entries(readSaved()).filter(([k, v]) => v !== (THEME_CONFIG_DEFAULTS as any)[k]));
+
+  let base: ThemeConfigState = { ...THEME_CONFIG_DEFAULTS };
+  const state = reactive<ThemeConfigState>({ ...base, ...overrides });
+  const ui = reactive({ open: false, locked: false });
+
+  /** What differs from the base — the user's changes — or nothing while the platform enforces its look. */
+  const persist = () => {
+    if (ui.locked) return;
+    const diff = Object.fromEntries(KEYS.filter(k => state[k] !== base[k]).map(k => [k, state[k]]));
+    try {
+      if (Object.keys(diff).length) localStorage.setItem(STORAGE_KEY, JSON.stringify(diff));
+      else localStorage.removeItem(STORAGE_KEY);
+    } catch { /* quota / private mode */ }
+  };
   const root = () => document.documentElement;
   const setVars = (vars: Record<string, string | number>, unit = '', remove = false) => {
     const st = root().style;
@@ -179,7 +203,7 @@ export function createThemeConfig(): IThemeConfig {
     const sh = Number.isFinite(state.shadow) ? state.shadow : SHADOW_DEFAULT;
     setVars(shadowSet(sh), '', sh === SHADOW_DEFAULT);
 
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch { /* quota / private mode */ }
+    persist();
   };
 
   const exportTokens = () => {
@@ -204,13 +228,24 @@ export function createThemeConfig(): IThemeConfig {
     state,
     get open() { return ui.open; },
     set open(v: boolean) { ui.open = v; },
-    defaults: THEME_CONFIG_DEFAULTS,
+    get defaults() { return base; },
+    get locked() { return ui.locked; },
     swatches: SWATCHES,
     fontStacks: FONT_STACKS,
     webFonts: WEB_FONTS,
     surfaces: SURFACES,
-    set(patch) { Object.assign(state, patch); },
-    reset() { Object.assign(state, THEME_CONFIG_DEFAULTS); },
+    set(patch) { if (!ui.locked) Object.assign(state, patch); },
+    reset() { if (!ui.locked) Object.assign(state, base); },
+    useDefaults(patch, options) {
+      // The user's changes survive a new base (unless enforced): measured against the old base, or —
+      // coming out of a lock, which never touched storage — read back from localStorage.
+      const mine = options?.enforce ? {}
+        : ui.locked ? readSaved()
+        : Object.fromEntries(KEYS.filter(k => state[k] !== base[k]).map(k => [k, state[k]]));
+      base = { ...THEME_CONFIG_DEFAULTS, ...pick(patch) };
+      ui.locked = !!options?.enforce;
+      Object.assign(state, base, mine);
+    },
     apply,
     toggle(force) { ui.open = force ?? !ui.open; },
     exportTokens,

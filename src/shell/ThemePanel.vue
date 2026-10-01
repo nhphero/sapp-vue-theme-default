@@ -35,12 +35,13 @@ const fill = (value: number, min: number, max: number) => `${((value - min) / (m
         <header class="tp-head">
           <Palette :size="16" />
           <b>{{ $t('shell.theme') }}</b>
-          <span class="tp-note">{{ $t('theme.savedOnDevice') }}</span>
+          <span class="tp-note">{{ config.locked ? $t('theme.locked') : $t('theme.savedOnDevice') }}</span>
           <button type="button" class="icon-btn" aria-label="Đóng" @click="config.toggle(false)"><X :size="16" /></button>
         </header>
 
-        <div class="tp-body">
-          <div v-if="i18n" class="tp-row">
+        <!-- Locked = the platform enforces its look (Admin → Config); only the language stays editable -->
+        <div class="tp-body" :class="{ 'is-locked': config.locked }">
+          <div v-if="i18n" class="tp-row tp-lang">
             <span>{{ $t('shell.language') }}</span>
             <div class="tp-seg" role="group">
               <button v-for="l in i18n.availableLocales" :key="l" type="button" class="flex items-center justify-center gap-1.5" :aria-pressed="i18n.locale === l" @click="i18n.setLocale(l)"><LocaleFlag :locale="l" :size="16" />{{ LOCALE_LABELS[l] ?? l }}</button>
@@ -130,7 +131,7 @@ const fill = (value: number, min: number, max: number) => `${((value - min) / (m
 
         <footer class="tp-actions">
           <button type="button" class="btn sm" title="Theme Studio" @click="openStudio"><Maximize2 :size="14" /> {{ $t('theme.fullPage') }}</button>
-          <button type="button" class="btn sm" @click="config.reset()"><RotateCcw :size="14" /> {{ $t('theme.reset') }}</button>
+          <button type="button" class="btn sm" :disabled="config.locked" @click="config.reset()"><RotateCcw :size="14" /> {{ $t('theme.reset') }}</button>
           <button type="button" class="btn sm" @click="copyTokens">
             <Check v-if="copied" :size="14" class="text-success" /><Copy v-else :size="14" /> {{ copied ? $t('theme.copied') : $t('theme.exportTokens') }}
           </button>
@@ -148,6 +149,7 @@ const fill = (value: number, min: number, max: number) => `${((value - min) / (m
 .tp-head b { font-size: var(--text-base); }
 .tp-note { margin-left: auto; font-size: var(--text-xs); color: var(--faint); }
 .tp-body { flex: 1; overflow-y: auto; padding: var(--sp-4); }
+.tp-body.is-locked .tp-row:not(.tp-lang) { opacity: .5; pointer-events: none; }
 .tp-row { margin-bottom: var(--sp-4); }
 .tp-row > span { display: block; font: 650 10px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--faint); margin-bottom: var(--sp-2); }
 .tp-out { float: right; font: 600 11px/1 var(--font-mono); color: var(--muted-foreground); text-transform: none; letter-spacing: 0; }
