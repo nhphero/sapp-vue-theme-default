@@ -138,7 +138,8 @@ const apps = computed(() => {
     .map((a: any) => ({
       id: a.id,
       label: a.name,
-      path: a.id === 'admin' ? '/app/admin/apps' : `/app/${a.id}`,
+      // Routes follow the slug (changeable); the id stays the key.
+      path: typeof $superApp.appPath === 'function' ? $superApp.appPath(a.id, a.id === 'admin' ? 'apps' : '') : `/app/${a.slug || a.id}${a.id === 'admin' ? '/apps' : ''}`,
       icon: resolveIcon(a.icon),
       detail: a.description || 'Micro-Frontend App'
     }))
@@ -209,7 +210,9 @@ const activeWorkspace = computed(() => {
 })
 
 watch(() => route.params.moduleId, (param) => {
-  const moduleId = Array.isArray(param) ? param[0] : param
+  // The route names the app by slug (or by id, for links older than a slug change); state keeps the id.
+  const key = Array.isArray(param) ? param[0] : param
+  const moduleId = key ? ($superApp.findAppByRoute?.(key)?.id ?? key) : key
   if (moduleId && $appState.current_app !== moduleId) {
     $appState.current_app = moduleId
   }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch, onMounted, onBeforeUnmount, inject, provide, shallowRef, markRaw } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { CSS_SCOPE_KEY } from '../composables/cssScope'
 
 /**
@@ -9,6 +9,7 @@ import { CSS_SCOPE_KEY } from '../composables/cssScope'
  * Standardizes the"Bridge Resolution" pattern across all apps.
  */
 const route = useRoute()
+const router = useRouter()
 const $superApp = inject<any>('$superApp')
 
 const isLoaded = ref(false)
@@ -37,8 +38,16 @@ const loadModule = async () => {
   }
 
   const segments = Array.isArray(param) ? param : param.split('/').filter(Boolean)
-  const baseModuleId = segments[0]
+  // /app/<slug>/… — the slug is the route (changeable), everything else is keyed by the app's id.
+  const baseModuleId = $superApp.findAppByRoute?.(segments[0])?.id ?? segments[0]
   const subPath = segments.slice(1).join('/')
+
+  // Named by its id (a link older than a slug change): move to the current route.
+  const slugNow = typeof $superApp.appPath === 'function' ? $superApp.appPath(baseModuleId).split('/')[2] : segments[0]
+  if (slugNow && segments[0] !== slugNow) {
+    router.replace({ path: $superApp.appPath(baseModuleId, subPath), query: route.query, hash: route.hash })
+    return
+  }
 
   // 🛡️ RBAC: Guard sensitive modules from unauthorized mounting
   if (baseModuleId === 'admin') {
