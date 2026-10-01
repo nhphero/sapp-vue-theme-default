@@ -68,3 +68,7 @@ Mini app dùng được y hệt vì cùng document. Muốn lưu theo user/tenant
 
 Nút chuyển app hiện version dạng badge nhỏ cùng hàng với tên app đang mở (màu lấy theo chữ của thanh, version dài thì cắt bớt), lấy từ `manifest.json` của nguồn hiện tại (`superApp.loadAppManifest(id)`): app package → version đang deploy (ví dụ `v1`, `20261001-103516`); app remote không có version (dev server) → `dev`. Class `.app-version` dùng `var(--text-xs)`.
 
+
+## Header: app gần đây
+
+Dropdown chuyển app có hàng **Gần đây** ở trên cùng: tối đa 5 app vừa mở (mới nhất trước, không tính app đang mở), dạng pill nhỏ, lọc theo ô tìm kiếm. Lưu theo trình duyệt ở localStorage `sapp:recent-apps` (mọi truy cập bọc try/catch — storage bị chặn thì hàng chỉ sống trong phiên). Nhãn `shell.recent` nằm trong i18n của `vue-sapp`.
