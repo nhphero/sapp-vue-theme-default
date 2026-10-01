@@ -169,19 +169,45 @@ watch(() => currentApp.value.id, (appId) => {
  * deployed version — "stable" when the app follows its package's stable alias (the real version in
  * the tooltip); a remote app without one (a dev server) shows "dev".
  */
+/** An app's version label + tooltip from its manifest (cached by the kernel); null when it has none. */
+const describeVersion = async (appId: string): Promise<{ label: string; title: string } | null> => {
+  if (!appId || appId === 'default' || typeof $superApp.loadAppManifest !== 'function') return null
+  const manifest = await $superApp.loadAppManifest(appId)
+  if (!manifest) return null
+  const version = String(manifest.version ?? 'dev')
+  const record = $superApp.getRegisteredApps?.().find((a: any) => a.id === appId)
+  return record?.channel === 'stable' ? { label: 'stable', title: `stable · ${version}` } : { label: version, title: version }
+}
+
 const appVersion = ref('')
 const appVersionTitle = ref('')
 watch(() => [currentApp.value.id, (currentApp.value as any).version], async ([appId]) => {
   appVersion.value = ''
   appVersionTitle.value = ''
-  if (!appId || appId === 'default' || typeof $superApp.loadAppManifest !== 'function') return
-  const manifest = await $superApp.loadAppManifest(appId)
-  if (currentApp.value.id !== appId) return
-  const version = manifest ? String(manifest.version ?? 'dev') : ''
-  const record = $superApp.getRegisteredApps?.().find((a: any) => a.id === appId)
-  appVersion.value = version && record?.channel === 'stable' ? 'stable' : version
-  appVersionTitle.value = appVersion.value === 'stable' ? `stable · ${version}` : version
+  const described = await describeVersion(appId)
+  if (currentApp.value.id !== appId || !described) return
+  appVersion.value = described.label
+  appVersionTitle.value = described.title
 }, { immediate: true })
+
+/**
+ * Versions shown after each app's name in the switcher — loaded when the menu first opens (one
+ * manifest per app, cached by the kernel), again when an app's version changes.
+ */
+const tileVersions = ref<Record<string, { label: string; title: string }>>({})
+const loadTileVersions = () => {
+  for (const app of rawApps()) {
+    const key = `${app.id}@${app.version ?? ''}`
+    if (versionKeys.has(key)) continue
+    versionKeys.add(key)
+    describeVersion(app.id).then(described => {
+      if (described) tileVersions.value = { ...tileVersions.value, [app.id]: described }
+    })
+  }
+}
+const versionKeys = new Set<string>()
+const rawApps = (): any[] => (typeof $superApp?.getRegisteredApps === 'function' ? $superApp.getRegisteredApps() : [])
+watch(showAppsMenu, open => { if (open) loadTileVersions() })
 
 /**
  * Band sections: an item without `group` is a tab; items sharing a `group` become ONE tab that opens
@@ -404,6 +430,7 @@ onMounted(() => {
                           :title="tile.detail" data-testid="recent-app" @click="tile.run()">
                     <component :is="tile.icon" :size="14" stroke-width="1.75" />
                     <span class="truncate">{{ tile.label }}</span>
+                    <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title">{{ tileVersions[tile.id].label }}</span>
                   </button>
                 </div>
               </section>
@@ -419,7 +446,10 @@ onMounted(() => {
                     <component :is="tile.icon" :size="16" stroke-width="1.75" />
                   </span>
                   <span class="min-w-0 flex-1">
-                    <span class="block text-sm font-semibold truncate group-hover:text-primary transition-colors">{{ tile.label }}</span>
+                    <span class="flex items-center gap-1.5 min-w-0">
+                      <span class="text-sm font-semibold truncate group-hover:text-primary transition-colors">{{ tile.label }}</span>
+                      <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title" data-testid="tile-version">{{ tileVersions[tile.id].label }}</span>
+                    </span>
                     <span class="block text-xs text-muted-foreground truncate">{{ tile.detail }}</span>
                   </span>
                   <button type="button" class="icon-btn shrink-0 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 aria-pressed:opacity-100" style="width:28px;height:28px"
@@ -491,6 +521,21 @@ onMounted(() => {
 
 /* The mounted app's version, a quiet pill on the same line as its name. Tinted from the chip's own
    text colour, so it reads on the light plate and on the dark band alike; long versions truncate. */
+.tile-version {
+  flex: none;
+  max-width: 14ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  padding: calc(var(--sp-1) * .5) var(--sp-1);
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  color: var(--muted-foreground);
+}
 .app-version {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
