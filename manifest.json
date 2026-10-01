@@ -1,0 +1,11 @@
+{
+  "name": "sapp-theme-default",
+  "type": "theme",
+  "title": "Default theme (hoff-kit)",
+  "description": "Design tokens, Header, MiniAppLayout, DataTable, UI kit, $message / $dialog.",
+  "icon": "Palette",
+  "build": {
+    "command": "docker run --rm -v \"$PWD\":/w -w /w nhphero/erp-node24 npm run build",
+    "output": "dist"
+  }
+}
