@@ -1,0 +1,1 @@
+{"version":3,"file":"cssScope.d.ts","sourceRoot":"","sources":["../../src/composables/cssScope.ts"],"names":[],"mappings":"AAAA,OAAO,EAAoB,KAAK,WAAW,EAAY,MAAM,KAAK,CAAC;AAEnE;;;;;;;;GAQG;AACH,eAAO,MAAM,aAAa,iBAAiB,CAAC;AAE5C,wBAAgB,WAAW,CAAC,OAAO,GAAE;IAAE,MAAM,CAAC,EAAE,OAAO,CAAA;CAAO,GAAG,WAAW,CAAC,MAAM,CAAC,CAInF"}

@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useCssScope } from '../../composables/cssScope';
 import { ref, onMounted, onUnmounted, inject, Teleport } from 'vue';
+
+/** `data-portal` value of the teleported panel — see composables/cssScope. */
+const cssScope = useCssScope()
 
 /** Context menu — hoff `.pop` + `.pop-item`. Call `open(event)` from a @contextmenu handler. */
 const props = defineProps<{
@@ -41,7 +45,7 @@ onUnmounted(() => { window.removeEventListener('scroll', close, true); window.re
 
 <template>
   <Teleport to="body">
-    <div v-if="isOpen" class="fixed inset-0 z-[9999]" data-portal @mousedown="close" @contextmenu.prevent="close">
+    <div v-if="isOpen" class="fixed inset-0 z-[9999]" :data-portal="cssScope" @mousedown="close" @contextmenu.prevent="close">
       <div ref="menuRef" class="pop absolute min-w-[200px]" role="menu" :style="{ left: `${x}px`, top: `${y}px` }" @mousedown.stop>
         <button
           v-for="(opt, i) in props.options" :key="i" type="button" role="menuitem"

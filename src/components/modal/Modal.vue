@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import { useCssScope } from '../../composables/cssScope';
 import { X } from 'lucide-vue-next';
 import { computed } from 'vue';
+
+/** `data-portal` value of the teleported panel — see composables/cssScope. */
+const cssScope = useCssScope({ active: true })
 
 /**
  * Modal — hoff-kit `.overlay` + `.modal` (preset modal-confirm): Esc / backdrop closes,
@@ -44,14 +48,13 @@ const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
 <template>
   <Transition name="modal">
     <!-- `data-portal`: a mini app's Tailwind utilities are scoped to
-         `@scope (#module-viewport, [data-portal])` by `mfeScopedCssPlugin`. A dialog is
-         rendered by DialogProvider at the Shell root, i.e. OUTSIDE the module viewport,
-         so without this marker every utility class in the dialog's content would be
-         dropped — same reason Select marks its popover panel. -->
+         `@scope ([data-mfe="<app>"], [data-portal="<app>"])` by `mfeScopedCssPlugin`. A dialog
+         is rendered by DialogProvider at the Shell root, i.e. OUTSIDE the app's viewport, so it
+         carries the scope of the app on screen — same reason Select marks its popover panel. -->
     <div
       v-if="isOpen"
       class="overlay"
-      data-portal
+      :data-portal="cssScope"
       :style="{ zIndex: props.zIndex }"
       role="dialog"
       aria-modal="true"

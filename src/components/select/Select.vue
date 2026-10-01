@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { useCssScope } from '../../composables/cssScope';
 import { computed, nextTick, onBeforeUnmount, ref, watch } from 'vue'
 import { SelectRoot, type SelectRootEmits, type SelectRootProps, useForwardPropsEmits } from 'radix-vue'
 import { Check, ChevronDown, Search } from 'lucide-vue-next'
 import { cn } from '../../utils'
+
+/** `data-portal` value of the teleported panel — see composables/cssScope. */
+const cssScope = useCssScope()
 
 /**
  * form.select — two ways to use it:
@@ -117,7 +121,7 @@ onBeforeUnmount(() => {
 
     <Teleport to="body">
       <Transition name="pop">
-        <div v-if="open" ref="panelRef" data-portal tabindex="-1" role="listbox" class="pop fixed z-[500] outline-none flex flex-col"
+        <div v-if="open" ref="panelRef" :data-portal="cssScope" tabindex="-1" role="listbox" class="pop fixed z-[500] outline-none flex flex-col"
              :style="{ top: `${pos.top}px`, left: `${pos.left}px`, width: `${pos.width}px`, maxHeight: '280px', transform: flipUp ? 'translateY(-100%)' : undefined }"
              @keydown="onKey">
           <div v-if="showSearch" class="pop-search">

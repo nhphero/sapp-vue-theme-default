@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { useCssScope } from '../../composables/cssScope';
 import { inject, computed, ref, onMounted, onUnmounted, watch } from 'vue';
+
+/** `data-portal` value of the teleported panel — see composables/cssScope. */
+const cssScope = useCssScope()
 
 const props = defineProps<{
   class?: string;
@@ -69,7 +73,7 @@ const alignmentClass = computed(() => {
     >
       <div
         v-if="isOpen"
-        data-portal
+        :data-portal="cssScope"
         :style="style"
         :class="[
  'pop fixed z-[9999] p-0 overflow-hidden outline-none',

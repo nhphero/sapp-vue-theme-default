@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, inject, shallowRef, markRaw } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, inject, provide, shallowRef, markRaw } from 'vue'
 import { useRoute } from 'vue-router'
+import { CSS_SCOPE_KEY } from '../composables/cssScope'
 
 /**
  * 🛰️ AppContainer (ESA v5 - Micro-Frontend Gateway)
@@ -15,6 +16,18 @@ const error = ref<string | null>(null)
 const EntryComponent = shallowRef<any>(null)
 
 const currentActiveModuleId = ref<string | null>(null)
+
+/**
+ * The mini app's CSS scope (mfeScopedCssPlugin): its viewport is `data-mfe="<key>"`, its teleported
+ * surfaces `data-portal="<key>"` — every app's utilities stay on that app.
+ */
+const cssScope = ref('')
+provide(CSS_SCOPE_KEY, cssScope)
+const setCssScope = (key: string) => {
+  cssScope.value = key
+  if ($superApp?.state) $superApp.state.activeCssScope = key
+}
+onBeforeUnmount(() => setCssScope(''))
 
 const loadModule = async () => {
   const param = route.params.moduleId
@@ -59,6 +72,7 @@ const loadModule = async () => {
     // 🚀 Retrieve the module's declared entry component
     const component = $superApp.getModuleEntry(baseModuleId)
     if (!component) throw new Error(`Module [${baseModuleId}] loaded but registered no entry component (expected"${baseModuleId}.main" via registerModuleEntry / createMiniApp).`)
+    setCssScope($superApp.getModuleCssScope?.(baseModuleId) ?? baseModuleId)
     EntryComponent.value = markRaw(component)
     
     // 📡 Notify the module about the current sub-path
@@ -87,7 +101,7 @@ watch(() => route.params.moduleId, () => {
     <!-- 🏗️ Standardized Module Frame Wrapper -->
     <template v-if="$c('ModulePageLayout')">
       <component :is="$c('ModulePageLayout')" class="flex-1 w-full h-full min-h-0">
-        <div id="module-viewport" class="flex-1 w-full h-full flex flex-col overflow-hidden min-h-0">
+        <div id="module-viewport" :data-mfe="cssScope || undefined" class="flex-1 w-full h-full flex flex-col overflow-hidden min-h-0">
           <!-- 🛠️ External Module mounts here via SuperApp Dynamic Resolution -->
           <component :is="EntryComponent" v-if="EntryComponent" class="flex-1 w-full h-full min-h-0 flex flex-col" />
         </div>
