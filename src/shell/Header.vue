@@ -121,6 +121,19 @@ const currentApp = computed(() => {
 const showAppNav = computed(() => inApp.value && shellNav.items.length > 0)
 
 /**
+ * Version of the mounted app, from its manifest.json (kernel `loadAppManifest`): a package app's
+ * deployed version; a remote app without one (a dev server) shows "dev".
+ */
+const appVersion = ref('')
+watch(() => [currentApp.value.id, (currentApp.value as any).version], async ([appId]) => {
+  appVersion.value = ''
+  if (!appId || appId === 'default' || typeof $superApp.loadAppManifest !== 'function') return
+  const manifest = await $superApp.loadAppManifest(appId)
+  if (currentApp.value.id !== appId) return
+  appVersion.value = manifest ? String(manifest.version ?? 'dev') : ''
+}, { immediate: true })
+
+/**
  * Band sections: an item without `group` is a tab; items sharing a `group` become ONE tab that opens
  * a dropdown of its pages (first-seen order). The group tab is selected while one of its pages is.
  */
@@ -324,7 +337,10 @@ onMounted(() => {
                     :class="currentApp.id === 'default' ? 'bg-muted text-muted-foreground' : 'bg-primary-soft text-primary'">
                 <component :is="currentApp.icon" :size="16" />
               </span>
-              <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
+              <span class="flex flex-col items-start min-w-0 leading-tight">
+                <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
+                <span v-if="appVersion" class="app-version text-faint font-mono whitespace-nowrap" data-testid="current-app-version">{{ appVersion }}</span>
+              </span>
               <ChevronDown :size="14" class="text-faint group-hover/app:text-foreground transition-colors" />
             </button>
           </template>
@@ -401,6 +417,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* Version under the app name in the switcher: small, from the theme's type scale. */
+.app-version { font-size: var(--text-xs); line-height: 1.1; }
+
 /* ── Menu band ────────────────────────────────────────────────────────────────
    The band is built from the BRAND scale, never from `--gray-*`: `themeConfig`
    regenerates `--brand-50…950` from whatever colour the user picks in Theme
