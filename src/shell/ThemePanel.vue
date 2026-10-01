@@ -39,7 +39,7 @@ const fill = (value: number, min: number, max: number) => `${((value - min) / (m
           <button type="button" class="icon-btn" aria-label="Đóng" @click="config.toggle(false)"><X :size="16" /></button>
         </header>
 
-        <!-- Locked = the platform enforces its look (Admin → Config); only the language stays editable -->
+        <!-- Locked = the platform enforces its look (Admin → Theme); only the language stays editable -->
         <div class="tp-body" :class="{ 'is-locked': config.locked }">
           <div v-if="i18n" class="tp-row tp-lang">
             <span>{{ $t('shell.language') }}</span>

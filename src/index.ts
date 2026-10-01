@@ -1,4 +1,4 @@
-import { defineAsyncComponent, type App } from 'vue';
+import { defineAsyncComponent, watch, type App } from 'vue';
 import type { ISuperApp, ITheme, ThemeServices } from '@nhphero/vue-sapp/contracts';
 import { createAppState } from '@nhphero/vue-sapp';
 import { createMessageService, createDialogService } from './services/ui';
@@ -37,6 +37,13 @@ export class DefaultTheme implements ITheme {
     superApp.$themeConfig = themeConfig;
     app.config.globalProperties.$themeConfig = themeConfig;
     app.provide('$themeConfig', themeConfig);
+
+    // The platform's look (Admin → Theme, `platformConfig.look`) is the base of everyone's theme panel;
+    // re-applied whenever the platform config is (boot, a save in Admin).
+    watch(() => JSON.stringify(superApp.state?.platformConfig?.look ?? null), json => {
+      const look = JSON.parse(json);
+      if (look) themeConfig.useDefaults(look, { enforce: look.enforce === true });
+    }, { immediate: true });
 
     // 🎨 Live theme customization panel (rendered by ThemeConnector) + ⌘K command
     superApp.registerComponent({ id: 'layout.theme-panel', category: 'Shell UI', component: defineAsyncComponent(() => import('./shell/ThemePanel.vue')) });

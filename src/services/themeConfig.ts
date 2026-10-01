@@ -6,7 +6,7 @@ import type { IThemeConfig, ThemeConfigState } from '@nhphero/vue-sapp/contracts
  * Everything is expressed as CSS variables on <html>, so it works for the Shell and every
  * mini app at once. `exportTokens()` gives the CSS to paste into hoff/tokens.css when the look is final.
  *
- * Two layers: the base (the theme defaults, or the platform's look from Admin → Config through
+ * Two layers: the base (the theme defaults, or the platform's look from Admin → Theme through
  * `useDefaults`) and the user's own changes on top. Only those changes go to localStorage, so a later
  * platform change reaches everyone who did not touch that setting.
  */
@@ -164,19 +164,23 @@ export function createThemeConfig(): IThemeConfig {
     for (const k of Object.keys(vars)) remove ? st.removeProperty(k) : st.setProperty(k, `${vars[k]}${unit}`);
   };
 
+  /** A look shown without being saved (`preview`); null = the state. */
+  let previewing: Partial<ThemeConfigState> | null = null;
+
   const apply = () => {
     const el = root();
-    if (state.mode === 'system') el.removeAttribute('data-theme');
-    else el.setAttribute('data-theme', state.mode);
+    const look: ThemeConfigState = previewing ? { ...state, ...previewing } : state;
+    if (look.mode === 'system') el.removeAttribute('data-theme');
+    else el.setAttribute('data-theme', look.mode);
 
-    const sc = state.brand ? brandScale(state.brand) : null;
+    const sc = look.brand ? brandScale(look.brand) : null;
     for (const s of Object.keys(STEPS)) {
       if (sc) el.style.setProperty(`--brand-${s}`, sc[`--brand-${s}`]);
       else el.style.removeProperty(`--brand-${s}`);
     }
 
-    const mText = Number(state.font) || 1;
-    const mSpace = mText * (Number(state.density) || 1);
+    const mText = Number(look.font) || 1;
+    const mSpace = mText * (Number(look.density) || 1);
     const scaled = (base: Record<string, number>, m: number) => Object.fromEntries(Object.entries(base).map(([k, v]) => [k, (v * m).toFixed(1)]));
     setVars(scaled(BASE_TEXT, mText), 'px', mText === 1);
     setVars(scaled(BASE_SPACE, mSpace), 'px', mSpace === 1);
@@ -185,7 +189,7 @@ export function createThemeConfig(): IThemeConfig {
 
     // Page surface. tokens.css reads `--page-surface` / `--page-surface-dark` through
     // var() fallbacks, so one inline value per mode cannot bleed across the other.
-    const surf = SURFACES.find(x => x.id === state.surface) ?? SURFACES[0];
+    const surf = SURFACES.find(x => x.id === look.surface) ?? SURFACES[0];
     if (surf.light) {
       el.style.setProperty('--page-surface', surf.light);
       el.style.setProperty('--page-surface-dark', surf.dark);
@@ -194,16 +198,16 @@ export function createThemeConfig(): IThemeConfig {
       el.style.removeProperty('--page-surface-dark');
     }
 
-    const ff = fontStack(state.fontFamily);
+    const ff = fontStack(look.fontFamily);
     if (ff) el.style.setProperty('--font-sans', ff); else el.style.removeProperty('--font-sans');
 
-    const r = Number.isFinite(state.radius) ? state.radius : RADIUS_DEFAULT;
+    const r = Number.isFinite(look.radius) ? look.radius : RADIUS_DEFAULT;
     setVars(radiusSet(r), 'px', r === RADIUS_DEFAULT);
 
-    const sh = Number.isFinite(state.shadow) ? state.shadow : SHADOW_DEFAULT;
+    const sh = Number.isFinite(look.shadow) ? look.shadow : SHADOW_DEFAULT;
     setVars(shadowSet(sh), '', sh === SHADOW_DEFAULT);
 
-    persist();
+    if (!previewing) persist();
   };
 
   const exportTokens = () => {
@@ -245,6 +249,10 @@ export function createThemeConfig(): IThemeConfig {
       base = { ...THEME_CONFIG_DEFAULTS, ...pick(patch) };
       ui.locked = !!options?.enforce;
       Object.assign(state, base, mine);
+    },
+    preview(look) {
+      previewing = look ? pick(look) : null;
+      apply();
     },
     apply,
     toggle(force) { ui.open = force ?? !ui.open; },
