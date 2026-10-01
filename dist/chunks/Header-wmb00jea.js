@@ -94,11 +94,11 @@ const Je = { class: "w-full bg-background sticky top-0 z-[100] transition-colors
     }, _e = ["superadmin", "admin"], ye = p(() => d?.$policy?.can?.("role", _e) ?? !1), ae = p(() => (R.value.length > 0 ? R.value : [
       { id: "workspace", name: "Workspace Hub", url: "http://localhost:4409", icon: "Globe", description: "Logic Orchestration", isEnabled: !0 },
       { id: "admin", name: "Admin Management", url: "http://localhost:4403", icon: "Shield", description: "Platform Governance", isEnabled: !0 }
-    ]).filter((t) => t.isEnabled !== !1).filter((t) => t.id !== "admin" || ye.value).map((t) => ({
+    ]).filter((t) => t.isEnabled !== !1).filter((t) => (t.code ?? t.id) !== "admin" || ye.value).map((t) => ({
       id: t.id,
       label: t.name,
       // Routes follow the slug (changeable); the id stays the key.
-      path: typeof d.appPath == "function" ? d.appPath(t.id, t.id === "admin" ? "apps" : "") : `/app/${t.slug || t.id}${t.id === "admin" ? "/apps" : ""}`,
+      path: typeof d.appPath == "function" ? d.appPath(t.id, (t.code ?? t.id) === "admin" ? "apps" : "") : `/app/${t.slug || t.id}`,
       icon: be(t.icon),
       detail: t.description || "Micro-Frontend App"
     }))), f = d.getModuleState("shell.nav", { moduleId: "", title: "", icon: null, items: [], active: "", navigate: null }), oe = p(() => H.path.startsWith("/app/")), _ = p(() => {
@@ -203,7 +203,7 @@ const Je = { class: "w-full bg-background sticky top-0 z-[100] transition-colors
               ], 2)),
               b.value.tagline ? (o(), l("span", et, c(b.value.tagline), 1)) : u("", !0)
             ], 64)) : (o(), l(k, { key: 1 }, [
-              t[8] || (t[8] = ze('<div class="relative" data-v-c84cf0f7><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-c84cf0f7><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-c84cf0f7>MP</span></div></div><div class="flex flex-col text-left" data-v-c84cf0f7><span class="text-[11px] font-black uppercase tracking-[0.4em] text-foreground group-hover/logo:text-primary transition-colors leading-none mb-1" data-v-c84cf0f7>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] text-faint" data-v-c84cf0f7>Core OS v5</span></div>', 2))
+              t[8] || (t[8] = ze('<div class="relative" data-v-05175c0b><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-05175c0b><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-05175c0b>MP</span></div></div><div class="flex flex-col text-left" data-v-05175c0b><span class="text-[11px] font-black uppercase tracking-[0.4em] text-foreground group-hover/logo:text-primary transition-colors leading-none mb-1" data-v-05175c0b>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] text-faint" data-v-05175c0b>Core OS v5</span></div>', 2))
             ], 64))
           ], 8, Ze)
         ]),
@@ -542,8 +542,8 @@ const Je = { class: "w-full bg-background sticky top-0 z-[100] transition-colors
       ])
     ]));
   }
-}), as = /* @__PURE__ */ He(Ht, [["__scopeId", "data-v-c84cf0f7"]]);
+}), as = /* @__PURE__ */ He(Ht, [["__scopeId", "data-v-05175c0b"]]);
 export {
   as as default
 };
-//# sourceMappingURL=Header-ByGhRuxb.js.map
+//# sourceMappingURL=Header-wmb00jea.js.map

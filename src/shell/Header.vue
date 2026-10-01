@@ -134,12 +134,12 @@ const apps = computed(() => {
   return rawList
     .filter((a: any) => a.isEnabled !== false)
     // The Admin app is for administrators only — asked of the policy, like every other gate.
-    .filter((a: any) => a.id !== 'admin' || canAdminister.value)
+    .filter((a: any) => (a.code ?? a.id) !== 'admin' || canAdminister.value)
     .map((a: any) => ({
       id: a.id,
       label: a.name,
       // Routes follow the slug (changeable); the id stays the key.
-      path: typeof $superApp.appPath === 'function' ? $superApp.appPath(a.id, a.id === 'admin' ? 'apps' : '') : `/app/${a.slug || a.id}${a.id === 'admin' ? '/apps' : ''}`,
+      path: typeof $superApp.appPath === 'function' ? $superApp.appPath(a.id, (a.code ?? a.id) === 'admin' ? 'apps' : '') : `/app/${a.slug || a.id}`,
       icon: resolveIcon(a.icon),
       detail: a.description || 'Micro-Frontend App'
     }))

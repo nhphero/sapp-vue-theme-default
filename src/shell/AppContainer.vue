@@ -49,8 +49,8 @@ const loadModule = async () => {
     return
   }
 
-  // 🛡️ RBAC: Guard sensitive modules from unauthorized mounting
-  if (baseModuleId === 'admin') {
+  // 🛡️ RBAC: Guard sensitive modules from unauthorized mounting (the admin app: by its code)
+  if (baseModuleId === 'admin' || $superApp.getApp?.(baseModuleId)?.code === 'admin') {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
     if (!['ADMIN', 'SUPERADMIN'].includes(user.role)) {
       console.error('🛡️ [Security] Unauthorized attempt to mount ADMIN module by role:', user.role);
