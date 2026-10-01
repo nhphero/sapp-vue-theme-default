@@ -66,7 +66,9 @@ Mini app dùng được y hệt vì cùng document. Muốn lưu theo user/tenant
 
 ## Header: version của app
 
-Nút chuyển app hiện version dạng badge nhỏ cùng hàng với tên app đang mở (màu lấy theo chữ của thanh, version dài thì cắt bớt), lấy từ `manifest.json` của nguồn hiện tại (`superApp.loadAppManifest(id)`): app package → version đang deploy (ví dụ `v1`, `20261001-103516`); app remote không có version (dev server) → `dev`. Class `.app-version` dùng `var(--text-xs)`.
+Nút chuyển app hiện version dạng badge nhỏ cùng hàng với tên app đang mở (màu lấy theo chữ của thanh, version dài thì cắt bớt), lấy từ `manifest.json` của nguồn hiện tại (`superApp.loadAppManifest(id)`): app package → version đang deploy (ví dụ `v1`, `20261001-103516`); app follow stable → `stable` (version thật trong tooltip); app remote không có version (dev server) → `dev`. Class `.app-version` dùng `var(--text-xs)`.
+
+Trong dropdown chuyển app, **mỗi app (ô trong lưới và pill ở hàng Gần đây) hiện version ngay sau tên** theo cùng quy tắc (`describeVersion`), class `.tile-version` (token `--text-xs`, `--sp-1`). Manifest chỉ nạp khi mở menu lần đầu (kernel cache theo URL), nạp lại khi version của app đổi.
 
 
 ## Header: app gần đây
