@@ -165,15 +165,21 @@ watch(() => currentApp.value.id, (appId) => {
 
 /**
  * Version of the mounted app, from its manifest.json (kernel `loadAppManifest`): a package app's
- * deployed version; a remote app without one (a dev server) shows "dev".
+ * deployed version — "stable" when the app follows its package's stable alias (the real version in
+ * the tooltip); a remote app without one (a dev server) shows "dev".
  */
 const appVersion = ref('')
+const appVersionTitle = ref('')
 watch(() => [currentApp.value.id, (currentApp.value as any).version], async ([appId]) => {
   appVersion.value = ''
+  appVersionTitle.value = ''
   if (!appId || appId === 'default' || typeof $superApp.loadAppManifest !== 'function') return
   const manifest = await $superApp.loadAppManifest(appId)
   if (currentApp.value.id !== appId) return
-  appVersion.value = manifest ? String(manifest.version ?? 'dev') : ''
+  const version = manifest ? String(manifest.version ?? 'dev') : ''
+  const record = $superApp.getRegisteredApps?.().find((a: any) => a.id === appId)
+  appVersion.value = version && record?.channel === 'stable' ? 'stable' : version
+  appVersionTitle.value = appVersion.value === 'stable' ? `stable · ${version}` : version
 }, { immediate: true })
 
 /**
@@ -381,7 +387,7 @@ onMounted(() => {
                 <component :is="currentApp.icon" :size="16" />
               </span>
               <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
-              <span v-if="appVersion" class="app-version" data-testid="current-app-version" :title="appVersion">{{ appVersion }}</span>
+              <span v-if="appVersion" class="app-version" data-testid="current-app-version" :title="appVersionTitle">{{ appVersion }}</span>
               <ChevronDown :size="14" class="text-faint group-hover/app:text-foreground transition-colors" />
             </button>
           </template>
