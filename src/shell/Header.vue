@@ -76,7 +76,7 @@ const recentTiles = (q?: string) => {
   return recentIds.value
     .filter(id => id !== currentApp.value.id)
     .map(id => tiles.value.find((t: any) => t.id === id))
-    .filter((t: any) => t && (!s || `${t.label} ${t.detail || ''} ${t.id}`.toLowerCase().includes(s)))
+    .filter((t): t is NonNullable<typeof t> => !!t && (!s || `${t.label} ${t.detail || ''} ${t.id}`.toLowerCase().includes(s)))
     .slice(0, RECENT_MAX)
 }
 
