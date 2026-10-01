@@ -63,3 +63,8 @@ Mini app dùng được y hệt vì cùng document. Muốn lưu theo user/tenant
 ## Build
 
 `vite build` + `vue-tsc` + copy CSS (`dist/theme.css`, `dist/utilities.css`, `dist/hoff/*.css`). devDependency `@nhphero/vue-sapp` trỏ tới tarball GitHub của `vue-sapp`, nên phải build và push `vue-sapp` trước. Danh sách id component đầy đủ có ở trang *Component* của app documentation.
+
+## Header: version của app
+
+Nút chuyển app hiện version nhỏ dưới tên app đang mở, lấy từ `manifest.json` của nguồn hiện tại (`superApp.loadAppManifest(id)`): app package → version đang deploy (ví dụ `v1`, `20261001-103516`); app remote không có version (dev server) → `dev`. Class `.app-version` dùng `var(--text-xs)`.
+

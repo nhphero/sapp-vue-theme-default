@@ -337,10 +337,8 @@ onMounted(() => {
                     :class="currentApp.id === 'default' ? 'bg-muted text-muted-foreground' : 'bg-primary-soft text-primary'">
                 <component :is="currentApp.icon" :size="16" />
               </span>
-              <span class="flex flex-col items-start min-w-0 leading-tight">
-                <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
-                <span v-if="appVersion" class="app-version text-faint font-mono whitespace-nowrap" data-testid="current-app-version">{{ appVersion }}</span>
-              </span>
+              <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
+              <span v-if="appVersion" class="app-version" data-testid="current-app-version" :title="appVersion">{{ appVersion }}</span>
               <ChevronDown :size="14" class="text-faint group-hover/app:text-foreground transition-colors" />
             </button>
           </template>
@@ -417,8 +415,23 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Version under the app name in the switcher: small, from the theme's type scale. */
-.app-version { font-size: var(--text-xs); line-height: 1.1; }
+/* The mounted app's version, a quiet pill on the same line as its name. Tinted from the chip's own
+   text colour, so it reads on the light plate and on the dark band alike; long versions truncate. */
+.app-version {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  padding: calc(var(--sp-1) * .75) var(--sp-2);
+  border-radius: var(--radius-sm);
+  background: color-mix(in srgb, currentColor 12%, transparent);
+  color: inherit;
+  opacity: .75;
+  max-width: 16ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 
 /* ── Menu band ────────────────────────────────────────────────────────────────
    The band is built from the BRAND scale, never from `--gray-*`: `themeConfig`

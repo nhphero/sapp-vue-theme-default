@@ -472,7 +472,7 @@ class Ne {
     i.config.globalProperties.$message = u, i.config.globalProperties.$appState = n, i.config.globalProperties.$superApp = e, e.$appState = n, e.$themeConfig = s, i.config.globalProperties.$themeConfig = s, i.provide("$themeConfig", s), e.registerComponent({ id: "layout.theme-panel", category: "Shell UI", component: t(() => import("./chunks/ThemePanel-BGYFWrcC.js")) }), e.registerCommand({ id: "theme.customize", name: "Tuỳ chỉnh giao diện", category: "Theme", shortcut: "⌘⇧T", handler: () => s.toggle() }), e.registerCommand({ id: "theme.studio", name: "Theme Studio", description: "Trang tuỳ chỉnh giao diện đầy đủ", category: "Theme", handler: () => {
       e.$router?.push("/system/theme");
     } });
-    const c = t(() => import("./chunks/Header-BhOvxJkN.js"));
+    const c = t(() => import("./chunks/Header-DTIb5xbx.js"));
     e.registerComponent({ id: "Header", category: "Shell UI", component: c }), e.registerComponent({ id: "layout.header", category: "Shell UI", component: c });
     const g = t(() => import("./chunks/Sidebar-CCmpwaOA.js"));
     e.registerComponent({ id: "Sidebar", category: "Shell UI", component: g }), e.registerComponent({ id: "layout.sidebar", category: "Shell UI", component: g });
