@@ -63,7 +63,7 @@
     "@codemirror/search": "^6.5.7",
     "@codemirror/state": "^6.5.1",
     "@codemirror/view": "^6.36.2",
-    "@nhphero/vue-sapp": "https://github.com/nhphero/sapp-vue/archive/3b6e7031c5e74f533616f8de9a6341b300ff9c06.tar.gz",
+    "@nhphero/vue-sapp": "https://github.com/nhphero/sapp-vue/archive/ce99c1ba73f1118734fc2078573028c1f0a94c9a.tar.gz",
     "@types/node": "^20.11.30",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vueuse/core": "10.11.1",
