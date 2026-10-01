@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { appIcon } from '../services/appIcons'
 import { inject, ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { 
@@ -95,23 +96,8 @@ const me = ref<any>(null)
 const workspaces = ref<any[]>([])
 const registeredAppsList = ref<any[]>([])
 
-const iconMap: Record<string, any> = {
-  Shield,
-  Globe,
-  Layers,
-  LayoutGrid,
-  Zap,
-  Box,
-  Cpu,
-  Terminal,
-  AppWindow,
-  Database
-}
-
-const resolveIcon = (iconName?: string) => {
-  if (!iconName) return LayoutGrid
-  return iconMap[iconName] || LayoutGrid
-}
+/** An app's icon by name — the shared set (services/appIcons.ts), the same `form.icon-picker` offers. */
+const resolveIcon = (iconName?: string) => appIcon(iconName)
 
 const loadApps = () => {
   if (typeof $superApp?.getRegisteredApps === 'function') {

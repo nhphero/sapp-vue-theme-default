@@ -101,6 +101,8 @@ export class DefaultTheme implements ITheme {
     superApp.registerComponent({ id: 'form.switch', category: 'Form UI', component: defineAsyncComponent(() => import('./components/input/InputSwitch.vue')) });
     superApp.registerComponent({ id: 'InputSwitch', category: 'Form UI', component: defineAsyncComponent(() => import('./components/input/InputSwitch.vue')) });
     superApp.registerComponent({ id: 'form.textarea', category: 'Form UI', component: defineAsyncComponent(() => import('./components/textarea/Textarea.vue')) });
+    superApp.registerComponent({ id: 'form.icon-picker', category: 'Form UI', component: defineAsyncComponent(() => import('./components/icon-picker/IconPicker.vue')) });
+    superApp.registerComponent({ id: 'ui.app-icon', category: 'UI Blocks', component: defineAsyncComponent(() => import('./components/icon-picker/AppIcon.vue')) });
     // label · control · error/hint — the markup for the `.field` rules in hoff/core.css
     superApp.registerComponent({ id: 'form.field', category: 'Form UI', component: defineAsyncComponent(() => import('./components/form-field/FormField.vue')) });
     superApp.registerComponent({ id: 'ui.modal', category: 'UI Blocks', component: defineAsyncComponent(() => import('./components/modal/Modal.vue')) });
@@ -164,4 +166,5 @@ export { THEME, type ThemeType } from './tokens';
 export { useUiStore } from './store/ui';
 export { createMessageService, createDialogService } from './services/ui';
 export { createThemeConfig, brandScale, SWATCHES, FONT_STACKS, THEME_CONFIG_DEFAULTS } from './services/themeConfig';
+export { APP_ICONS, APP_ICON_NAMES, appIcon } from './services/appIcons';
 export { cn } from './utils';

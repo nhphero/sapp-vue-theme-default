@@ -16,5 +16,6 @@ export { THEME, type ThemeType } from './tokens';
 export { useUiStore } from './store/ui';
 export { createMessageService, createDialogService } from './services/ui';
 export { createThemeConfig, brandScale, SWATCHES, FONT_STACKS, THEME_CONFIG_DEFAULTS } from './services/themeConfig';
+export { APP_ICONS, APP_ICON_NAMES, appIcon } from './services/appIcons';
 export { cn } from './utils';
 //# sourceMappingURL=index.d.ts.map
