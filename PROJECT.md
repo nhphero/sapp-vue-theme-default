@@ -58,7 +58,9 @@ superApp.$themeConfig.reset();
 superApp.$themeConfig.exportTokens();                 // CSS để dán vào hoff/tokens.css khi chốt
 ```
 
-Mini app dùng được y hệt vì cùng document. Muốn lưu theo user/tenant thay vì localStorage: đọc `state` sau `set` và gọi `superApp.doAction('system.variables.set', …)`, rồi `set(saved)` sau khi discovery load.
+Mini app dùng được y hệt vì cùng document.
+
+**Giao diện chung của hệ thống (Admin → Theme).** `register` theo dõi `superApp.state.platformConfig.look` (đến từ `discovery.json`) và gọi `useDefaults(look, { enforce })`: giao diện đó thành nền, localStorage chỉ giữ phần user đổi khác nền, nên admin đổi sau vẫn tới được mọi user chưa chỉnh mục đó. `enforce` = khoá (`locked`): bỏ thay đổi của user, `set`/`reset` không làm gì, ThemePanel và Theme Studio vô hiệu hoá control. `preview(look | null)` áp một giao diện lên trang mà không đổi state/localStorage — trang Admin → Theme dùng khi đang sửa.
 
 ## Build
 
