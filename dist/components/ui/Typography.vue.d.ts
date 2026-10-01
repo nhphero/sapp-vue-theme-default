@@ -12,9 +12,9 @@ type __VLS_Slots = {} & {
 };
 declare const __VLS_component: import("vue").DefineComponent<Props, {}, {}, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").PublicProps, Readonly<Props> & Readonly<{}>, {
     color: "default" | "muted" | "faint" | "primary" | "success" | "warning" | "error" | "danger" | "white";
+    truncate: boolean;
     variant: "h1" | "h2" | "h3" | "h4" | "body" | "small" | "label" | "mono" | "code";
     as: string;
-    truncate: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const _default: __VLS_WithSlots<typeof __VLS_component, __VLS_Slots>;
 export default _default;

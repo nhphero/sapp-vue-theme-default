@@ -47,6 +47,39 @@ const appSections = (q?: string) => {
   return ordered.length ? [{ key: 'apps', label: '', tiles: ordered }] : []
 }
 
+/**
+ * Recently opened apps — the switcher's top row (newest first, at most RECENT_MAX, the open app left
+ * out). Kept per browser in localStorage; every access is guarded (private mode, blocked storage).
+ */
+const RECENT_KEY = 'sapp:recent-apps'
+const RECENT_MAX = 5
+const readRecent = (): string[] => {
+  try {
+    const value = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]')
+    return Array.isArray(value) ? value.filter((id: unknown) => typeof id === 'string') : []
+  } catch {
+    return []
+  }
+}
+const recentIds = ref<string[]>(readRecent())
+const rememberApp = (appId: string) => {
+  // One more than shown: the open app is listed but not displayed.
+  recentIds.value = [appId, ...recentIds.value.filter(id => id !== appId)].slice(0, RECENT_MAX + 1)
+  try {
+    localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds.value))
+  } catch {
+    // storage unavailable — the row just lasts for this page
+  }
+}
+const recentTiles = (q?: string) => {
+  const s = (q || '').trim().toLowerCase()
+  return recentIds.value
+    .filter(id => id !== currentApp.value.id)
+    .map(id => tiles.value.find((t: any) => t.id === id))
+    .filter((t: any) => t && (!s || `${t.label} ${t.detail || ''} ${t.id}`.toLowerCase().includes(s)))
+    .slice(0, RECENT_MAX)
+}
+
 const showAppsMenu = ref(false)
 const setAppsMenu = (open: boolean) => { showAppsMenu.value = open }
 const showUserMenu = ref(false)
@@ -119,6 +152,10 @@ const currentApp = computed(() => {
   return { id: 'default', label: i18n?.t('shell.apps') ?? 'Apps', icon: LayoutGrid }
 })
 const showAppNav = computed(() => inApp.value && shellNav.items.length > 0)
+
+watch(() => currentApp.value.id, (appId) => {
+  if (appId && appId !== 'default') rememberApp(appId)
+}, { immediate: true })
 
 /**
  * Version of the mounted app, from its manifest.json (kernel `loadAppManifest`): a package app's
@@ -345,6 +382,16 @@ onMounted(() => {
 
           <template #content="{ query }">
             <div class="w-[720px] max-w-[calc(100vw-32px)]">
+              <section v-if="recentTiles(query).length" class="recent-apps" data-testid="apps-recent">
+                <div class="pop-head">{{ $t('shell.recent') }}</div>
+                <div class="recent-apps__row">
+                  <button v-for="tile in recentTiles(query)" :key="tile.key" type="button" class="recent-apps__item"
+                          :title="tile.detail" data-testid="recent-app" @click="tile.run()">
+                    <component :is="tile.icon" :size="14" stroke-width="1.75" />
+                    <span class="truncate">{{ tile.label }}</span>
+                  </button>
+                </div>
+              </section>
               <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
               <section v-for="sec in appSections(query)" :key="sec.key" class="pt-1 last:pb-3" :data-testid="`apps-section-${sec.key}`">
               <div v-if="sec.label" class="pop-head flex items-center gap-1.5">{{ sec.label }}<span class="text-faint font-normal">{{ sec.tiles.length }}</span></div>
@@ -415,6 +462,18 @@ onMounted(() => {
 </template>
 
 <style scoped>
+/* Recently opened apps: one row of compact pills above the full list. */
+.recent-apps { padding-top: var(--sp-1); border-bottom: 1px solid var(--border-soft); margin-bottom: var(--sp-1); }
+.recent-apps__row { display: flex; flex-wrap: wrap; gap: var(--sp-1); padding: 0 var(--sp-2) var(--sp-2); }
+.recent-apps__item {
+  display: inline-flex; align-items: center; gap: var(--sp-2); max-width: 22ch;
+  padding: var(--sp-1) var(--sp-3); border-radius: var(--radius); border: 1px solid var(--border-soft);
+  background: var(--card); color: var(--foreground); font-size: var(--text-sm); font-weight: 500;
+  cursor: pointer; transition: background-color var(--dur, .15s) ease, color var(--dur, .15s) ease, border-color var(--dur, .15s) ease;
+}
+.recent-apps__item:hover { background: var(--primary-soft); color: var(--primary); border-color: transparent; }
+.recent-apps__item svg { flex: none; opacity: .8; }
+
 /* The mounted app's version, a quiet pill on the same line as its name. Tinted from the chip's own
    text colour, so it reads on the light plate and on the dark band alike; long versions truncate. */
 .app-version {
