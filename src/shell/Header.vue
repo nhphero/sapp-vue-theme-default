@@ -743,8 +743,9 @@ onMounted(() => {
 .band-group__current { font-weight: 500; opacity: .8; }
 
 /* ── Sidebar layout (#shell-sidebar, rendered by the Shell theme's layout) ─────────────────── */
-.side-switch { padding: var(--sp-3) var(--sp-3) var(--sp-2); }
-.side-switch .app-switch, .side-switch .app-switch > div:first-child { display: flex; width: 100%; }
+.side-switch { width: 100%; padding: var(--sp-3) var(--sp-3) var(--sp-2); }
+.side-switch .app-switch { display: flex; flex: 1; min-width: 0; }
+.side-switch .app-switch > div:first-child { display: flex; flex: 1; min-width: 0; }
 .side-switch .app-chip {
   width: 100%; height: auto; min-height: calc(var(--touch) * 0.95); padding: var(--sp-2);
   border-radius: var(--radius-lg); background: var(--muted);

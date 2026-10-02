@@ -354,7 +354,7 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                   }, null, 8, $t)
                 ], 2))
               ], 64)) : (s(), n(g, { key: 1 }, [
-                a[8] || (a[8] = Be('<div class="relative" data-v-899d8b0d><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-899d8b0d><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-899d8b0d>MP</span></div></div><div class="flex flex-col text-left" data-v-899d8b0d><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-899d8b0d>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-899d8b0d>Core OS v5</span></div>', 2))
+                a[8] || (a[8] = Be('<div class="relative" data-v-f38602b1><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-f38602b1><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-f38602b1>MP</span></div></div><div class="flex flex-col text-left" data-v-f38602b1><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-f38602b1>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-f38602b1>Core OS v5</span></div>', 2))
               ], 64))
             ], 8, xt)
           ]),
@@ -647,8 +647,8 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
       ])) : u("", !0)
     ]));
   }
-}), ya = /* @__PURE__ */ tt(da, [["__scopeId", "data-v-899d8b0d"]]);
+}), ya = /* @__PURE__ */ tt(da, [["__scopeId", "data-v-f38602b1"]]);
 export {
   ya as default
 };
-//# sourceMappingURL=Header-CRdJd2j4.js.map
+//# sourceMappingURL=Header-DBe9I2F9.js.map
