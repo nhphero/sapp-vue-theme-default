@@ -80,13 +80,14 @@
 /* The outer cells line up with a card's content edge (.card-head / .card-body: --sp-4). */
 .table-wrap th:first-child, .table-wrap td:first-child { padding-left: var(--sp-4); }
 .table-wrap th:last-child, .table-wrap td:last-child { padding-right: var(--sp-4); }
-.table-wrap th { padding-top: var(--sp-2); padding-bottom: var(--sp-2); }
+/* Header row and body rows: one control high (tokens.css --control-h, Theme Studio → control size). */
+.table-wrap th, .table-wrap td { height: var(--control-h); }
 .table-wrap td { line-height: 1.35; }
 /* Header carries no fill: it is set apart by weight, case, tracking, colour and a
    heavier rule. `background` stays opaque (the table surface) rather than
    `transparent`, because the header is `position: sticky` — a see-through one
    lets the rows scroll underneath it. */
-.table-wrap th { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: .07em; color: var(--table-head-fg); background: var(--table-head-bg); white-space: nowrap; font-weight: 700; border-bottom: 2px solid var(--border); }
+.table-wrap th { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--table-head-fg); background: var(--table-head-bg); white-space: nowrap; font-weight: 650; border-bottom: 1px solid var(--border); }
 .table-wrap tr:last-child td { border-bottom: 0; }
 .table-wrap tbody tr:hover { background: var(--muted); }
 /* Hàng đang chọn: xám trung tính, pha từ --foreground nên không mang sắc brand.
