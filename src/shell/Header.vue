@@ -4,7 +4,7 @@ import { inject, ref, onMounted, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { 
   User, LayoutGrid, ChevronDown, Building2, LogOut, Zap, Globe, Shield,
-  Layers, Box, Cpu, Terminal, AppWindow, Database, Palette, Check, Star
+  Layers, Box, Cpu, Terminal, AppWindow, Database, Palette, Check, Star, PanelLeftClose, PanelLeftOpen
 } from 'lucide-vue-next'
 import { useRoute } from 'vue-router'
 import { SUPERAPP_EVENTS } from '@nhphero/vue-sapp/contracts'
@@ -12,9 +12,24 @@ import LocaleFlag from '../components/LocaleFlag.vue'
 import UserAvatar from '../components/avatar/UserAvatar.vue'
 
 /**
- * 👑 Header (Antigravity v5 - High Contrast Arctic)
- * Solid white tactical bar for maximum legibility.
+ * 👑 Header — the brand row (app switcher, logo, language, user) and the open app's menu.
+ *
+ * `layout`:
+ * - `band` (default): the menu is a band of tabs under the header.
+ * - `sidebar`: the logo goes left; the app switcher and the menu are teleported into the Shell's
+ *   `#shell-sidebar` element (the Shell theme's layout renders it, left of the page), the menu as a
+ *   vertical list (groups as headings); collapsible to icons (localStorage `sapp:sidebar-collapsed`).
+ *   The `shell.band` controls move to the header's right side.
  */
+const props = withDefaults(defineProps<{ layout?: 'band' | 'sidebar' }>(), { layout: 'band' })
+const sidebar = computed(() => props.layout === 'sidebar')
+const COLLAPSED_KEY = 'sapp:sidebar-collapsed'
+const readCollapsed = () => { try { return localStorage.getItem(COLLAPSED_KEY) === 'true' } catch { return false } }
+const collapsed = ref(readCollapsed())
+const toggleCollapsed = () => {
+  collapsed.value = !collapsed.value
+  try { localStorage.setItem(COLLAPSED_KEY, String(collapsed.value)) } catch { /* storage unavailable — lasts for the page */ }
+}
 const $superApp = inject<any>('$superApp')
 const $s = $superApp
 const router = useRouter()
@@ -314,10 +329,12 @@ onMounted(() => {
   <header class="shell-header w-full transition-colors duration-300">
     <!-- Brand row: the app switcher left, the logo centred, language and user right. Wider than the
          menu row below (its own container), so the logo reads as the platform's and the menu as the app's. -->
-    <div class="shell-header__row shell-header__wide">
+    <div class="shell-header__row shell-header__wide" :class="sidebar && 'is-sidebar'">
       <!-- 📱 App switcher: the app you are in; its pages are the band below. -->
-      <div class="flex items-center min-w-0 justify-self-start">
-        <div class="flex items-center shrink-0 min-w-0">
+      <div class="flex items-center min-w-0 justify-self-start" :class="sidebar && 'hidden'">
+        <!-- sidebar layout: at the top of the sidebar (Teleport renders in place when disabled) -->
+        <Teleport defer to="#shell-sidebar" :disabled="!sidebar">
+        <div class="flex items-center shrink-0 min-w-0" :class="sidebar && ['side-switch', collapsed && 'is-collapsed']">
           <component :is="$c('ui.dropdown')" class="app-switch" :modelValue="showAppsMenu" @update:modelValue="setAppsMenu($event)" search :search-placeholder="$t('shell.searchApps')">
           <template #trigger>
             <!-- 📱 Apps Switcher Button -->
@@ -363,10 +380,10 @@ onMounted(() => {
           </template>
           </component>
         </div>
-
+        </Teleport>
       </div>
 
-      <!-- 🏷️ Logo, centred -->
+      <!-- 🏷️ Logo: centred (band layout), left (sidebar layout) -->
       <div class="flex items-center justify-center min-w-0">
         <div class="flex items-center gap-3 cursor-pointer group/logo" data-testid="brand" :title="branding?.name" @click="router.push(branding?.homePath || '/')">
           <!-- 🏷️ Brand logo from createSapp({ branding }); dark surfaces get the dark variant or a light plate -->
@@ -392,6 +409,10 @@ onMounted(() => {
 
       <!-- 👤 Right Section: User & Actions -->
       <div class="flex items-center gap-2 justify-self-end">
+        <!-- sidebar layout: the controls the band would hold (shell.band), e.g. the navigation history toggle -->
+        <div v-if="sidebar && shellBand.end?.length" class="flex items-center gap-1" data-testid="app-band-end">
+          <component :is="item" v-for="(item, i) in shellBand.end" :key="i" />
+        </div>
         <div class="hidden md:flex items-center gap-1 flex-nowrap shrink-0">
            <!-- 🌐 Language switcher -->
            <component :is="$c('ui.dropdown')" v-if="i18n" :modelValue="showLangMenu" @update:modelValue="showLangMenu = $event" align="right">
@@ -455,7 +476,7 @@ onMounted(() => {
   </header>
 
     <!-- 🧭 App band: the open app's pages (tabs), outside the header block, on the page surface. -->
-    <div class="app-band">
+    <div v-if="!sidebar" class="app-band">
       <div class="page-container flex items-stretch gap-3">
 
         <nav v-if="showAppNav" class="tabs tabs--band min-w-0 overflow-x-auto no-scrollbar" role="tablist" data-testid="app-nav">
@@ -499,6 +520,38 @@ onMounted(() => {
         </div>
       </div>
     </div>
+
+    <!-- 🧭 Sidebar layout: the open app's menu, under the switcher in #shell-sidebar. -->
+    <Teleport v-if="sidebar" defer to="#shell-sidebar">
+      <nav class="side-nav" :class="collapsed && 'is-collapsed'" data-testid="app-nav">
+        <template v-if="showAppNav">
+          <template v-for="section in bandSections" :key="section.group ?? section.item.path">
+            <button v-if="section.group === null" type="button" class="nav-item side-item" :aria-current="shellNav.active === section.item.path ? 'page' : undefined"
+                    :title="collapsed ? section.item.label : undefined" @click="shellNav.navigate?.(section.item.path)">
+              <component :is="section.item.icon" v-if="section.item.icon" />
+              <span v-else class="side-initial">{{ String(section.item.label).charAt(0) }}</span>
+              <span class="side-label">{{ section.item.label }}</span>
+              <span v-if="section.item.badge !== undefined" class="badge side-label">{{ section.item.badge }}</span>
+            </button>
+            <div v-else class="side-group" :data-testid="`app-nav-group-${section.group}`">
+              <div class="nav-group side-label">{{ section.group }}</div>
+              <button v-for="item in section.items" :key="item.path" type="button" class="nav-item side-item" :disabled="item.disabled"
+                      :aria-disabled="item.disabled || undefined" :aria-current="shellNav.active === item.path ? 'page' : undefined"
+                      :title="collapsed ? item.label : undefined" @click="shellNav.navigate?.(item.path)">
+                <component :is="item.icon" v-if="item.icon" />
+                <span v-else class="side-initial">{{ String(item.label).charAt(0) }}</span>
+                <span class="side-label">{{ item.label }}</span>
+              </button>
+            </div>
+          </template>
+        </template>
+      </nav>
+      <button type="button" class="side-collapse" :aria-pressed="collapsed" :title="collapsed ? 'Expand the sidebar' : 'Collapse the sidebar'"
+              data-testid="sidebar-collapse" @click="toggleCollapsed">
+        <component :is="collapsed ? PanelLeftOpen : PanelLeftClose" :size="16" />
+        <span v-if="!collapsed" class="side-label">Collapse</span>
+      </button>
+    </Teleport>
   </div>
 </template>
 
@@ -595,7 +648,11 @@ onMounted(() => {
   box-shadow: var(--shell-header-shadow, var(--header-shadow));
   /* its shadow falls on the menu below */
   position: relative; z-index: 1;
+  /* shell.band controls in the header (sidebar layout) */
+  --app-band-fg: var(--header-fg);
 }
+/* Sidebar layout: logo left, the controls right; full width, like the frame under it. */
+.shell-header__wide.is-sidebar { grid-template-columns: auto minmax(0, 1fr); max-width: none; padding: 0 var(--sp-4); }
 .shell-header__row { height: var(--header-row-h); }
 /* Three columns: the centre (logo) stays centred whatever the sides hold. The row is wider than the
    page container the menu row uses. */
@@ -612,13 +669,15 @@ onMounted(() => {
 .hdr-btn { color: var(--header-muted-fg); }
 .hdr-btn:hover { color: var(--header-fg); background: var(--header-hover-bg); }
 
-.app-band {
-  /* Outside the header block: the menu sits on the page surface, in the page's colours — the
-     `--header-*` its tabs read are reset to the semantic tokens here, whatever the header preset. */
+/* Outside the header block (the band, the sidebar's switcher and menu): the page's colours — the
+   `--header-*` they read are reset to the semantic tokens here, whatever the header preset. */
+.app-band, .side-switch, .side-nav, .side-collapse {
   --header-fg: var(--foreground);        --header-muted-fg: var(--muted-foreground);
   --header-faint: var(--faint);          --header-hover-bg: var(--muted);
   --header-active-bg: var(--primary-soft);  --header-active-fg: var(--primary);
   --header-accent: var(--primary);       --header-border: var(--border-soft);
+}
+.app-band {
   /* controls on it (shell.band) read these */
   --app-band:    var(--shell-band-bg, var(--background));
   --app-band-fg: var(--foreground);
@@ -682,4 +741,44 @@ onMounted(() => {
 
 /* The active page's name after a group label reads quieter than the group itself. */
 .band-group__current { font-weight: 500; opacity: .8; }
+
+/* ── Sidebar layout (#shell-sidebar, rendered by the Shell theme's layout) ─────────────────── */
+.side-switch { padding: var(--sp-3) var(--sp-3) var(--sp-2); }
+.side-switch .app-switch, .side-switch .app-switch > div:first-child { display: flex; width: 100%; }
+.side-switch .app-chip {
+  width: 100%; height: auto; min-height: calc(var(--touch) * 0.95); padding: var(--sp-2);
+  border-radius: var(--radius-lg); background: var(--muted);
+}
+.side-switch .app-chip:hover { background: color-mix(in srgb, var(--primary) 8%, var(--muted)); }
+.side-switch .app-chip > span:nth-child(2) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: left; }
+.side-switch.is-collapsed { padding-inline: var(--sp-2); }
+.side-switch.is-collapsed .app-chip { justify-content: center; padding-inline: 0; }
+.side-switch.is-collapsed .app-chip > :not(:first-child) { display: none; }
+
+.side-nav {
+  flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 2px;
+  padding: var(--sp-1) var(--sp-3) var(--sp-3); scrollbar-width: thin; scrollbar-color: var(--border) transparent;
+}
+.side-group { display: flex; flex-direction: column; gap: 2px; margin-top: var(--sp-3); }
+.side-group .nav-group { padding-bottom: var(--sp-1); }
+.side-item { white-space: nowrap; }
+.side-item .side-label { overflow: hidden; text-overflow: ellipsis; }
+.side-item .badge { margin-left: auto; }
+.side-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+.side-initial {
+  flex: none; display: grid; place-items: center; width: var(--sp-5); height: var(--sp-5); border-radius: var(--radius-sm, 4px);
+  background: var(--muted); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase;
+}
+.side-nav.is-collapsed { padding-inline: var(--sp-2); }
+.side-nav.is-collapsed .side-label { display: none; }
+.side-nav.is-collapsed .side-item { justify-content: center; padding-inline: 0; }
+.side-nav.is-collapsed .side-item[aria-current="page"]::before { display: none; }
+.side-nav.is-collapsed .side-group { margin-top: var(--sp-2); padding-top: var(--sp-2); border-top: 1px solid var(--border-soft); }
+
+.side-collapse {
+  display: flex; align-items: center; gap: var(--sp-2); margin: var(--sp-2); padding: var(--sp-2) var(--sp-3);
+  border: 0; border-radius: var(--radius); background: transparent; color: var(--muted-foreground); font-size: var(--text-xs); cursor: pointer;
+}
+.side-collapse[aria-pressed="true"] { justify-content: center; padding-inline: 0; }
+.side-collapse:hover { background: var(--muted); color: var(--foreground); }
 </style>
