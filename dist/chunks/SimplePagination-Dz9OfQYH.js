@@ -1,20 +1,20 @@
-import { defineComponent as y, inject as w, openBlock as s, createElementBlock as c, createElementVNode as n, toDisplayString as l, createVNode as d, unref as g, withDirectives as P, withKeys as k, isRef as h, vModelText as C, createBlock as p, resolveDynamicComponent as i, withCtx as u, Fragment as S, renderList as V, createTextVNode as N, renderSlot as T } from "vue";
+import { defineComponent as $, inject as y, openBlock as s, createElementBlock as m, createElementVNode as n, toDisplayString as l, createVNode as d, unref as g, withDirectives as h, withKeys as P, isRef as k, vModelText as C, createBlock as p, resolveDynamicComponent as i, withCtx as u, Fragment as S, renderList as V, createTextVNode as N, renderSlot as T } from "vue";
 import { ChevronLeft as B, ChevronRight as j } from "lucide-vue-next";
-const D = { class: "pagination justify-between px-4 py-2 shrink-0 bg-card border-t border-border-soft" }, z = { class: "flex items-center gap-2" }, A = { class: "text-sm text-muted-foreground" }, E = ["disabled"], K = { class: "input sm flex items-center gap-1 w-auto px-2" }, L = { class: "text-sm font-semibold tabular-nums" }, R = ["disabled"], U = { class: "flex items-center gap-2" }, x = { class: "text-sm text-muted-foreground" }, M = /* @__PURE__ */ y({
+const D = { class: "pagination justify-between px-4 py-2 shrink-0 bg-card border-t border-border-soft" }, z = { class: "flex items-center gap-2" }, A = { class: "text-sm text-muted-foreground whitespace-nowrap" }, E = ["disabled"], K = { class: "input sm flex items-center gap-1 w-auto px-2" }, L = { class: "text-sm font-semibold tabular-nums" }, R = ["disabled"], U = { class: "flex items-center gap-2" }, x = { class: "text-sm text-muted-foreground whitespace-nowrap" }, M = /* @__PURE__ */ $({
   __name: "SimplePagination",
   props: {
     source: {}
   },
   setup(b) {
-    const r = b, f = w("$superApp"), { ref: v, watch: $ } = f.$vue, a = v(r.source.pagination.page);
-    $(() => r.source.pagination.page, (e) => {
+    const r = b, f = y("$superApp"), { ref: v, watch: w } = f.$vue, a = v(r.source.pagination.page);
+    w(() => r.source.pagination.page, (e) => {
       a.value = e;
     });
-    const m = () => {
+    const c = () => {
       const e = Number(a.value);
       e >= 1 && e <= r.source.pagination.totalPages ? r.source.setPage(e) : a.value = r.source.pagination.page;
     };
-    return (e, t) => (s(), c("div", D, [
+    return (e, t) => (s(), m("div", D, [
       n("div", z, [
         n("span", A, l(e.$t("common.page")), 1),
         n("button", {
@@ -27,11 +27,11 @@ const D = { class: "pagination justify-between px-4 py-2 shrink-0 bg-card border
           d(g(B), { size: 14 })
         ], 8, E),
         n("div", K, [
-          P(n("input", {
+          h(n("input", {
             type: "number",
-            "onUpdate:modelValue": t[1] || (t[1] = (o) => h(a) ? a.value = o : null),
-            onKeydown: k(m, ["enter"]),
-            onBlur: m,
+            "onUpdate:modelValue": t[1] || (t[1] = (o) => k(a) ? a.value = o : null),
+            onKeydown: P(c, ["enter"]),
+            onBlur: c,
             class: "w-8 bg-transparent border-0 outline-none text-center text-sm font-semibold text-primary tabular-nums p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
           }, null, 544), [
             [C, g(a)]
@@ -64,7 +64,7 @@ const D = { class: "pagination justify-between px-4 py-2 shrink-0 bg-card border
             })),
             (s(), p(i(e.$c("form.select-content")), null, {
               default: u(() => [
-                (s(), c(S, null, V([20, 50, 100, 200, 500], (o) => d(i(e.$c("form.select-item")), {
+                (s(), m(S, null, V([20, 50, 100, 200, 500], (o) => d(i(e.$c("form.select-item")), {
                   key: o,
                   value: String(o)
                 }, {
@@ -87,4 +87,4 @@ const D = { class: "pagination justify-between px-4 py-2 shrink-0 bg-card border
 export {
   M as default
 };
-//# sourceMappingURL=SimplePagination-DkesrVwv.js.map
+//# sourceMappingURL=SimplePagination-Dz9OfQYH.js.map

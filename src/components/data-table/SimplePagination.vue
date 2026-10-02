@@ -21,7 +21,7 @@ const jumpToPage = () => {
 <template>
   <div class="pagination justify-between px-4 py-2 shrink-0 bg-card border-t border-border-soft">
     <div class="flex items-center gap-2">
-      <span class="text-sm text-muted-foreground">{{ $t('common.page') }}</span>
+      <span class="text-sm text-muted-foreground whitespace-nowrap">{{ $t('common.page') }}</span>
       <button type="button" class="btn icon sm" aria-label="Trang trước"
         :disabled="source.pagination.page <= 1 || source.pagination.loading"
         @click="source.setPage(source.pagination.page - 1)">
@@ -41,7 +41,7 @@ const jumpToPage = () => {
     </div>
 
     <div class="flex items-center gap-2">
-      <span class="text-sm text-muted-foreground">{{ $t('common.perPage') }}</span>
+      <span class="text-sm text-muted-foreground whitespace-nowrap">{{ $t('common.perPage') }}</span>
       <component :is="$c('form.select')" :modelValue="String(source.pagination.pageSize)" @update:modelValue="(v: string) => source.setPageSize(Number(v))">
         <component :is="$c('form.select-trigger')" class="control-sm">
           <component :is="$c('form.select-value')" />
