@@ -71,11 +71,15 @@
 /* ── table (scoped to .table-wrap so foreign tables are untouched) ─ */
 /* Bảng là một card: ngoài viền còn cần bóng đổ để tách khỏi nền trang, nếu không
    nó chỉ là một hình chữ nhật trắng nằm cạnh các hình chữ nhật trắng khác. */
-.table-wrap { overflow-x: auto; border: 1px solid var(--border-soft); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-sm); }
+/* The table's own card: the same surface as `.card` (radius, border, shadow), so a table and a card sit alike. */
+.table-wrap { overflow-x: auto; border: 1px solid var(--border-soft); border-radius: var(--radius-lg); background: var(--card); box-shadow: var(--shadow); }
 .table-wrap table { border-collapse: collapse; width: 100%; font-size: var(--text-sm); }
 /* Hàng compact: một dòng một bản ghi. Padding lấy từ --sp-* nên vẫn co theo mật độ
    trong Theme Studio; th giữ padding cũ để dải tiêu đề không bị bóp. */
 .table-wrap th, .table-wrap td { text-align: left; padding: var(--sp-1) var(--sp-3); border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
+/* The outer cells line up with a card's content edge (.card-head / .card-body: --sp-4). */
+.table-wrap th:first-child, .table-wrap td:first-child { padding-left: var(--sp-4); }
+.table-wrap th:last-child, .table-wrap td:last-child { padding-right: var(--sp-4); }
 .table-wrap th { padding-top: var(--sp-2); padding-bottom: var(--sp-2); }
 .table-wrap td { line-height: 1.35; }
 /* Header carries no fill: it is set apart by weight, case, tracking, colour and a
