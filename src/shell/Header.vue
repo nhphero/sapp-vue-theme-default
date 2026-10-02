@@ -615,8 +615,6 @@ onMounted(() => {
   background: transparent;
   border: 0;
 }
-/* A hairline parts the two rows, inset to the container so it lines up with the content. */
-.app-band .page-container { border-top: 1px solid var(--header-border); }
 .app-band .page-container { height: var(--header-band-h); }
 
 /* The switcher names the app, right after the logo: plain text on the brand row (a plate on hover),

@@ -1,10 +1,10 @@
-import { defineComponent as De, inject as Ne, computed as p, ref as _, watch as j, onMounted as Oe, openBlock as n, createElementBlock as l, createElementVNode as a, createBlock as m, resolveDynamicComponent as h, withCtx as y, toDisplayString as d, createCommentVNode as u, Fragment as k, renderList as C, createTextVNode as H, withKeys as Ue, withModifiers as G, createVNode as f, unref as i, normalizeClass as J, createStaticVNode as Re } from "vue";
+import { defineComponent as De, inject as Ne, computed as p, ref as _, watch as j, onMounted as Oe, openBlock as n, createElementBlock as l, createElementVNode as a, createBlock as m, resolveDynamicComponent as h, withCtx as y, toDisplayString as c, createCommentVNode as u, Fragment as k, renderList as C, createTextVNode as H, withKeys as Ue, withModifiers as G, createVNode as f, unref as i, normalizeClass as J, createStaticVNode as Re } from "vue";
 import { appIcon as je } from "../index.js";
 import { useRouter as Ie, useRoute as Te } from "vue-router";
 import { LayoutGrid as ie, Star as Pe, ChevronDown as I, Check as re, User as Ke, Palette as Fe, LogOut as Be } from "lucide-vue-next";
 import { SUPERAPP_EVENTS as He } from "@nhphero/vue-sapp/contracts";
-import { _ as ce } from "./LocaleFlag.vue_vue_type_script_setup_true_lang-D2eeZNym.js";
-import { _ as de } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
+import { _ as de } from "./LocaleFlag.vue_vue_type_script_setup_true_lang-D2eeZNym.js";
+import { _ as ce } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
 import { _ as Ge } from "./_plugin-vue_export-helper-CHgC5LLL.js";
 const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors duration-300" }, We = { class: "shell-header__row shell-header__wide" }, Ye = { class: "flex items-center min-w-0 justify-self-start" }, Qe = { class: "flex items-center shrink-0 min-w-0" }, Xe = ["title", "aria-label"], Ze = {
   class: "text-sm font-semibold text-foreground whitespace-nowrap",
@@ -15,7 +15,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
 }, at = ["data-testid"], nt = {
   key: 0,
   class: "pop-head flex items-center gap-1.5"
-}, ot = { class: "text-faint font-normal" }, lt = { class: "apps-list" }, it = ["aria-current", "onClick", "onKeydown"], rt = { class: "apps-item__icon" }, ct = { class: "apps-item__text" }, dt = { class: "apps-item__name" }, ut = { class: "truncate" }, pt = ["title"], mt = ["title"], vt = ["aria-pressed", "aria-label", "onClick"], ht = { class: "flex items-center justify-center min-w-0" }, ft = ["title"], gt = ["src", "alt"], bt = ["src", "alt"], _t = { class: "flex items-center gap-2 justify-self-end" }, yt = { class: "hidden md:flex items-center gap-1 flex-nowrap shrink-0" }, kt = ["title", "aria-label"], wt = { class: "w-52" }, xt = { class: "pop-head" }, $t = ["aria-selected", "onClick"], St = { class: "flex items-center gap-2.5" }, At = {
+}, ot = { class: "text-faint font-normal" }, lt = { class: "apps-list" }, it = ["aria-current", "onClick", "onKeydown"], rt = { class: "apps-item__icon" }, dt = { class: "apps-item__text" }, ct = { class: "apps-item__name" }, ut = { class: "truncate" }, pt = ["title"], mt = ["title"], vt = ["aria-pressed", "aria-label", "onClick"], ht = { class: "flex items-center justify-center min-w-0" }, ft = ["title"], gt = ["src", "alt"], bt = ["src", "alt"], _t = { class: "flex items-center gap-2 justify-self-end" }, yt = { class: "hidden md:flex items-center gap-1 flex-nowrap shrink-0" }, kt = ["title", "aria-label"], wt = { class: "w-52" }, xt = { class: "pop-head" }, $t = ["aria-selected", "onClick"], St = { class: "flex items-center gap-2.5" }, At = {
   type: "button",
   class: "h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hdr-btn cursor-pointer transition-colors outline-none",
   "data-testid": "user-menu"
@@ -56,9 +56,9 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
       try {
         const e = JSON.parse(localStorage.getItem(ue) || "null");
         if (e && typeof e == "object" && !Array.isArray(e))
-          return Object.fromEntries(Object.entries(e).filter(([, c]) => typeof c == "number"));
+          return Object.fromEntries(Object.entries(e).filter(([, d]) => typeof d == "number"));
         const t = JSON.parse(localStorage.getItem(pe) || "[]"), s = Date.now();
-        return Array.isArray(t) ? Object.fromEntries(t.filter((c) => typeof c == "string").map((c, o) => [c, s - o * 1e3])) : {};
+        return Array.isArray(t) ? Object.fromEntries(t.filter((d) => typeof d == "string").map((d, o) => [d, s - o * 1e3])) : {};
       } catch {
         return {};
       }
@@ -126,7 +126,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
           e.push({ group: null, item: t });
           continue;
         }
-        const s = e.find((c) => c.group === t.group);
+        const s = e.find((d) => d.group === t.group);
         s ? (s.items.push(t), s.icon ??= t.groupIcon) : e.push({ group: t.group, icon: t.groupIcon, items: [t] });
       }
       return e;
@@ -201,13 +201,13 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                   }, [
                     (n(), m(h(x.value.icon), { size: 16 }))
                   ], 2),
-                  a("span", Ze, d(x.value.label), 1),
+                  a("span", Ze, c(x.value.label), 1),
                   U.value ? (n(), l("span", {
                     key: 0,
                     class: "app-version",
                     "data-testid": "current-app-version",
                     title: K.value
-                  }, d(U.value), 9, qe)) : u("", !0),
+                  }, c(U.value), 9, qe)) : u("", !0),
                   f(i(I), {
                     size: 14,
                     class: "text-faint group-hover/app:text-foreground transition-colors"
@@ -217,18 +217,18 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
               content: y(({ query: s }) => [
                 a("div", et, [
                   a("div", tt, [
-                    X(s).length ? u("", !0) : (n(), l("div", st, d(e.$t("common.empty")), 1)),
-                    (n(!0), l(k, null, C(X(s), (c) => (n(), l("section", {
-                      key: c.key,
+                    X(s).length ? u("", !0) : (n(), l("div", st, c(e.$t("common.empty")), 1)),
+                    (n(!0), l(k, null, C(X(s), (d) => (n(), l("section", {
+                      key: d.key,
                       class: "pt-1 last:pb-3",
-                      "data-testid": `apps-section-${c.key}`
+                      "data-testid": `apps-section-${d.key}`
                     }, [
-                      c.label ? (n(), l("div", nt, [
-                        H(d(c.label), 1),
-                        a("span", ot, d(c.tiles.length), 1)
+                      d.label ? (n(), l("div", nt, [
+                        H(c(d.label), 1),
+                        a("span", ot, c(d.tiles.length), 1)
                       ])) : u("", !0),
                       a("div", lt, [
-                        (n(!0), l(k, null, C(c.tiles, (o) => (n(), l("div", {
+                        (n(!0), l(k, null, C(d.tiles, (o) => (n(), l("div", {
                           key: o.key,
                           role: "button",
                           tabindex: "0",
@@ -243,15 +243,15 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                               "stroke-width": "1.75"
                             }))
                           ]),
-                          a("span", ct, [
-                            a("span", dt, [
-                              a("span", ut, d(o.label), 1),
+                          a("span", dt, [
+                            a("span", ct, [
+                              a("span", ut, c(o.label), 1),
                               V.value[o.id] ? (n(), l("span", {
                                 key: 0,
                                 class: "tile-version",
                                 title: V.value[o.id].title,
                                 "data-testid": "tile-version"
-                              }, d(V.value[o.id].label), 9, pt)) : u("", !0)
+                              }, c(V.value[o.id].label), 9, pt)) : u("", !0)
                             ])
                           ]),
                           Z(o.id) ? (n(), l("span", {
@@ -259,7 +259,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                             class: "apps-item__used",
                             title: new Date(S.value[o.id]).toLocaleString(),
                             "data-testid": "tile-last-used"
-                          }, d(Z(o.id)), 9, mt)) : u("", !0),
+                          }, c(Z(o.id)), 9, mt)) : u("", !0),
                           a("button", {
                             type: "button",
                             class: "icon-btn apps-item__star",
@@ -307,7 +307,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                 }, null, 8, bt)
               ], 2))
             ], 64)) : (n(), l(k, { key: 1 }, [
-              t[8] || (t[8] = Re('<div class="relative" data-v-0b61cebe><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-0b61cebe><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-0b61cebe>MP</span></div></div><div class="flex flex-col text-left" data-v-0b61cebe><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-0b61cebe>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-0b61cebe>Core OS v5</span></div>', 2))
+              t[8] || (t[8] = Re('<div class="relative" data-v-af45a99d><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-af45a99d><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-af45a99d>MP</span></div></div><div class="flex flex-col text-left" data-v-af45a99d><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-af45a99d>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-af45a99d>Core OS v5</span></div>', 2))
             ], 64))
           ], 8, ft)
         ]),
@@ -327,7 +327,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                   "aria-label": e.$t("shell.language"),
                   "data-testid": "lang-switch"
                 }, [
-                  f(ce, {
+                  f(de, {
                     locale: i($).locale,
                     size: 20
                   }, null, 8, ["locale"]),
@@ -339,20 +339,20 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
               ]),
               content: y(() => [
                 a("div", wt, [
-                  a("div", xt, d(e.$t("shell.language")), 1),
+                  a("div", xt, c(e.$t("shell.language")), 1),
                   (n(!0), l(k, null, C(i($).availableLocales, (s) => (n(), l("button", {
                     key: s,
                     type: "button",
                     class: "pop-item justify-between whitespace-nowrap",
                     "aria-selected": i($).locale === s,
-                    onClick: (c) => fe(s)
+                    onClick: (d) => fe(s)
                   }, [
                     a("span", St, [
-                      f(ce, {
+                      f(de, {
                         locale: s,
                         size: 22
                       }, null, 8, ["locale"]),
-                      a("span", null, d(he[s] ?? s), 1)
+                      a("span", null, c(he[s] ?? s), 1)
                     ]),
                     i($).locale === s ? (n(), m(i(re), {
                       key: 0,
@@ -373,8 +373,8 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
           }, {
             trigger: y(() => [
               a("button", At, [
-                a("span", Ct, d(v.value?.username || "User"), 1),
-                f(de, {
+                a("span", Ct, c(v.value?.username || "User"), 1),
+                f(ce, {
                   src: v.value?.avatar,
                   name: v.value?.username || "User",
                   size: 28,
@@ -389,15 +389,15 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
             content: y(() => [
               a("div", Lt, [
                 a("div", zt, [
-                  f(de, {
+                  f(ce, {
                     src: v.value?.avatar,
                     name: v.value?.username || "User",
                     size: 36,
                     rounded: "lg"
                   }, null, 8, ["src", "name"]),
                   a("div", Et, [
-                    a("div", Vt, d(v.value?.username), 1),
-                    a("div", Mt, d(v.value?.email || v.value?.role), 1)
+                    a("div", Vt, c(v.value?.username), 1),
+                    a("div", Mt, c(v.value?.email || v.value?.role), 1)
                   ])
                 ]),
                 a("button", {
@@ -412,7 +412,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                     size: 15,
                     class: "text-muted-foreground"
                   }),
-                  a("span", null, d(e.$t("shell.profile")), 1)
+                  a("span", null, c(e.$t("shell.profile")), 1)
                 ]),
                 a("button", {
                   type: "button",
@@ -425,7 +425,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                     size: 15,
                     class: "text-muted-foreground"
                   }),
-                  a("span", null, d(e.$t("system.themeStudio", { default: "Theme Studio" })), 1)
+                  a("span", null, c(e.$t("system.themeStudio", { default: "Theme Studio" })), 1)
                 ]),
                 t[9] || (t[9] = a("div", { class: "pop-sep" }, null, -1)),
                 a("button", {
@@ -434,7 +434,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                   onClick: Ve
                 }, [
                   f(i(Be), { size: 15 }),
-                  a("span", null, d(e.$t("shell.logout")), 1)
+                  a("span", null, c(e.$t("shell.logout")), 1)
                 ])
               ])
             ]),
@@ -456,20 +456,20 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                 "aria-selected": i(g).active === s.item.path,
                 onMousedown: t[6] || (t[6] = G(() => {
                 }, ["prevent"])),
-                onClick: (c) => i(g).navigate?.(s.item.path)
+                onClick: (d) => i(g).navigate?.(s.item.path)
               }, [
                 s.item.icon ? (n(), m(h(s.item.icon), {
                   key: 0,
                   size: 13
                 })) : u("", !0),
-                H(" " + d(s.item.label) + " ", 1),
-                s.item.badge !== void 0 ? (n(), l("span", Rt, d(s.item.badge), 1)) : u("", !0)
+                H(" " + c(s.item.label) + " ", 1),
+                s.item.badge !== void 0 ? (n(), l("span", Rt, c(s.item.badge), 1)) : u("", !0)
               ], 40, Ut)) : (n(), m(h(e.$c("ui.popover")), {
                 key: 1,
                 class: "band-group",
                 align: "start"
               }, {
-                default: y(({ close: c }) => [
+                default: y(({ close: d }) => [
                   (n(), m(h(e.$c("ui.popover-trigger")), { class: "band-group__trigger" }, {
                     default: y(() => [
                       a("button", {
@@ -486,8 +486,8 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                           key: 0,
                           size: 13
                         })) : u("", !0),
-                        H(" " + d(s.group) + " ", 1),
-                        F(s.items) ? (n(), l("span", It, "· " + d(F(s.items).label), 1)) : u("", !0),
+                        H(" " + c(s.group) + " ", 1),
+                        F(s.items) ? (n(), l("span", It, "· " + c(F(s.items).label), 1)) : u("", !0),
                         f(i(I), { size: 12 })
                       ], 40, jt)
                     ]),
@@ -508,7 +508,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                           disabled: o.disabled,
                           "aria-disabled": o.disabled || void 0,
                           onClick: (b) => {
-                            c(), i(g).navigate?.(o.path);
+                            d(), i(g).navigate?.(o.path);
                           }
                         }, [
                           o.icon ? (n(), m(h(o.icon), {
@@ -516,7 +516,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                             size: 15,
                             class: "text-muted-foreground"
                           })) : u("", !0),
-                          a("span", Kt, d(o.label), 1),
+                          a("span", Kt, c(o.label), 1),
                           i(g).active === o.path ? (n(), m(i(re), {
                             key: 1,
                             size: 14,
@@ -533,14 +533,14 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
             ], 64))), 128))
           ])) : u("", !0),
           i(te).end?.length ? (n(), l("div", Ft, [
-            (n(!0), l(k, null, C(i(te).end, (s, c) => (n(), m(h(s), { key: c }))), 128))
+            (n(!0), l(k, null, C(i(te).end, (s, d) => (n(), m(h(s), { key: d }))), 128))
           ])) : u("", !0)
         ])
       ])
     ]));
   }
-}), ts = /* @__PURE__ */ Ge(Bt, [["__scopeId", "data-v-0b61cebe"]]);
+}), ts = /* @__PURE__ */ Ge(Bt, [["__scopeId", "data-v-af45a99d"]]);
 export {
   ts as default
 };
-//# sourceMappingURL=Header-BFHOpJgR.js.map
+//# sourceMappingURL=Header-BVT0aoRe.js.map
