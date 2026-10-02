@@ -578,8 +578,9 @@ onMounted(() => {
 /* The header is one block: brand row and app band on the same surface, one edge below them. */
 .shell-header {
   background: var(--card);
-  border-bottom: 1px solid var(--border-soft);
-  box-shadow: var(--shadow-sm);
+  /* No lines: one soft shadow below. A Shell theme that adds a bar under the header (navigation
+     history) moves the shadow below that bar instead: `--shell-header-shadow: none`. */
+  box-shadow: var(--shell-header-shadow, var(--shadow-sm));
 }
 .app-band {
   /* The band sits on the header's surface: ink and surface come from it, the menu's state from the brand. */
@@ -588,13 +589,12 @@ onMounted(() => {
 
   background: transparent;
   border: 0;
-  border-top: 1px solid var(--border-soft);
 }
 
 /* A full header-height band: the menu is the app's main navigation and needs room to breathe. */
 .app-band .page-container { min-height: var(--header-h); }
 
-.app-band__sep { background: var(--border-soft); }
+.app-band__sep { display: none; }
 
 /* Switcher owns the band — it names the app the tabs belong to, so it stays the
    heavier item. Its icon chip is glass rather than `--primary-soft`: a near-white
@@ -608,7 +608,6 @@ onMounted(() => {
   height: 100%;
   padding: 0 var(--sp-3) 0 var(--sp-2);
   border: 0;
-  border-inline: 1px solid var(--border-soft);
   border-radius: 0;
   background: var(--muted);
 }
