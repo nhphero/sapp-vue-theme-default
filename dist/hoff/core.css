@@ -27,6 +27,47 @@
 .section-header .title { font-size: var(--text-xs); font-weight: 700; text-transform: uppercase;
   letter-spacing: var(--tracking-wide); color: var(--muted-foreground); }
 
+/* ── page surface — one model for every page (rules: ui.md "Surfaces") ──────────────────────
+   On the page surface (--background) sit only: the page head, toolbars / filter chips, and cards.
+   Every block of content is a `.card` (one surface, one border, one shadow); a tint is only ever
+   an `.alert`; sunken bits inside a card (code, ids) are `--muted`. */
+
+/* Page head: icon, title, one line of context, actions right — no surface of its own. */
+.page-head { display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap; }
+.page-head__icon { flex: none; display: grid; place-items: center; width: calc(var(--touch) * 0.9); height: calc(var(--touch) * 0.9);
+  border-radius: var(--radius-lg); background: var(--primary-soft); color: var(--primary); }
+.page-head__text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.page-head__title { margin: 0; font-size: var(--text-xl); font-weight: 650; line-height: 1.25; color: var(--foreground); }
+.page-head__sub { font-size: var(--text-sm); color: var(--muted-foreground); }
+.page-head__actions { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
+
+/* A card whose content runs to its edges (a table, a section header, a list): no padding. */
+.card.flush { padding: 0; overflow: hidden; }
+.card-head { display: flex; align-items: center; gap: var(--sp-3); padding: var(--sp-3) var(--sp-4); border-bottom: 1px solid var(--border-soft); }
+.card-head .title { font-size: var(--text-base); font-weight: 650; color: var(--foreground); }
+.card-head .sub { font-size: var(--text-sm); color: var(--muted-foreground); }
+.card-head .spacer { flex: 1; }
+.card-body { padding: var(--sp-4); }
+
+/* Stat cards: label over value, an optional icon right in the stat's tone. */
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(22ch, 1fr)); gap: var(--sp-4); }
+.card.stat { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); min-width: 0; }
+.stat__icon { flex: none; display: grid; place-items: center; width: calc(var(--touch) * 0.85); height: calc(var(--touch) * 0.85);
+  border-radius: var(--radius); background: var(--muted); color: var(--muted-foreground); }
+.stat.ok .stat__icon { background: var(--success-soft); color: var(--success); }
+.stat.warn .stat__icon { background: var(--warning-soft); color: var(--warning); }
+.stat.danger .stat__icon { background: var(--danger-soft); color: var(--danger); }
+.stat.info .stat__icon { background: var(--info-soft); color: var(--info); }
+
+/* Filter chips: one toggle group above a list (`aria-pressed` / `aria-selected` marks the active one). */
+.filter-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.filter-chip { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: calc(var(--touch) * 0.8); padding: 0 var(--sp-3);
+  border: 1px solid var(--border-soft); border-radius: 999px; background: var(--card); color: var(--muted-foreground);
+  font-size: var(--text-sm); font-weight: 500; cursor: pointer; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
+.filter-chip:hover { color: var(--foreground); border-color: var(--border); }
+.filter-chip[aria-pressed="true"], .filter-chip[aria-selected="true"] { background: var(--primary-soft); border-color: transparent; color: var(--primary); }
+.filter-chip .count { font-variant-numeric: var(--tabular); opacity: .7; }
+
 /* ── table (scoped to .table-wrap so foreign tables are untouched) ─ */
 /* Bảng là một card: ngoài viền còn cần bóng đổ để tách khỏi nền trang, nếu không
    nó chỉ là một hình chữ nhật trắng nằm cạnh các hình chữ nhật trắng khác. */
