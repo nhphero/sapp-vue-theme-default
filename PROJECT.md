@@ -103,3 +103,7 @@ Dropdown chuyển app là **một cột, mỗi dòng một app** (icon, tên, ve
 - `ui.app-icon` — `<component :is="$c('ui.app-icon')" name="Database" :size="16" />`.
 - `form.icon-picker` — `v-model` = tên icon; trigger giống `.input` (icon + tên), panel có ô tìm (gõ `bookopen` hay `book open` đều ra `BookOpen`) + lưới icon, Enter chọn kết quả đầu, Esc đóng. Panel teleport ra `<body>` (fixed, như form.select) nên không bị modal cắt, mang `data-portal` (CSS scope của app).
 
+## Header: điểm cắm `shell.band`, và chạy trong cache route
+
+- Cuối dải app, Header render các component trong module state **`shell.band`** (`end: Component[]`, theo thứ tự) — Shell theme đặt control của mình ở đó (theme dashboard: nút lịch sử điều hướng).
+- `AppContainer` chạy được trong `<KeepAlive>` (một container mỗi app): khi ẩn bỏ qua mọi đổi route (trang khác / app khác — chỉ phản ứng với route có slug nó được mount); khi hiện lại lấy lại CSS scope của app và `runPathAction` sub-path hiện tại. `MiniAppLayout` `onActivated` publish lại menu lên dải header (`shell.nav`).
