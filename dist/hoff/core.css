@@ -87,7 +87,7 @@
    heavier rule. `background` stays opaque (the table surface) rather than
    `transparent`, because the header is `position: sticky` — a see-through one
    lets the rows scroll underneath it. */
-.table-wrap th { font-size: var(--text-xs); text-transform: uppercase; letter-spacing: var(--tracking-wide); color: var(--table-head-fg); background: var(--table-head-bg); white-space: nowrap; font-weight: 650; border-bottom: 1px solid var(--border); }
+.table-wrap th { font-size: var(--text-sm); font-weight: 600; color: var(--table-head-fg); background: var(--table-head-bg); white-space: nowrap; border-bottom: 1px solid var(--border); }
 .table-wrap tr:last-child td { border-bottom: 0; }
 .table-wrap tbody tr:hover { background: var(--muted); }
 /* Hàng đang chọn: xám trung tính, pha từ --foreground nên không mang sắc brand.

@@ -621,7 +621,7 @@ const headerMenuOptions = computed(() => [
               @contextmenu.prevent="handleHeaderContextMenu($event, col)"
             >
               <div class="flex items-center justify-between gap-2 w-full">
-                <!-- clean: size/weight/colour come from `.table-wrap th` (--text-xs, 700,
+                <!-- clean: size/weight/colour come from `.table-wrap th` (--text-sm, 600,
                      --table-head-fg). The old hardcoded `text-xs font-medium` overrode the
                      token and left the header greyed out and two sizes too small. -->
                 <span 

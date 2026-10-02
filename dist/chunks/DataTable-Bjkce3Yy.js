@@ -591,8 +591,8 @@ const We = ["data-variant"], qe = { class: "flex items-center gap-4" }, Ge = { c
       }, null, 8, ["options"]))
     ], 10, We));
   }
-}), Ot = /* @__PURE__ */ Ye(Tt, [["__scopeId", "data-v-b3570c41"]]);
+}), Ot = /* @__PURE__ */ Ye(Tt, [["__scopeId", "data-v-9e4136e0"]]);
 export {
   Ot as default
 };
-//# sourceMappingURL=DataTable-BDouONVY.js.map
+//# sourceMappingURL=DataTable-Bjkce3Yy.js.map

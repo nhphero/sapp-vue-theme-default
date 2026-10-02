@@ -125,7 +125,7 @@
      --secondary là màu của một BỀ MẶT rộng (dải menu) nên phải trầm và nhạt, còn
      mực chữ cần đậm. Buộc chung một token thì mỗi lần chỉnh dải menu là header bảng
      lại phai theo. */
-  --table-head-bg: var(--muted);  --table-head-fg: var(--brand-900);
+  --table-head-bg: var(--card);  --table-head-fg: var(--muted-foreground);   /* plain head: the rows' surface, quiet ink */
   --z-sticky: 30; --z-overlay: 40; --z-modal: 50; --z-toast: 60;
 
   /* ═══ ALIAS CŨ — tương thích bản trước, sẽ bỏ; đừng dùng cho UI mới ═ */
@@ -149,7 +149,7 @@
     --secondary-hover: color-mix(in srgb, var(--brand-600) 40%, var(--gray-600));
     --secondary-foreground: var(--gray-100);
     --secondary-soft: var(--brand-950);
-    --table-head-bg: var(--muted); --table-head-fg: var(--brand-200);
+    --table-head-bg: var(--card); --table-head-fg: var(--muted-foreground);
     --muted: var(--gray-800);        --sunken: #0B1116;
     --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
     --faint: var(--gray-500);
@@ -174,7 +174,7 @@
   --secondary-hover: color-mix(in srgb, var(--brand-600) 40%, var(--gray-600));
   --secondary-foreground: var(--gray-100);
   --secondary-soft: var(--brand-950);
-  --table-head-bg: var(--muted); --table-head-fg: var(--brand-200);
+  --table-head-bg: var(--card); --table-head-fg: var(--muted-foreground);
   --muted: var(--gray-800);        --sunken: #0B1116;
   --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
   --faint: var(--gray-500);
@@ -202,7 +202,6 @@
   --muted: var(--gray-200);
   --muted-foreground: var(--gray-800);  --faint: var(--gray-700);
   --border: var(--gray-500);            --border-soft: var(--gray-400);  --input: var(--gray-500);
-  --table-head-bg: var(--gray-200);
 }
 :root[data-contrast="max"]:not([data-theme="dark"]) {
   --background: var(--page-surface, var(--gray-300));
@@ -210,7 +209,6 @@
   --foreground: var(--gray-950);
   --muted-foreground: var(--gray-900);  --faint: var(--gray-800);
   --border: var(--gray-600);            --border-soft: var(--gray-500);  --input: var(--gray-600);
-  --table-head-bg: var(--gray-300);
   --secondary: color-mix(in srgb, var(--brand-800) 45%, var(--gray-800));
   --secondary-hover: color-mix(in srgb, var(--brand-800) 60%, var(--gray-800));
 }
