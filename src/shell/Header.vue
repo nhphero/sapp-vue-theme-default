@@ -408,22 +408,24 @@ onMounted(() => {
           </template>
 
           <template #content="{ query }">
-            <div class="w-[720px] max-w-[calc(100vw-32px)]">
+            <!-- Two columns: recently opened apps on the left (when there are any), every app on the right. -->
+            <div class="apps-menu" :class="{ 'has-recent': recentTiles(query).length }">
               <section v-if="recentTiles(query).length" class="recent-apps" data-testid="apps-recent">
                 <div class="pop-head">{{ $t('shell.recent') }}</div>
-                <div class="recent-apps__row">
+                <div class="recent-apps__list">
                   <button v-for="tile in recentTiles(query)" :key="tile.key" type="button" class="recent-apps__item"
                           :title="tile.detail" data-testid="recent-app" @click="tile.run()">
-                    <component :is="tile.icon" :size="14" stroke-width="1.75" />
+                    <span class="recent-apps__icon"><component :is="tile.icon" :size="14" stroke-width="1.75" /></span>
                     <span class="truncate">{{ tile.label }}</span>
                     <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title">{{ tileVersions[tile.id].label }}</span>
                   </button>
                 </div>
               </section>
+              <div class="apps-menu__all">
               <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
               <section v-for="sec in appSections(query)" :key="sec.key" class="pt-1 last:pb-3" :data-testid="`apps-section-${sec.key}`">
               <div v-if="sec.label" class="pop-head flex items-center gap-1.5">{{ sec.label }}<span class="text-faint font-normal">{{ sec.tiles.length }}</span></div>
-              <div class="px-2 pb-1 grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+              <div class="px-2 pb-1 grid gap-1 sm:grid-cols-2">
                 <div v-for="tile in sec.tiles" :key="tile.key" role="button" tabindex="0" @click="tile.run()" @keydown.enter="tile.run()"
                      class="group relative flex items-center gap-3 rounded-lg px-2.5 py-2 text-left hover:bg-muted transition-colors min-w-0 cursor-pointer"
                      :aria-current="tile.id === currentApp.id ? 'true' : undefined">
@@ -445,6 +447,7 @@ onMounted(() => {
                 </div>
               </div>
               </section>
+              </div>
             </div>
           </template>
           </component>
@@ -493,17 +496,26 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* Recently opened apps: one row of compact pills above the full list. */
-.recent-apps { padding-top: var(--sp-1); border-bottom: 1px solid var(--border-soft); margin-bottom: var(--sp-1); }
-.recent-apps__row { display: flex; flex-wrap: wrap; gap: var(--sp-1); padding: 0 var(--sp-2) var(--sp-2); }
+/* The menu: every app; with recent apps, two columns — recent (a narrow list) left, every app right.
+   Narrow screens stack them. Widths in tokens, so the menu scales with Theme Studio. */
+.apps-menu { width: calc(var(--sp-8) * 9); max-width: calc(100vw - var(--sp-6)); }
+.apps-menu.has-recent { width: calc(var(--sp-8) * 12.5); display: grid; grid-template-columns: calc(var(--sp-8) * 3.5) minmax(0, 1fr); }
+.apps-menu__all { min-width: 0; }
+.recent-apps { padding: var(--sp-1) 0 var(--sp-2); border-right: 1px solid var(--border-soft); background: var(--muted); min-width: 0; }
+.recent-apps__list { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--sp-2); }
 .recent-apps__item {
-  display: inline-flex; align-items: center; gap: var(--sp-2); max-width: 22ch;
-  padding: var(--sp-1) var(--sp-3); border-radius: var(--radius); border: 1px solid var(--border-soft);
-  background: var(--card); color: var(--foreground); font-size: var(--text-sm); font-weight: 500;
-  cursor: pointer; transition: background-color var(--dur, .15s) ease, color var(--dur, .15s) ease, border-color var(--dur, .15s) ease;
+  display: flex; align-items: center; gap: var(--sp-2); width: 100%; min-width: 0;
+  padding: var(--sp-1) var(--sp-2); border-radius: var(--radius); border: 0;
+  background: transparent; color: var(--foreground); font-size: var(--text-sm); font-weight: 500; text-align: left;
+  cursor: pointer; transition: background-color var(--dur, .15s) ease, color var(--dur, .15s) ease;
 }
-.recent-apps__item:hover { background: var(--primary-soft); color: var(--primary); border-color: transparent; }
-.recent-apps__item svg { flex: none; opacity: .8; }
+.recent-apps__item:hover { background: var(--card); color: var(--primary); }
+.recent-apps__icon { flex: none; width: var(--sp-6); height: var(--sp-6); border-radius: var(--radius-sm); display: grid; place-items: center; background: var(--card); color: var(--muted-foreground); }
+.recent-apps__item:hover .recent-apps__icon { color: var(--primary); }
+@media (max-width: 720px) {
+  .apps-menu.has-recent { width: calc(100vw - var(--sp-6)); grid-template-columns: minmax(0, 1fr); }
+  .recent-apps { border-right: 0; border-bottom: 1px solid var(--border-soft); }
+}
 
 /* The mounted app's version, a quiet pill on the same line as its name. Tinted from the chip's own
    text colour, so it reads on the light plate and on the dark band alike; long versions truncate. */
