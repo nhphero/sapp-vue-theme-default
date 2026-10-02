@@ -761,7 +761,7 @@ onMounted(() => {
 .side { display: flex; height: 100%; min-height: 0; }
 /* Rail: every app, icon over a short name; the open one on the brand's soft plate. */
 .side-rail {
-  flex: none; display: flex; flex-direction: column; width: calc(var(--touch) * 1.75); min-height: 0;
+  flex: none; display: flex; flex-direction: column; width: calc(var(--touch) * 2); min-height: 0;
   padding: var(--sp-2) 0; background: var(--muted);
 }
 .side-rail__apps { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; align-items: center; gap: var(--sp-1); scrollbar-width: none; }
@@ -776,7 +776,7 @@ onMounted(() => {
 /* Up to two lines, centred: app names are often two words. */
 .side-app__label {
   max-width: 100%; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
-  text-align: center; overflow-wrap: anywhere; font-size: calc(var(--text-xs) * 0.9); font-weight: 600; line-height: 1.2;
+  text-align: center; overflow-wrap: normal; word-break: normal; font-size: calc(var(--text-xs) * 0.9); font-weight: 600; line-height: 1.2;
 }
 .side-app__fav { position: absolute; top: calc(var(--sp-1) * 0.75); right: var(--sp-2); fill: var(--warning); color: var(--warning); }
 .side-app:hover { color: var(--foreground); }
@@ -791,7 +791,8 @@ onMounted(() => {
 
 /* Menu column: the open app's name, then its pages. */
 .side-panel { flex: none; display: flex; flex-direction: column; width: calc(var(--touch) * 5); min-height: 0; background: var(--card); }
-.side-panel__head { display: flex; align-items: center; gap: var(--sp-2); min-height: calc(var(--touch) * 1.1); padding: 0 var(--sp-4); }
+/* As tall as the header beside it, so the two read as one top line. */
+.side-panel__head { display: flex; align-items: center; gap: var(--sp-2); height: var(--header-h); flex: none; padding: 0 var(--sp-4); }
 .side-panel__title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--text-sm); font-weight: 700; color: var(--foreground); }
 .side-nav {
   flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 2px;
