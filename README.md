@@ -41,7 +41,7 @@ Shell: a Shell theme (e.g. `sapp-theme-dashboard`) is built on it.
 | `form.icon-picker`, `ui.app-icon` | Lucide icons by name | Searchable picker. |
 | `display.data-table` | `.table-wrap` grid | `:fetch`, `:columns`, `persist-id`, sort, paging, selection. |
 | `display.chart` | Chart.js canvas | bar / stacked / line / area / donut / pie / scatter; colours from tokens. |
-| `display.markdown` | sanitised HTML | GitHub Markdown via `marked`, cleaned by `DOMPurify`; `base-url` for relative links. |
+| `display.markdown` | sanitised HTML | GitHub Markdown via `marked`, cleaned by `DOMPurify`. `url` (fetched) or `source`; relative links from the url's folder or `base-url`; slots `loading`, `empty`. |
 | `layout.mini-app` | page frame | Header, nav in the Shell band / sidebar / tabs, `.page-container`. |
 
 ## Configuration

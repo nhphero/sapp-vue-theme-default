@@ -88,8 +88,13 @@ Dropdown chuyển app có hàng **Gần đây** ở trên cùng: tối đa 5 app
 
 `components/markdown/Markdown.vue` — render Markdown (GitHub flavoured: bảng, task list, code block) bằng `marked`, HTML làm sạch bằng `DOMPurify` (bỏ script, event handler, link `javascript:`), link mở tab mới, link / ảnh tương đối resolve theo `base-url`. Nạp lần đầu dùng (async). Style theo token (`--text-*`, `--sp-*`, `--muted`, `--border-soft`…). Ví dụ: Admin → Packages → một package hiện README.md của version.
 
+Đưa văn bản (`source`) hoặc địa chỉ file (`url` — tự tải, không cache, tải lại khi url đổi; link / ảnh tương đối theo thư mục của url, trừ khi có `base-url`). Slot `loading`, `empty` (không có nội dung / 404 / không tới được — nhận `{ url, status }`, status 0 = mạng hoặc CORS); emit `loaded` (văn bản), `error` (`{ url, status }`).
+
 ```vue
-<component :is="$c('display.markdown')" :source="readme" :base-url="`${files}/${pkg}/${version}/`" />
+<component :is="$c('display.markdown')" :url="`${files}/${pkg}/${version}/README.md`">
+  <template #empty="{ status }">Không có README.md ({{ status || 'không tải được' }})</template>
+</component>
+<component :is="$c('display.markdown')" :source="text" base-url="https://host/docs/" />
 ```
 
 ## Icon của app: `APP_ICONS`, `ui.app-icon`, `form.icon-picker`
