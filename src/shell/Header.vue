@@ -120,10 +120,8 @@ const usedLabel = (appId: string): string => {
 const showAppsMenu = ref(false)
 const setAppsMenu = (open: boolean) => { showAppsMenu.value = open }
 const showUserMenu = ref(false)
-const showWorkspaceMenu = ref(false)
 
 const me = ref<any>(null)
-const workspaces = ref<any[]>([])
 const registeredAppsList = ref<any[]>([])
 
 /** An app's icon by name — the shared set (services/appIcons.ts), the same `form.icon-picker` offers. */
@@ -140,14 +138,7 @@ const ADMIN_ROLES = ['superadmin', 'admin']
 const canAdminister = computed(() => $superApp?.$policy?.can?.('role', ADMIN_ROLES) ?? false)
 
 const apps = computed(() => {
-  const rawList = registeredAppsList.value.length > 0
-    ? registeredAppsList.value
-    : [
-        { id: 'workspace', name: 'Workspace Hub', url: 'http://localhost:4409', icon: 'Globe', description: 'Logic Orchestration', isEnabled: true },
-        { id: 'admin', name: 'Admin Management', url: 'http://localhost:4403', icon: 'Shield', description: 'Platform Governance', isEnabled: true }
-      ]
-
-  return rawList
+  return registeredAppsList.value
     .filter((a: any) => a.isEnabled !== false)
     // The Admin app is for administrators only — asked of the policy, like every other gate.
     .filter((a: any) => (a.code ?? a.id) !== 'admin' || canAdminister.value)
@@ -171,8 +162,7 @@ const shellNav = $superApp.getModuleState('shell.nav', { moduleId: '', title: ''
 /** True while a mini app is mounted (`/app/<id>/…`); Shell pages (Home, Theme Studio…) show the generic switcher. */
 const inApp = computed(() => route.path.startsWith('/app/'))
 const currentApp = computed(() => {
-  let appId = inApp.value ? $appState.current_app : null;
-  if (appId === 'expose') appId = 'workspace';
+  const appId = inApp.value ? $appState.current_app : null;
   const found = appId && apps.value.find(a => a.id === appId)
   if (found) return found
   // mounted by URL only (not in the Admin registry): use what the app's layout published
@@ -247,15 +237,6 @@ const bandSections = computed<BandSection[]>(() => {
 })
 const groupActive = (items: any[]) => items.find(i => shellNav.active === i.path) ?? null
 
-const activeWorkspaceId = computed({
-  get: () => $appState.current_workspace,
-  set: (val) => { $appState.current_workspace = val }
-})
-
-const activeWorkspace = computed(() => {
-  return workspaces.value.find(w => String(w.id) === String(activeWorkspaceId.value)) || workspaces.value[0]
-})
-
 watch(() => route.params.moduleId, (param) => {
   // The route names the app by slug (or by id, for links older than a slug change); state keeps the id.
   const key = Array.isArray(param) ? param[0] : param
@@ -273,27 +254,6 @@ const fetchMe = async () => {
   }
 }
 $superApp.on?.('auth:profile-updated', (user: any) => { me.value = { ...(me.value || {}), ...user } })
-
-const fetchWorkspaces = async () => {
-  try {
-    const result = await $superApp.doAction('workspace.list')
-    workspaces.value = result || []
-    const exists = workspaces.value.find(w => String(w.id) === String(activeWorkspaceId.value))
-    if ((!activeWorkspaceId.value || !exists) && workspaces.value.length > 0) {
-      activeWorkspaceId.value = String(workspaces.value[0].id)
-    }
-  } catch (err) {}
-}
-
-const selectWorkspace = (id: string) => {
-  const newId = String(id);
-  if ($appState.current_workspace === newId) {
-    showWorkspaceMenu.value = false;
-    return;
-  }
-  $appState.current_workspace = newId;
-  showWorkspaceMenu.value = false;
-}
 
 const handleLogout = async () => {
   // Lets the auth provider (SSO) drop its own tokens too — the app session only, never the IdP session.
@@ -317,7 +277,6 @@ const navigate = (path: string) => {
 
 onMounted(() => {
   fetchMe()
-  fetchWorkspaces()
   loadApps()
   if (typeof $superApp?.on === 'function') {
     $superApp.on('apps:updated', (updated: any) => {
@@ -787,9 +746,9 @@ onMounted(() => {
 .app-band--classic .tabs--band { align-items: center; margin-left: 0; }
 .app-band--classic .tabs--band .tab {
   height: var(--control-h); padding: 0.2em var(--sp-4) 0; border-radius: var(--radius);
-  font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-wide);
+  font-size: calc(var(--text-xs) * 0.9); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-wide);
 }
-.app-band--classic .tabs--band .tab :deep(svg) { width: 1.2em; height: 1.2em; }
+.app-band--classic .tabs--band .tab :deep(svg) { width: 1.3em; height: 1.3em; }
 .app-band--classic .tabs--band .tab:hover { background: var(--header-hover-bg); }
 .app-band--classic .tabs--band .tab[aria-selected="true"] { box-shadow: none; background: var(--header-active-bg); color: var(--header-active-fg); }
 

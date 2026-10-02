@@ -20,7 +20,6 @@ const isAtLeastAdmin = ['ADMIN', 'SUPERADMIN'].includes(user.role)
 
 const commands = computed(() => {
   const list = [
-    { id: 'm.workspace', label: 'Go to Workspace Management', icon: Layout, category: 'Navigation' },
     { id: 'action.clear-cache', label: 'Clear System Cache', icon: Zap, category: 'Actions' },
   ]
   

@@ -20,7 +20,7 @@ const props = defineProps({
       <slot name="sidebar"></slot>
     </aside>
 
-    <!-- 🏗️ Main Content Workspace -->
+    <!-- 🏗️ Main content -->
     <div class="flex-1 flex flex-col min-w-0 h-full relative overflow-hidden">
       <!-- 🗺️ Header Slot -->
       <header v-if="$slots.header" class="shrink-0 z-10 border-b border-border-soft bg-white/80  backdrop-blur-md">

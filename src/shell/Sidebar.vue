@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useRouter, useRoute } from 'vue-router'
 import { inject, computed } from 'vue'
-import { LayoutDashboard, Database, Settings, FileText, ChevronRight, Globe, Share2 } from 'lucide-vue-next'
+import { LayoutDashboard, Database, Settings, FileText, ChevronRight, Share2 } from 'lucide-vue-next'
 import type { ISuperApp } from '@nhphero/vue-sapp/contracts'
 
 /**
@@ -15,7 +15,6 @@ const superApp = inject('$superApp') as ISuperApp
 
 const staticNavItems = [
   { id: 'admin', label: 'Admin Management', icon: Database, path: '/app/admin/integrations', moduleId: 'admin' },
-  { id: 'workspace', label: 'Workspace Management', icon: Globe, path: '/app/workspace', moduleId: 'workspace' },
   { id: 'settings', label: 'System Settings', icon: Settings, path: '/settings' }
 ]
 
