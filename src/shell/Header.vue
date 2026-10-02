@@ -488,7 +488,7 @@ onMounted(() => {
     <div v-if="!sidebar" class="app-band" :class="classic && 'app-band--classic'">
       <div class="page-container flex items-stretch gap-3">
         <!-- classic: the app switcher lands here (teleported), then a separator before the tabs -->
-        <div v-if="classic" id="shell-band-switch" class="flex items-stretch shrink-0"></div>
+        <div v-if="classic" id="shell-band-switch" class="flex items-center shrink-0"></div>
         <div v-if="classic && showAppNav" class="app-band__sep" aria-hidden="true"></div>
 
         <nav v-if="showAppNav" class="tabs tabs--band min-w-0 overflow-x-auto no-scrollbar" role="tablist" data-testid="app-nav">
@@ -766,9 +766,15 @@ onMounted(() => {
   background: var(--brand-800);
 }
 .app-band__sep { align-self: center; width: 1px; height: 50%; flex: none; background: var(--header-border); }
-/* The switcher: the band's leading segment, a shade darker, full band height. */
-.band-switch { align-self: stretch; }
-.band-switch .app-chip { height: 100%; padding: 0 var(--sp-3); border-radius: 0; background: rgb(0 0 0 / .18); }
+/* Every item on the band is one control high (tokens.css --control-h, Theme Studio → control size);
+   the band is that plus even padding, so it grows and shrinks with the controls on the page. */
+.app-band--classic .page-container { height: auto; min-height: calc(var(--control-h) + var(--sp-2) * 2); padding-block: var(--sp-2); align-items: center; }
+.app-band--classic .tabs--band { align-self: center; }
+.app-band--classic .app-band__end { align-self: center; }
+/* The switcher: a shade darker plate, one control high. */
+.band-switch { align-self: center; }
+.band-switch .app-switch, .band-switch .app-switch > div:first-child { height: var(--control-h); }
+.band-switch .app-chip { height: var(--control-h); padding: 0 var(--sp-3) 0 var(--sp-2); border-radius: var(--radius); background: rgb(0 0 0 / .18); }
 .band-switch .app-chip:hover { background: rgb(0 0 0 / .26); }
 /* Tabs: uppercase pills centred on the band; the page on screen a light plate. */
 .app-band--classic .tabs--band { align-items: center; margin-left: 0; }

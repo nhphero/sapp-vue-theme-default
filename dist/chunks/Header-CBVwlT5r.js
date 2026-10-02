@@ -29,7 +29,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
 }, jt = { class: "hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap" }, Tt = { class: "w-60" }, Pt = { class: "flex items-center gap-3 px-2 py-2.5 mb-1 border-b border-border-soft" }, Kt = { class: "min-w-0" }, Bt = { class: "text-sm font-semibold text-foreground truncate" }, Ft = { class: "text-xs text-faint truncate" }, Ht = { class: "page-container flex items-stretch gap-3" }, Gt = {
   key: 0,
   id: "shell-band-switch",
-  class: "flex items-stretch shrink-0"
+  class: "flex items-center shrink-0"
 }, Jt = {
   key: 1,
   class: "app-band__sep",
@@ -369,7 +369,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                 ], 2)),
                 A.value && x.value.tagline ? (s(), n("span", zt, d(x.value.tagline), 1)) : c("", !0)
               ], 64)) : (s(), n(g, { key: 1 }, [
-                a[8] || (a[8] = Je('<div class="relative" data-v-9017dc8c><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-9017dc8c><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-9017dc8c>MP</span></div></div><div class="flex flex-col text-left" data-v-9017dc8c><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-9017dc8c>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-9017dc8c>Core OS v5</span></div>', 2))
+                a[8] || (a[8] = Je('<div class="relative" data-v-29e0517f><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-29e0517f><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-29e0517f>MP</span></div></div><div class="flex flex-col text-left" data-v-29e0517f><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-29e0517f>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-29e0517f>Core OS v5</span></div>', 2))
               ], 64))
             ], 8, At)
           ]),
@@ -667,8 +667,8 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
       ])) : c("", !0)
     ]));
   }
-}), $a = /* @__PURE__ */ lt(ha, [["__scopeId", "data-v-9017dc8c"]]);
+}), $a = /* @__PURE__ */ lt(ha, [["__scopeId", "data-v-29e0517f"]]);
 export {
   $a as default
 };
-//# sourceMappingURL=Header-BohfZAnq.js.map
+//# sourceMappingURL=Header-CBVwlT5r.js.map
