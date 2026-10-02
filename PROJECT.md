@@ -84,6 +84,17 @@ Dropdown chuyển app là **một cột, mỗi dòng một app** (icon, tên, ve
 - `display.data-table` — `variant="grid"` (mặc định, kiểu bảng tính) | `"clean"` (bảng hoff, chỉ kẻ ngang, pager ở đáy); `show-select` + `v-model:selected` (+ `row-key`) cho cột checkbox chọn dòng/chọn cả trang; slot `cell-<col>`, `toolbar-left/-actions`.
 - Header bảng (`.table-wrap th`) dùng `--table-head-bg/-fg` (đặc, không opacity: gray-800/gray-100, dark: gray-700/gray-100) để nổi hơn nền trang.
 
+## Image: `display.image`
+
+An image that opens large on click — `components/image-view/ImageView.vue`. The thumbnail takes the
+size you give it (the image fits inside, `fit="contain|cover"`); the viewer shows it as large as the screen
+allows on a checkerboard (transparent parts visible), zoom −/+ (double-click toggles 2×), a link to the
+original, Esc / outside click to close. `:preview="false"` keeps a plain image; a broken `src` shows a placeholder.
+
+```vue
+<component :is="$c('display.image')" :src="logoUrl" alt="Logo" class="h-8 w-40" />
+```
+
 ## Markdown: `display.markdown`
 
 `components/markdown/Markdown.vue` — render Markdown (GitHub flavoured: bảng, task list, code block) bằng `marked`, HTML làm sạch bằng `DOMPurify` (bỏ script, event handler, link `javascript:`), link mở tab mới, link / ảnh tương đối resolve theo `base-url`. Nạp lần đầu dùng (async). Style theo token (`--text-*`, `--sp-*`, `--muted`, `--border-soft`…). Ví dụ: Admin → Packages → một package hiện README.md của version.

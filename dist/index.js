@@ -1,7 +1,7 @@
-import { reactive as J, watch as V, ref as D, defineComponent as be, inject as xe, computed as q, openBlock as x, createBlock as k, resolveDynamicComponent as I, withCtx as U, createElementBlock as O, createElementVNode as T, toDisplayString as $, withKeys as ve, createCommentVNode as B, createTextVNode as X, normalizeClass as Y, defineAsyncComponent as r } from "vue";
+import { reactive as J, watch as V, ref as D, defineComponent as be, inject as xe, computed as q, openBlock as x, createBlock as I, resolveDynamicComponent as k, withCtx as U, createElementBlock as O, createElementVNode as T, toDisplayString as $, withKeys as ve, createCommentVNode as B, createTextVNode as X, normalizeClass as Y, defineAsyncComponent as n } from "vue";
 import { createAppState as Se } from "@nhphero/vue-sapp";
-import { defineStore as ke } from "pinia";
-import { MessageSquare as ae, HelpCircle as Ie, Zap as ie, AlertTriangle as se, CheckCircle2 as Ue, Info as ce, Headphones as we, Video as Te, Camera as $e, Image as Be, Palette as Pe, Flag as De, Sparkles as Me, Heart as Fe, Star as Oe, Rocket as Ne, Settings as le, Lock as me, KeyRound as Ee, Key as je, Car as He, Truck as Le, Tags as Re, Tag as _e, ShoppingBag as Ve, ShoppingCart as Ge, Megaphone as Ke, Phone as We, Mail as ze, Bell as de, Clock as Je, CalendarDays as qe, Calendar as Xe, Target as Ye, Gauge as Ze, Activity as Qe, TrendingUp as Ae, PieChart as eo, BarChart3 as oo, Gavel as to, Scale as no, PiggyBank as ro, DollarSign as ao, Banknote as io, Receipt as so, CreditCard as co, Wallet as lo, Award as mo, GraduationCap as go, Handshake as fo, Briefcase as uo, Contact as po, UserCog as ho, User as ge, Users as yo, Compass as Co, Map as bo, MapPin as xo, Wrench as vo, Hammer as So, Ruler as ko, HardHat as Io, Warehouse as Uo, Store as wo, Factory as To, Landmark as $o, Hotel as Bo, Home as Po, Building2 as Do, Building as Mo, ListChecks as Fo, ClipboardCheck as Oo, ClipboardList as No, Archive as Eo, FolderOpen as jo, Folder as Ho, Files as Lo, FileText as Ro, Book as _o, BookOpen as Vo, GitBranch as Go, Workflow as Ko, Network as Wo, Braces as zo, Code as Jo, Cloud as qo, Server as Xo, Database as Yo, Cpu as Zo, Terminal as Qo, Boxes as Ao, Package as et, Box as ot, ShieldCheck as fe, Shield as tt, Globe as nt, LayoutDashboard as rt, LayoutGrid as ue, Layers as at, ArrowRight as it, Search as st, LogOut as ct, ChevronDown as lt, ChevronRight as mt, Check as dt, X as gt } from "lucide-vue-next";
+import { defineStore as Ie } from "pinia";
+import { MessageSquare as ae, HelpCircle as ke, Zap as ie, AlertTriangle as se, CheckCircle2 as Ue, Info as ce, Headphones as we, Video as Te, Camera as $e, Image as Be, Palette as Pe, Flag as De, Sparkles as Me, Heart as Fe, Star as Oe, Rocket as Ne, Settings as le, Lock as me, KeyRound as Ee, Key as je, Car as He, Truck as Le, Tags as Re, Tag as _e, ShoppingBag as Ve, ShoppingCart as Ge, Megaphone as Ke, Phone as We, Mail as ze, Bell as de, Clock as Je, CalendarDays as qe, Calendar as Xe, Target as Ye, Gauge as Ze, Activity as Qe, TrendingUp as Ae, PieChart as eo, BarChart3 as oo, Gavel as to, Scale as no, PiggyBank as ro, DollarSign as ao, Banknote as io, Receipt as so, CreditCard as co, Wallet as lo, Award as mo, GraduationCap as go, Handshake as fo, Briefcase as uo, Contact as po, UserCog as ho, User as ge, Users as yo, Compass as Co, Map as bo, MapPin as xo, Wrench as vo, Hammer as So, Ruler as Io, HardHat as ko, Warehouse as Uo, Store as wo, Factory as To, Landmark as $o, Hotel as Bo, Home as Po, Building2 as Do, Building as Mo, ListChecks as Fo, ClipboardCheck as Oo, ClipboardList as No, Archive as Eo, FolderOpen as jo, Folder as Ho, Files as Lo, FileText as Ro, Book as _o, BookOpen as Vo, GitBranch as Go, Workflow as Ko, Network as Wo, Braces as zo, Code as Jo, Cloud as qo, Server as Xo, Database as Yo, Cpu as Zo, Terminal as Qo, Boxes as Ao, Package as et, Box as ot, ShieldCheck as fe, Shield as tt, Globe as nt, LayoutDashboard as rt, LayoutGrid as ue, Layers as at, ArrowRight as it, Search as st, LogOut as ct, ChevronDown as lt, ChevronRight as mt, Check as dt, X as gt } from "lucide-vue-next";
 import { clsx as ft } from "clsx";
 import { twMerge as ut } from "tailwind-merge";
 function pt(t) {
@@ -128,16 +128,16 @@ const N = "sapp.theme.config", E = { "--text-xs": 12, "--text-sm": 14, "--text-b
 }, vt = (t, i, e) => {
   const o = i / 100, s = e / 100, d = (c) => (c + t / 30) % 12, p = o * Math.min(s, 1 - s), f = (c) => s - p * Math.max(-1, Math.min(d(c) - 3, 9 - d(c), 1)), l = (c) => c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
   return 0.2126 * l(f(0)) + 0.7152 * l(f(8)) + 0.0722 * l(f(4));
-}, St = "#0E151A", kt = 83e-4, It = (t, i, e) => {
+}, St = "#0E151A", It = 83e-4, kt = (t, i, e) => {
   const o = vt(t, i, e);
-  return 1.05 / (o + 0.05) >= (o + 0.05) / (kt + 0.05) ? "#fff" : St;
+  return 1.05 / (o + 0.05) >= (o + 0.05) / (It + 0.05) ? "#fff" : St;
 }, ee = (t) => {
   const i = xt(t);
   if (!i) return null;
   const e = {};
   for (const o of Object.keys(L)) {
     const s = L[o], d = i.s * (s > 85 ? 0.55 : s > 70 ? 0.75 : 1);
-    e[`--brand-${o}`] = `hsl(${i.h.toFixed(0)} ${d.toFixed(0)}% ${s}%)`, e[`--on-brand-${o}`] = It(i.h, d, s);
+    e[`--brand-${o}`] = `hsl(${i.h.toFixed(0)} ${d.toFixed(0)}% ${s}%)`, e[`--on-brand-${o}`] = kt(i.h, d, s);
   }
   return e;
 }, oe = (t) => ({ "--radius-sm": Math.max(0, Math.round(t * 0.5)), "--radius": t, "--radius-lg": Math.round(t * 1.7) }), te = (t) => {
@@ -161,37 +161,37 @@ function Ut() {
     } catch {
       return {};
     }
-  }, i = Object.fromEntries(Object.entries(t()).filter(([a, n]) => n !== w[a]));
+  }, i = Object.fromEntries(Object.entries(t()).filter(([a, r]) => r !== w[a]));
   let e = { ...w };
   const o = J({ ...e, ...i }), s = J({ open: !1, locked: !1 }), d = () => {
     if (s.locked) return;
-    const a = Object.fromEntries(_.filter((n) => o[n] !== e[n]).map((n) => [n, o[n]]));
+    const a = Object.fromEntries(_.filter((r) => o[r] !== e[r]).map((r) => [r, o[r]]));
     try {
       Object.keys(a).length ? localStorage.setItem(N, JSON.stringify(a)) : localStorage.removeItem(N);
     } catch {
     }
-  }, p = () => document.documentElement, f = (a, n = "", m = !1) => {
+  }, p = () => document.documentElement, f = (a, r = "", m = !1) => {
     const g = p().style;
-    for (const h of Object.keys(a)) m ? g.removeProperty(h) : g.setProperty(h, `${a[h]}${n}`);
+    for (const h of Object.keys(a)) m ? g.removeProperty(h) : g.setProperty(h, `${a[h]}${r}`);
   };
   let l = null;
   const c = () => {
-    const a = p(), n = l ? { ...o, ...l } : o;
-    n.mode === "system" ? a.removeAttribute("data-theme") : a.setAttribute("data-theme", n.mode);
-    const m = n.brand ? ee(n.brand) : null;
+    const a = p(), r = l ? { ...o, ...l } : o;
+    r.mode === "system" ? a.removeAttribute("data-theme") : a.setAttribute("data-theme", r.mode);
+    const m = r.brand ? ee(r.brand) : null;
     for (const C of Object.keys(L))
       m ? (a.style.setProperty(`--brand-${C}`, m[`--brand-${C}`]), a.style.setProperty(`--on-brand-${C}`, m[`--on-brand-${C}`])) : (a.style.removeProperty(`--brand-${C}`), a.style.removeProperty(`--on-brand-${C}`));
-    const g = Number(n.font) || 1, h = g * (Number(n.density) || 1), v = (C, he) => Object.fromEntries(Object.entries(C).map(([ye, Ce]) => [ye, (Ce * he).toFixed(1)]));
+    const g = Number(r.font) || 1, h = g * (Number(r.density) || 1), v = (C, he) => Object.fromEntries(Object.entries(C).map(([ye, Ce]) => [ye, (Ce * he).toFixed(1)]));
     f(v(E, g), "px", g === 1), f(v(j, h), "px", h === 1), a.style.setProperty("--scale-text", g.toFixed(3)), a.style.setProperty("--scale-space", h.toFixed(3));
-    const u = P.find((C) => C.id === n.surface) ?? P[0];
-    u.light ? (a.style.setProperty("--page-surface", u.light), a.style.setProperty("--page-surface-dark", u.dark)) : (a.style.removeProperty("--page-surface"), a.style.removeProperty("--page-surface-dark")), Q.some((C) => C.id && C.id === n.contrast) ? a.setAttribute("data-contrast", n.contrast) : a.removeAttribute("data-contrast");
-    const S = Number(n.control) || 1;
-    S !== 1 ? a.style.setProperty("--control-scale", String(S)) : a.style.removeProperty("--control-scale"), A.some((C) => C.id && C.id === n.header) ? a.setAttribute("data-header", n.header) : a.removeAttribute("data-header");
-    const K = re(n.fontFamily);
+    const u = P.find((C) => C.id === r.surface) ?? P[0];
+    u.light ? (a.style.setProperty("--page-surface", u.light), a.style.setProperty("--page-surface-dark", u.dark)) : (a.style.removeProperty("--page-surface"), a.style.removeProperty("--page-surface-dark")), Q.some((C) => C.id && C.id === r.contrast) ? a.setAttribute("data-contrast", r.contrast) : a.removeAttribute("data-contrast");
+    const S = Number(r.control) || 1;
+    S !== 1 ? a.style.setProperty("--control-scale", String(S)) : a.style.removeProperty("--control-scale"), A.some((C) => C.id && C.id === r.header) ? a.setAttribute("data-header", r.header) : a.removeAttribute("data-header");
+    const K = re(r.fontFamily);
     K ? a.style.setProperty("--font-sans", K) : a.style.removeProperty("--font-sans");
-    const W = Number.isFinite(n.radius) ? n.radius : M;
+    const W = Number.isFinite(r.radius) ? r.radius : M;
     f(oe(W), "px", W === M);
-    const z = Number.isFinite(n.shadow) ? n.shadow : F;
+    const z = Number.isFinite(r.shadow) ? r.shadow : F;
     f(te(z), "", z === F), l || d();
   }, y = {
     state: o,
@@ -220,9 +220,9 @@ function Ut() {
     reset() {
       s.locked || Object.assign(o, e);
     },
-    useDefaults(a, n) {
-      const m = n?.enforce ? {} : s.locked ? t() : Object.fromEntries(_.filter((g) => o[g] !== e[g]).map((g) => [g, o[g]]));
-      e = { ...w, ...H(a) }, s.locked = !!n?.enforce, Object.assign(o, e, m);
+    useDefaults(a, r) {
+      const m = r?.enforce ? {} : s.locked ? t() : Object.fromEntries(_.filter((g) => o[g] !== e[g]).map((g) => [g, o[g]]));
+      e = { ...w, ...H(a) }, s.locked = !!r?.enforce, Object.assign(o, e, m);
     },
     preview(a) {
       l = a ? H(a) : null, c();
@@ -232,8 +232,8 @@ function Ut() {
       s.open = a ?? !s.open;
     },
     exportTokens: () => {
-      const a = ["/* Tokens exported from the theme panel — paste into packages/sapp-theme-default/src/hoff/tokens.css */"], n = o.brand ? ee(o.brand) : null;
-      if (n) for (const u of Object.keys(n)) a.push(`${u}: ${n[u]};`);
+      const a = ["/* Tokens exported from the theme panel — paste into packages/sapp-theme-default/src/hoff/tokens.css */"], r = o.brand ? ee(o.brand) : null;
+      if (r) for (const u of Object.keys(r)) a.push(`${u}: ${r[u]};`);
       const m = Number(o.font) || 1;
       if (m !== 1) for (const u of Object.keys(E)) a.push(`${u}: ${(E[u] * m).toFixed(1)}px;`);
       const g = m * (Number(o.density) || 1);
@@ -249,22 +249,22 @@ function Ut() {
   };
   return V(o, c, { deep: !0 }), c(), y;
 }
-const wt = ke("ui", () => {
+const wt = Ie("ui", () => {
   const t = D([]);
   let i = 0;
-  const e = /* @__PURE__ */ new Map(), o = (n) => {
-    const m = n.id || ++i, g = { ...n, id: m, type: n.type || "info" };
+  const e = /* @__PURE__ */ new Map(), o = (r) => {
+    const m = r.id || ++i, g = { ...r, id: m, type: r.type || "info" };
     e.has(m) && (clearTimeout(e.get(m)), e.delete(m));
     const h = t.value.findIndex((u) => u.id === m);
     h !== -1 ? t.value[h] = g : t.value.push(g);
     const v = setTimeout(() => {
       s(m);
-    }, n.duration || 5e3);
+    }, r.duration || 5e3);
     e.set(m, v);
-  }, s = (n) => {
-    t.value = t.value.filter((m) => m.id !== n), e.has(n) && (clearTimeout(e.get(n)), e.delete(n));
-  }, d = D(null), p = (n) => {
-    console.log("💬 [uiStore] showMessage:", n.title), d.value = n;
+  }, s = (r) => {
+    t.value = t.value.filter((m) => m.id !== r), e.has(r) && (clearTimeout(e.get(r)), e.delete(r));
+  }, d = D(null), p = (r) => {
+    console.log("💬 [uiStore] showMessage:", r.title), d.value = r;
   }, f = () => {
     console.log("💬 [uiStore] closeMessage"), d.value = null;
   }, l = D([]);
@@ -277,17 +277,17 @@ const wt = ke("ui", () => {
     showMessage: p,
     closeMessage: f,
     activeDialogs: l,
-    openDialog: (n) => {
-      console.log("🏗️ [uiStore] openDialog:", n.title);
-      const m = n.id || `dialog-${++c}`;
-      return l.value.push({ ...n, id: m }), m;
+    openDialog: (r) => {
+      console.log("🏗️ [uiStore] openDialog:", r.title);
+      const m = r.id || `dialog-${++c}`;
+      return l.value.push({ ...r, id: m }), m;
     },
-    closeDialog: (n) => {
-      const m = l.value.find((g) => g.id === n);
-      m?.onClose && m.onClose(), l.value = l.value.filter((g) => g.id !== n);
+    closeDialog: (r) => {
+      const m = l.value.find((g) => g.id === r);
+      m?.onClose && m.onClose(), l.value = l.value.filter((g) => g.id !== r);
     },
     closeAllDialogs: () => {
-      l.value.forEach((n) => n.onClose?.()), l.value = [];
+      l.value.forEach((r) => r.onClose?.()), l.value = [];
     }
   };
 }), Tt = {
@@ -311,7 +311,7 @@ const wt = ke("ui", () => {
       success: { icon: Ue, color: "text-success", bg: "bg-success-soft" },
       warning: { icon: se, color: "text-warning", bg: "bg-warning-soft" },
       error: { icon: ie, color: "text-danger", bg: "bg-danger-soft" },
-      confirm: { icon: Ie, color: "text-primary", bg: "bg-primary-soft" },
+      confirm: { icon: ke, color: "text-primary", bg: "bg-primary-soft" },
       prompt: { icon: ae, color: "text-primary", bg: "bg-primary-soft" }
     }, d = () => {
       i?.closeMessage();
@@ -320,7 +320,7 @@ const wt = ke("ui", () => {
     }, f = () => {
       e.value?.onCancel && e.value.onCancel(), d();
     }, l = q(() => e.value ? s[e.value.type] || s.info : null);
-    return (c, b) => (x(), k(I(c.$c("ui.modal")), {
+    return (c, b) => (x(), I(k(c.$c("ui.modal")), {
       key: e.value?.title || "none",
       show: !!e.value,
       onClose: d,
@@ -332,7 +332,7 @@ const wt = ke("ui", () => {
           T("div", {
             class: Y(["w-10 h-10 rounded-lg flex items-center justify-center shrink-0", l.value?.bg])
           }, [
-            (x(), k(I(l.value?.icon), {
+            (x(), I(k(l.value?.icon), {
               size: 20,
               "stroke-width": "2",
               class: Y(l.value?.color)
@@ -343,7 +343,7 @@ const wt = ke("ui", () => {
       ]),
       footer: U(() => [
         T("div", Mt, [
-          e.value?.type === "confirm" || e.value?.type === "prompt" ? (x(), k(I(c.$c("ui.button")), {
+          e.value?.type === "confirm" || e.value?.type === "prompt" ? (x(), I(k(c.$c("ui.button")), {
             key: 0,
             variant: "default",
             onClick: f
@@ -353,7 +353,7 @@ const wt = ke("ui", () => {
             ]),
             _: 1
           })) : B("", !0),
-          (x(), k(I(c.$c("ui.button")), {
+          (x(), I(k(c.$c("ui.button")), {
             variant: e.value?.type === "error" ? "danger" : "primary",
             onClick: p,
             disabled: e.value?.type === "prompt" && !o.value?.trim()
@@ -369,14 +369,14 @@ const wt = ke("ui", () => {
         e.value ? (x(), O("div", Bt, [
           T("p", Pt, $(e.value.description), 1),
           e.value.type === "prompt" ? (x(), O("div", Dt, [
-            e.value.inputType === "textarea" ? (x(), k(I(c.$c("form.textarea")), {
+            e.value.inputType === "textarea" ? (x(), I(k(c.$c("form.textarea")), {
               key: 0,
               modelValue: o.value,
               "onUpdate:modelValue": b[0] || (b[0] = (y) => o.value = y),
               placeholder: e.value.placeholder,
               rows: "4",
               class: "resize-none"
-            }, null, 8, ["modelValue", "placeholder"])) : (x(), k(I(c.$c("form.input")), {
+            }, null, 8, ["modelValue", "placeholder"])) : (x(), I(k(c.$c("form.input")), {
               key: 1,
               modelValue: o.value,
               "onUpdate:modelValue": b[1] || (b[1] = (y) => o.value = y),
@@ -553,8 +553,8 @@ const wt = ke("ui", () => {
   Factory: To,
   Store: wo,
   Warehouse: Uo,
-  HardHat: Io,
-  Ruler: ko,
+  HardHat: ko,
+  Ruler: Io,
   Hammer: So,
   Wrench: vo,
   MapPin: xo,
@@ -622,21 +622,21 @@ class Ot {
     i.config.globalProperties.$message = d, i.config.globalProperties.$appState = f, i.config.globalProperties.$superApp = e, e.$appState = f, e.$themeConfig = l, i.config.globalProperties.$themeConfig = l, i.provide("$themeConfig", l), V(() => JSON.stringify(e.state?.platformConfig?.look ?? null), (g) => {
       const h = JSON.parse(g);
       h && l.useDefaults(h, { enforce: h.enforce === !0 });
-    }, { immediate: !0 }), e.registerComponent({ id: "layout.theme-panel", category: "Shell UI", component: r(() => import("./chunks/ThemePanel-Di-Yg5oa.js")) }), e.registerCommand({ id: "theme.customize", name: "Tuỳ chỉnh giao diện", category: "Theme", shortcut: "⌘⇧T", handler: () => l.toggle() }), e.registerCommand({ id: "theme.studio", name: "Theme Studio", description: "Trang tuỳ chỉnh giao diện đầy đủ", category: "Theme", handler: () => {
+    }, { immediate: !0 }), e.registerComponent({ id: "layout.theme-panel", category: "Shell UI", component: n(() => import("./chunks/ThemePanel-Di-Yg5oa.js")) }), e.registerCommand({ id: "theme.customize", name: "Tuỳ chỉnh giao diện", category: "Theme", shortcut: "⌘⇧T", handler: () => l.toggle() }), e.registerCommand({ id: "theme.studio", name: "Theme Studio", description: "Trang tuỳ chỉnh giao diện đầy đủ", category: "Theme", handler: () => {
       e.$router?.push("/system/theme");
     } });
-    const c = r(() => import("./chunks/Header-C1Ly-7-P.js"));
+    const c = n(() => import("./chunks/Header-C1Ly-7-P.js"));
     e.registerComponent({ id: "Header", category: "Shell UI", component: c }), e.registerComponent({ id: "layout.header", category: "Shell UI", component: c });
-    const b = r(() => import("./chunks/Sidebar-Imdyd8q7.js"));
+    const b = n(() => import("./chunks/Sidebar-Imdyd8q7.js"));
     e.registerComponent({ id: "Sidebar", category: "Shell UI", component: b }), e.registerComponent({ id: "layout.sidebar", category: "Shell UI", component: b });
-    const y = r(() => import("./chunks/ModulePageLayout-CBHSeNXj.js"));
+    const y = n(() => import("./chunks/ModulePageLayout-CBHSeNXj.js"));
     e.registerComponent({ id: "ModulePageLayout", category: "Shell UI", component: y }), e.registerComponent({ id: "layout.module-page", category: "Shell UI", component: y });
-    const a = r(() => import("./chunks/ModuleHeader-BnrOpukT.js"));
+    const a = n(() => import("./chunks/ModuleHeader-BnrOpukT.js"));
     e.registerComponent({ id: "ModuleHeader", category: "Shell UI", component: a }), e.registerComponent({ id: "layout.module-header", category: "Shell UI", component: a });
-    const n = r(() => import("./chunks/DualSidebarLayout-BH2tOx6j.js"));
-    e.registerComponent({ id: "DualSidebarLayout", category: "Shell UI", component: n }), e.registerComponent({ id: "layout.dual-sidebar", category: "Shell UI", component: n });
-    const m = r(() => import("./chunks/ErpCommandPalette-Ddnzl0bP.js"));
-    return e.registerComponent({ id: "CommandPalette", category: "Shell UI", component: m }), e.registerComponent({ id: "layout.command-palette", category: "Shell UI", component: m }), e.registerComponent({ id: "layout.app-container", category: "Shell UI", component: r(() => import("./chunks/AppContainer-1auGMDoE.js")) }), e.registerComponent({ id: "ThemeConnector", category: "Shell UI", component: r(() => import("./chunks/ThemeConnector-DFEwh45z.js")) }), e.registerComponent({ id: "ToastContainer", category: "Shell UI", component: r(() => import("./chunks/ToastContainer-JGwl3S_m.js")) }), e.registerComponent({ id: "MessageProvider", category: "Shell UI", component: Ft }), e.registerComponent({ id: "DialogProvider", category: "Shell UI", component: r(() => import("./chunks/DialogProvider-C21AipJt.js")) }), e.registerComponent({ id: "layout.action-bar", category: "Layout UI", component: r(() => import("./chunks/ErpActionBar-DR8NVTx-.js")) }), e.registerComponent({ id: "display.data-grid", category: "Display UI", component: r(() => import("./chunks/ErpDataGrid-A4UGQwRU.js")) }), e.registerComponent({ id: "form.entity-selector", category: "Form UI", component: r(() => import("./chunks/ErpEntitySelector-XLEStx_M.js")) }), e.registerComponent({ id: "ui.card", category: "UI Blocks", component: r(() => import("./chunks/Card-sv8WQzvB.js")) }), e.registerComponent({ id: "ui.button", category: "UI Blocks", component: r(() => import("./chunks/Button-Cud5Nfh1.js")) }), e.registerComponent({ id: "ui.button-copy", category: "UI Blocks", component: r(() => import("./chunks/ButtonCopy-DsdzXkaa.js")) }), e.registerComponent({ id: "ui.text", category: "UI Blocks", component: r(() => import("./chunks/Typography-CNI1yScN.js")) }), e.registerComponent({ id: "ui.skeleton", category: "UI Blocks", component: r(() => import("./chunks/Skeleton-CfLyDGWt.js")) }), e.registerComponent({ id: "form.input", category: "Form UI", component: r(() => import("./chunks/Input-B0IfgsVG.js")) }), e.registerComponent({ id: "form.input-number", category: "Form UI", component: r(() => import("./chunks/InputNumber-DBRTF-wJ.js")) }), e.registerComponent({ id: "form.switch", category: "Form UI", component: r(() => import("./chunks/InputSwitch-BPvOZo9w.js")) }), e.registerComponent({ id: "InputSwitch", category: "Form UI", component: r(() => import("./chunks/InputSwitch-BPvOZo9w.js")) }), e.registerComponent({ id: "form.textarea", category: "Form UI", component: r(() => import("./chunks/Textarea-BVKFbpBu.js")) }), e.registerComponent({ id: "form.icon-picker", category: "Form UI", component: r(() => import("./chunks/IconPicker-DbgxD0io.js")) }), e.registerComponent({ id: "ui.app-icon", category: "UI Blocks", component: r(() => import("./chunks/AppIcon-CZVJSONO.js")) }), e.registerComponent({ id: "form.field", category: "Form UI", component: r(() => import("./chunks/FormField-DnQICIpP.js")) }), e.registerComponent({ id: "ui.modal", category: "UI Blocks", component: r(() => import("./chunks/Modal-BVG4U5yl.js")) }), e.registerComponent({ id: "ui.search-input", category: "UI Blocks", component: r(() => import("./chunks/SearchInput-CHiFQN2g.js")) }), e.registerComponent({ id: "ui.avatar", category: "UI Blocks", component: r(() => import("./chunks/UserAvatar-DRE3opnT.js")) }), e.registerComponent({ id: "ui.badge", category: "UI Blocks", component: r(() => import("./chunks/Badge-ZzsVRpNl.js")) }), e.registerComponent({ id: "ui.alert", category: "UI Blocks", component: r(() => import("./chunks/Alert-DylOuBAF.js")) }), e.registerComponent({ id: "layout.section-header", category: "Layout UI", component: r(() => import("./chunks/SectionHeader-C8ufun_t.js")) }), e.registerComponent({ id: "layout.mini-app", category: "Layout UI", component: r(() => import("./chunks/MiniAppLayout-DcMLR1CC.js")) }), e.registerComponent({ id: "form.code-editor", category: "Form UI", component: r(() => import("./chunks/CodeEditor-0g7paalJ.js")) }), e.registerComponent({ id: "runtime.studio", category: "Form UI", component: r(() => import("./chunks/CodeEditor-0g7paalJ.js")) }), e.registerComponent({ id: "button.copy", category: "UI Blocks", component: r(() => import("./chunks/ButtonCopy-DsdzXkaa.js")) }), e.registerComponent({ id: "ui.popover", category: "UI Blocks", component: r(() => import("./chunks/Popover-DgBGd8bu.js")) }), e.registerComponent({ id: "ui.popover-trigger", category: "UI Blocks", component: r(() => import("./chunks/PopoverTrigger-CTa-i7wG.js")) }), e.registerComponent({ id: "ui.popover-content", category: "UI Blocks", component: r(() => import("./chunks/PopoverContent-0CCuXPfd.js")) }), e.registerComponent({ id: "ui.context-menu", category: "UI Blocks", component: r(() => import("./chunks/ContextMenu-D1g_2xmd.js")) }), e.registerComponent({ id: "ui.list-manager", category: "UI Blocks", component: r(() => import("./chunks/ListManager-BbjjcqOm.js")) }), e.registerComponent({ id: "ui.dropdown", category: "UI Blocks", component: r(() => import("./chunks/Dropdown-wKllpTqE.js")) }), e.registerComponent({ id: "display.chart", category: "Display UI", component: r(() => import("./chunks/InsightChart-BlF0mgf_.js")) }), e.registerComponent({ id: "display.data-table", category: "Display UI", component: r(() => import("./chunks/DataTable-Bjkce3Yy.js")) }), e.registerComponent({ id: "display.column-settings", category: "Display UI", component: r(() => import("./chunks/ColumnSettings-Bv6YxjSC.js")) }), e.registerComponent({ id: "display.simple-pagination", category: "Display UI", component: r(() => import("./chunks/SimplePagination-Dz9OfQYH.js")) }), e.registerComponent({ id: "display.markdown", category: "Display UI", component: r(() => import("./chunks/Markdown-B7Z-2crI.js")) }), e.registerComponent({ id: "Table", category: "Table UI", component: r(() => import("./chunks/Table-BLZjeVVX.js")) }), e.registerComponent({ id: "TableBody", category: "Table UI", component: r(() => import("./chunks/TableBody-B62z8Jcx.js")) }), e.registerComponent({ id: "TableCell", category: "Table UI", component: r(() => import("./chunks/TableCell-DEzqxj9e.js")) }), e.registerComponent({ id: "TableHead", category: "Table UI", component: r(() => import("./chunks/TableHead-DFpbn3fx.js")) }), e.registerComponent({ id: "TableHeader", category: "Table UI", component: r(() => import("./chunks/TableHeader-C6oE9KYG.js")) }), e.registerComponent({ id: "TableRow", category: "Table UI", component: r(() => import("./chunks/TableRow-BT1dHX61.js")) }), e.registerComponent({ id: "form.select", category: "Form UI", component: r(() => import("./chunks/Select-Br3bDwg3.js")) }), e.registerComponent({ id: "form.select-content", category: "Form UI", component: r(() => import("./chunks/SelectContent-DJPU2Dbi.js")) }), e.registerComponent({ id: "form.select-item", category: "Form UI", component: r(() => import("./chunks/SelectItem-ExBV4X2S.js")) }), e.registerComponent({ id: "form.select-trigger", category: "Form UI", component: r(() => import("./chunks/SelectTrigger-VqHMXKN7.js")) }), e.registerComponent({ id: "form.select-value", category: "Form UI", component: r(() => import("./chunks/SelectValue-Bo98YXZE.js")) }), e.registerComponent({ id: "ui.icon.shield-check", category: "Icons", component: fe }), e.registerComponent({ id: "ui.icon.user", category: "Icons", component: ge }), e.registerComponent({ id: "ui.icon.lock", category: "Icons", component: me }), e.registerComponent({ id: "ui.icon.arrow-right", category: "Icons", component: it }), e.registerComponent({ id: "ui.icon.search", category: "Icons", component: st }), e.registerComponent({ id: "ui.icon.settings", category: "Icons", component: le }), e.registerComponent({ id: "ui.icon.bell", category: "Icons", component: de }), e.registerComponent({ id: "ui.icon.logout", category: "Icons", component: ct }), e.registerComponent({ id: "ui.icon.chevron-down", category: "Icons", component: lt }), e.registerComponent({ id: "ui.icon.chevron-right", category: "Icons", component: mt }), e.registerComponent({ id: "ui.icon.check", category: "Icons", component: dt }), e.registerComponent({ id: "ui.icon.alert-triangle", category: "Icons", component: se }), e.registerComponent({ id: "ui.icon.info", category: "Icons", component: ce }), e.registerComponent({ id: "ui.icon.x", category: "Icons", component: gt }), { messageService: d, dialogService: p, appState: f, themeConfig: l, uiStore: s };
+    const r = n(() => import("./chunks/DualSidebarLayout-BH2tOx6j.js"));
+    e.registerComponent({ id: "DualSidebarLayout", category: "Shell UI", component: r }), e.registerComponent({ id: "layout.dual-sidebar", category: "Shell UI", component: r });
+    const m = n(() => import("./chunks/ErpCommandPalette-Ddnzl0bP.js"));
+    return e.registerComponent({ id: "CommandPalette", category: "Shell UI", component: m }), e.registerComponent({ id: "layout.command-palette", category: "Shell UI", component: m }), e.registerComponent({ id: "layout.app-container", category: "Shell UI", component: n(() => import("./chunks/AppContainer-1auGMDoE.js")) }), e.registerComponent({ id: "ThemeConnector", category: "Shell UI", component: n(() => import("./chunks/ThemeConnector-DFEwh45z.js")) }), e.registerComponent({ id: "ToastContainer", category: "Shell UI", component: n(() => import("./chunks/ToastContainer-JGwl3S_m.js")) }), e.registerComponent({ id: "MessageProvider", category: "Shell UI", component: Ft }), e.registerComponent({ id: "DialogProvider", category: "Shell UI", component: n(() => import("./chunks/DialogProvider-C21AipJt.js")) }), e.registerComponent({ id: "layout.action-bar", category: "Layout UI", component: n(() => import("./chunks/ErpActionBar-DR8NVTx-.js")) }), e.registerComponent({ id: "display.data-grid", category: "Display UI", component: n(() => import("./chunks/ErpDataGrid-A4UGQwRU.js")) }), e.registerComponent({ id: "form.entity-selector", category: "Form UI", component: n(() => import("./chunks/ErpEntitySelector-XLEStx_M.js")) }), e.registerComponent({ id: "ui.card", category: "UI Blocks", component: n(() => import("./chunks/Card-sv8WQzvB.js")) }), e.registerComponent({ id: "ui.button", category: "UI Blocks", component: n(() => import("./chunks/Button-Cud5Nfh1.js")) }), e.registerComponent({ id: "ui.button-copy", category: "UI Blocks", component: n(() => import("./chunks/ButtonCopy-DsdzXkaa.js")) }), e.registerComponent({ id: "ui.text", category: "UI Blocks", component: n(() => import("./chunks/Typography-CNI1yScN.js")) }), e.registerComponent({ id: "ui.skeleton", category: "UI Blocks", component: n(() => import("./chunks/Skeleton-CfLyDGWt.js")) }), e.registerComponent({ id: "form.input", category: "Form UI", component: n(() => import("./chunks/Input-B0IfgsVG.js")) }), e.registerComponent({ id: "form.input-number", category: "Form UI", component: n(() => import("./chunks/InputNumber-DBRTF-wJ.js")) }), e.registerComponent({ id: "form.switch", category: "Form UI", component: n(() => import("./chunks/InputSwitch-BPvOZo9w.js")) }), e.registerComponent({ id: "InputSwitch", category: "Form UI", component: n(() => import("./chunks/InputSwitch-BPvOZo9w.js")) }), e.registerComponent({ id: "form.textarea", category: "Form UI", component: n(() => import("./chunks/Textarea-BVKFbpBu.js")) }), e.registerComponent({ id: "form.icon-picker", category: "Form UI", component: n(() => import("./chunks/IconPicker-DbgxD0io.js")) }), e.registerComponent({ id: "ui.app-icon", category: "UI Blocks", component: n(() => import("./chunks/AppIcon-CZVJSONO.js")) }), e.registerComponent({ id: "form.field", category: "Form UI", component: n(() => import("./chunks/FormField-DnQICIpP.js")) }), e.registerComponent({ id: "ui.modal", category: "UI Blocks", component: n(() => import("./chunks/Modal-BVG4U5yl.js")) }), e.registerComponent({ id: "ui.search-input", category: "UI Blocks", component: n(() => import("./chunks/SearchInput-CHiFQN2g.js")) }), e.registerComponent({ id: "ui.avatar", category: "UI Blocks", component: n(() => import("./chunks/UserAvatar-DRE3opnT.js")) }), e.registerComponent({ id: "ui.badge", category: "UI Blocks", component: n(() => import("./chunks/Badge-ZzsVRpNl.js")) }), e.registerComponent({ id: "ui.alert", category: "UI Blocks", component: n(() => import("./chunks/Alert-DylOuBAF.js")) }), e.registerComponent({ id: "layout.section-header", category: "Layout UI", component: n(() => import("./chunks/SectionHeader-C8ufun_t.js")) }), e.registerComponent({ id: "layout.mini-app", category: "Layout UI", component: n(() => import("./chunks/MiniAppLayout-DcMLR1CC.js")) }), e.registerComponent({ id: "form.code-editor", category: "Form UI", component: n(() => import("./chunks/CodeEditor-0g7paalJ.js")) }), e.registerComponent({ id: "runtime.studio", category: "Form UI", component: n(() => import("./chunks/CodeEditor-0g7paalJ.js")) }), e.registerComponent({ id: "button.copy", category: "UI Blocks", component: n(() => import("./chunks/ButtonCopy-DsdzXkaa.js")) }), e.registerComponent({ id: "ui.popover", category: "UI Blocks", component: n(() => import("./chunks/Popover-DgBGd8bu.js")) }), e.registerComponent({ id: "ui.popover-trigger", category: "UI Blocks", component: n(() => import("./chunks/PopoverTrigger-CTa-i7wG.js")) }), e.registerComponent({ id: "ui.popover-content", category: "UI Blocks", component: n(() => import("./chunks/PopoverContent-0CCuXPfd.js")) }), e.registerComponent({ id: "ui.context-menu", category: "UI Blocks", component: n(() => import("./chunks/ContextMenu-D1g_2xmd.js")) }), e.registerComponent({ id: "ui.list-manager", category: "UI Blocks", component: n(() => import("./chunks/ListManager-BbjjcqOm.js")) }), e.registerComponent({ id: "ui.dropdown", category: "UI Blocks", component: n(() => import("./chunks/Dropdown-wKllpTqE.js")) }), e.registerComponent({ id: "display.chart", category: "Display UI", component: n(() => import("./chunks/InsightChart-BlF0mgf_.js")) }), e.registerComponent({ id: "display.data-table", category: "Display UI", component: n(() => import("./chunks/DataTable-Bjkce3Yy.js")) }), e.registerComponent({ id: "display.column-settings", category: "Display UI", component: n(() => import("./chunks/ColumnSettings-Bv6YxjSC.js")) }), e.registerComponent({ id: "display.simple-pagination", category: "Display UI", component: n(() => import("./chunks/SimplePagination-Dz9OfQYH.js")) }), e.registerComponent({ id: "display.markdown", category: "Display UI", component: n(() => import("./chunks/Markdown-B7Z-2crI.js")) }), e.registerComponent({ id: "display.image", category: "Display UI", component: n(() => import("./chunks/ImageView-BgLLMszT.js")) }), e.registerComponent({ id: "Table", category: "Table UI", component: n(() => import("./chunks/Table-BLZjeVVX.js")) }), e.registerComponent({ id: "TableBody", category: "Table UI", component: n(() => import("./chunks/TableBody-B62z8Jcx.js")) }), e.registerComponent({ id: "TableCell", category: "Table UI", component: n(() => import("./chunks/TableCell-DEzqxj9e.js")) }), e.registerComponent({ id: "TableHead", category: "Table UI", component: n(() => import("./chunks/TableHead-DFpbn3fx.js")) }), e.registerComponent({ id: "TableHeader", category: "Table UI", component: n(() => import("./chunks/TableHeader-C6oE9KYG.js")) }), e.registerComponent({ id: "TableRow", category: "Table UI", component: n(() => import("./chunks/TableRow-BT1dHX61.js")) }), e.registerComponent({ id: "form.select", category: "Form UI", component: n(() => import("./chunks/Select-Br3bDwg3.js")) }), e.registerComponent({ id: "form.select-content", category: "Form UI", component: n(() => import("./chunks/SelectContent-DJPU2Dbi.js")) }), e.registerComponent({ id: "form.select-item", category: "Form UI", component: n(() => import("./chunks/SelectItem-ExBV4X2S.js")) }), e.registerComponent({ id: "form.select-trigger", category: "Form UI", component: n(() => import("./chunks/SelectTrigger-VqHMXKN7.js")) }), e.registerComponent({ id: "form.select-value", category: "Form UI", component: n(() => import("./chunks/SelectValue-Bo98YXZE.js")) }), e.registerComponent({ id: "ui.icon.shield-check", category: "Icons", component: fe }), e.registerComponent({ id: "ui.icon.user", category: "Icons", component: ge }), e.registerComponent({ id: "ui.icon.lock", category: "Icons", component: me }), e.registerComponent({ id: "ui.icon.arrow-right", category: "Icons", component: it }), e.registerComponent({ id: "ui.icon.search", category: "Icons", component: st }), e.registerComponent({ id: "ui.icon.settings", category: "Icons", component: le }), e.registerComponent({ id: "ui.icon.bell", category: "Icons", component: de }), e.registerComponent({ id: "ui.icon.logout", category: "Icons", component: ct }), e.registerComponent({ id: "ui.icon.chevron-down", category: "Icons", component: lt }), e.registerComponent({ id: "ui.icon.chevron-right", category: "Icons", component: mt }), e.registerComponent({ id: "ui.icon.check", category: "Icons", component: dt }), e.registerComponent({ id: "ui.icon.alert-triangle", category: "Icons", component: se }), e.registerComponent({ id: "ui.icon.info", category: "Icons", component: ce }), e.registerComponent({ id: "ui.icon.x", category: "Icons", component: gt }), { messageService: d, dialogService: p, appState: f, themeConfig: l, uiStore: s };
   }
 }
 const Wt = new Ot();

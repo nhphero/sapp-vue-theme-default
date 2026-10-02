@@ -136,6 +136,8 @@ export class DefaultTheme implements ITheme {
     superApp.registerComponent({ id: 'display.simple-pagination', category: 'Display UI', component: defineAsyncComponent(() => import('./components/data-table/SimplePagination.vue')) });
     // Markdown (GitHub flavoured), sanitised — a package's README, docs. Loaded on first use (marked + DOMPurify).
     superApp.registerComponent({ id: 'display.markdown', category: 'Display UI', component: defineAsyncComponent(() => import('./components/markdown/Markdown.vue')) });
+    // An image that opens large on click (viewer: zoom, original, Esc to close).
+    superApp.registerComponent({ id: 'display.image', category: 'Display UI', component: defineAsyncComponent(() => import('./components/image-view/ImageView.vue')) });
     superApp.registerComponent({ id: 'Table', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/Table.vue')) });
     superApp.registerComponent({ id: 'TableBody', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/TableBody.vue')) });
     superApp.registerComponent({ id: 'TableCell', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/TableCell.vue')) });
