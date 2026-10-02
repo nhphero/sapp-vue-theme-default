@@ -336,6 +336,55 @@ onMounted(() => {
           </div>
           </template>
         </div>
+        <!-- 📱 App switcher, right after the logo: the app you are in; its pages are the band below. -->
+        <span class="h-6 w-px hdr-sep shrink-0" aria-hidden="true"></span>
+        <div class="flex items-center shrink-0 min-w-0">
+          <component :is="$c('ui.dropdown')" class="app-switch" :modelValue="showAppsMenu" @update:modelValue="setAppsMenu($event)" search :search-placeholder="$t('shell.searchApps')">
+          <template #trigger>
+            <!-- 📱 Apps Switcher Button -->
+            <button type="button" class="app-chip flex items-center gap-2 transition-colors outline-none group/app"
+                    :title="$t('shell.apps')" :aria-label="$t('shell.apps')" data-testid="apps-switch">
+              <span class="w-7 h-7 rounded-md grid place-items-center shrink-0 transition-colors"
+                    :class="currentApp.id === 'default' ? 'bg-muted text-muted-foreground' : 'bg-primary-soft text-primary'">
+                <component :is="currentApp.icon" :size="16" />
+              </span>
+              <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
+              <span v-if="appVersion" class="app-version" data-testid="current-app-version" :title="appVersionTitle">{{ appVersion }}</span>
+              <ChevronDown :size="14" class="text-faint group-hover/app:text-foreground transition-colors" />
+            </button>
+          </template>
+
+          <template #content="{ query }">
+            <!-- One column, one app per row: favourites, then most recently used (sapp:app-last-used), then by name. -->
+            <div class="apps-menu">
+              <div class="apps-menu__all">
+              <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
+              <section v-for="sec in appSections(query)" :key="sec.key" class="pt-1 last:pb-3" :data-testid="`apps-section-${sec.key}`">
+              <div v-if="sec.label" class="pop-head flex items-center gap-1.5">{{ sec.label }}<span class="text-faint font-normal">{{ sec.tiles.length }}</span></div>
+              <div class="apps-list">
+                <div v-for="tile in sec.tiles" :key="tile.key" role="button" tabindex="0" class="apps-item group"
+                     :aria-current="tile.id === currentApp.id ? 'true' : undefined" @click="tile.run()" @keydown.enter="tile.run()">
+                  <span class="apps-item__icon"><component :is="tile.icon" :size="16" stroke-width="1.75" /></span>
+                  <span class="apps-item__text">
+                    <span class="apps-item__name">
+                      <span class="truncate">{{ tile.label }}</span>
+                      <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title" data-testid="tile-version">{{ tileVersions[tile.id].label }}</span>
+                    </span>
+                  </span>
+                  <span v-if="usedLabel(tile.id)" class="apps-item__used" :title="new Date(lastUsed[tile.id]).toLocaleString()" data-testid="tile-last-used">{{ usedLabel(tile.id) }}</span>
+                  <button type="button" class="icon-btn apps-item__star"
+                          :aria-pressed="isFavorite(tile.key)" :aria-label="$t('shell.toggleFavorite')" data-testid="tile-star" @click.stop="toggleFavorite(tile.key)">
+                    <Star :size="14" :class="isFavorite(tile.key) ? 'fill-warning text-warning' : 'text-faint'" />
+                  </button>
+                </div>
+              </div>
+              </section>
+              </div>
+            </div>
+          </template>
+          </component>
+        </div>
+
       </div>
  
       <!-- 👤 Right Section: User & Actions -->
@@ -404,55 +453,6 @@ onMounted(() => {
          Recessed surface so it reads as nested inside the Shell row above, not as a sibling of it. -->
     <div class="app-band">
       <div class="page-container flex items-stretch gap-3">
-        <div class="flex items-stretch shrink-0">
-          <component :is="$c('ui.dropdown')" class="app-switch" :modelValue="showAppsMenu" @update:modelValue="setAppsMenu($event)" search :search-placeholder="$t('shell.searchApps')">
-          <template #trigger>
-            <!-- 📱 Apps Switcher Button -->
-            <button type="button" class="app-chip flex items-center gap-2 transition-colors outline-none group/app"
-                    :title="$t('shell.apps')" :aria-label="$t('shell.apps')" data-testid="apps-switch">
-              <span class="w-7 h-7 rounded-md grid place-items-center shrink-0 transition-colors"
-                    :class="currentApp.id === 'default' ? 'bg-muted text-muted-foreground' : 'bg-primary-soft text-primary'">
-                <component :is="currentApp.icon" :size="16" />
-              </span>
-              <span class="text-sm font-semibold text-foreground whitespace-nowrap" data-testid="current-app">{{ currentApp.label }}</span>
-              <span v-if="appVersion" class="app-version" data-testid="current-app-version" :title="appVersionTitle">{{ appVersion }}</span>
-              <ChevronDown :size="14" class="text-faint group-hover/app:text-foreground transition-colors" />
-            </button>
-          </template>
-
-          <template #content="{ query }">
-            <!-- One column, one app per row: favourites, then most recently used (sapp:app-last-used), then by name. -->
-            <div class="apps-menu">
-              <div class="apps-menu__all">
-              <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
-              <section v-for="sec in appSections(query)" :key="sec.key" class="pt-1 last:pb-3" :data-testid="`apps-section-${sec.key}`">
-              <div v-if="sec.label" class="pop-head flex items-center gap-1.5">{{ sec.label }}<span class="text-faint font-normal">{{ sec.tiles.length }}</span></div>
-              <div class="apps-list">
-                <div v-for="tile in sec.tiles" :key="tile.key" role="button" tabindex="0" class="apps-item group"
-                     :aria-current="tile.id === currentApp.id ? 'true' : undefined" @click="tile.run()" @keydown.enter="tile.run()">
-                  <span class="apps-item__icon"><component :is="tile.icon" :size="16" stroke-width="1.75" /></span>
-                  <span class="apps-item__text">
-                    <span class="apps-item__name">
-                      <span class="truncate">{{ tile.label }}</span>
-                      <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title" data-testid="tile-version">{{ tileVersions[tile.id].label }}</span>
-                    </span>
-                    <span v-if="tile.detail" class="apps-item__detail">{{ tile.detail }}</span>
-                  </span>
-                  <span v-if="usedLabel(tile.id)" class="apps-item__used" :title="new Date(lastUsed[tile.id]).toLocaleString()" data-testid="tile-last-used">{{ usedLabel(tile.id) }}</span>
-                  <button type="button" class="icon-btn apps-item__star"
-                          :aria-pressed="isFavorite(tile.key)" :aria-label="$t('shell.toggleFavorite')" data-testid="tile-star" @click.stop="toggleFavorite(tile.key)">
-                    <Star :size="14" :class="isFavorite(tile.key) ? 'fill-warning text-warning' : 'text-faint'" />
-                  </button>
-                </div>
-              </div>
-              </section>
-              </div>
-            </div>
-          </template>
-          </component>
-        </div>
-
-        <div v-if="showAppNav" class="app-band__sep shrink-0"></div>
 
         <nav v-if="showAppNav" class="tabs tabs--band min-w-0 overflow-x-auto no-scrollbar" role="tablist" data-testid="app-nav">
           <template v-for="section in bandSections" :key="section.group ?? section.item.path">
@@ -519,7 +519,6 @@ onMounted(() => {
 .apps-item__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .apps-item__name { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; font-size: var(--text-sm); font-weight: 600; }
 .apps-item:hover .apps-item__name { color: var(--primary); }
-.apps-item__detail { font-size: var(--text-xs); color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .apps-item__used { flex: none; font-size: var(--text-xs); color: var(--faint); white-space: nowrap; }
 .apps-item__star { flex: none; width: calc(var(--touch) * 0.64); height: calc(var(--touch) * 0.64); opacity: 0; }
 .apps-item:hover .apps-item__star, .apps-item__star:focus-visible, .apps-item__star[aria-pressed="true"] { opacity: 1; }
@@ -609,20 +608,17 @@ onMounted(() => {
   border: 0;
 }
 .app-band .page-container { height: var(--header-band-h); }
-/* Between the app's name and its pages. */
-.app-band__sep { align-self: center; height: 45%; width: 1px; background: var(--header-border); }
 
-/* The switcher names the app: plain text on the band (no plate), its icon in the brand's soft colour.
-   It fills the band's height so the whole strip is clickable. */
-.app-switch { align-self: stretch; }
-.app-switch > div:first-child { height: 100%; }
+/* The switcher names the app, right after the logo: plain text on the brand row (a plate on hover),
+   its icon in the brand's soft colour. */
 .app-chip {
-  height: 100%;
-  padding: 0 var(--sp-2) 0 0;
+  height: calc(var(--touch) * 0.8);
+  padding: 0 var(--sp-2) 0 calc(var(--sp-1) * 1.5);
   border: 0;
-  border-radius: 0;
+  border-radius: var(--radius);
   background: transparent;
 }
+.app-chip:hover { background: var(--header-hover-bg); }
 .app-chip span { color: var(--header-fg); }
 .app-chip span:first-child { width: var(--sp-6); height: var(--sp-6); background: var(--header-active-bg); color: var(--header-active-fg); }
 .app-chip .app-version { color: var(--header-muted-fg); background: var(--header-hover-bg); border-color: transparent; }
@@ -639,6 +635,8 @@ onMounted(() => {
   scrollbar-width: none;   /* `no-scrollbar` is not a defined utility in this theme */
 }
 .tabs--band::-webkit-scrollbar { display: none; }
+/* The first label lines up with the logo above it (tabs carry their own side padding). */
+.tabs--band { margin-left: calc(var(--sp-3) * -1); }
 .tabs--band .tab {
   height: 100%;
   padding: 0 var(--sp-3);
