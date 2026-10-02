@@ -311,33 +311,11 @@ onMounted(() => {
 <template>
   <!-- One block: the brand row and the app band share the header surface; the menu's active item is colour. -->
   <header class="shell-header w-full sticky top-0 z-[100] transition-colors duration-300">
-    <div class="page-container shell-header__row flex items-center justify-between gap-4">
-      
-      <!-- 🗺️ Left Section: Branding & Navigation -->
-      <div class="flex items-center gap-3 min-w-0">
-        <div class="flex items-center gap-3 cursor-pointer group/logo" data-testid="brand" :title="branding?.name" @click="router.push(branding?.homePath || '/')">
-          <!-- 🏷️ Brand logo from createSapp({ branding }); dark surfaces get the dark variant or a light plate -->
-          <template v-if="branding?.logo">
-            <img v-if="headerDark && branding.logoDark" :src="branding.logoDark" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
-            <span v-else class="inline-flex items-center rounded-md" :class="headerDark && 'bg-white/95 px-2 py-1'">
-              <img :src="branding.logo" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
-            </span>
-            <span v-if="branding.tagline" class="hidden lg:block text-[10px] font-bold uppercase tracking-[0.2em] hdr-faint border-l hdr-line pl-3">{{ branding.tagline }}</span>
-          </template>
-          <template v-else>
-          <div class="relative">
-            <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft">
-              <span class="text-primary-foreground font-black text-xs tracking-tighter">MP</span>
-            </div>
-          </div>
-          <div class="flex flex-col text-left">
-            <span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1">Antigravity</span>
-            <span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint">Core OS v5</span>
-          </div>
-          </template>
-        </div>
-        <!-- 📱 App switcher, right after the logo: the app you are in; its pages are the band below. -->
-        <span class="h-6 w-px hdr-sep shrink-0" aria-hidden="true"></span>
+    <!-- Brand row: the app switcher left, the logo centred, language and user right. Wider than the
+         menu row below (its own container), so the logo reads as the platform's and the menu as the app's. -->
+    <div class="shell-header__row shell-header__wide">
+      <!-- 📱 App switcher: the app you are in; its pages are the band below. -->
+      <div class="flex items-center min-w-0 justify-self-start">
         <div class="flex items-center shrink-0 min-w-0">
           <component :is="$c('ui.dropdown')" class="app-switch" :modelValue="showAppsMenu" @update:modelValue="setAppsMenu($event)" search :search-placeholder="$t('shell.searchApps')">
           <template #trigger>
@@ -386,9 +364,34 @@ onMounted(() => {
         </div>
 
       </div>
- 
+
+      <!-- 🏷️ Logo, centred -->
+      <div class="flex items-center justify-center min-w-0">
+        <div class="flex items-center gap-3 cursor-pointer group/logo" data-testid="brand" :title="branding?.name" @click="router.push(branding?.homePath || '/')">
+          <!-- 🏷️ Brand logo from createSapp({ branding }); dark surfaces get the dark variant or a light plate -->
+          <template v-if="branding?.logo">
+            <img v-if="headerDark && branding.logoDark" :src="branding.logoDark" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
+            <span v-else class="inline-flex items-center rounded-md" :class="headerDark && 'bg-white/95 px-2 py-1'">
+              <img :src="branding.logo" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
+            </span>
+            <span v-if="branding.tagline" class="hidden lg:block text-[10px] font-bold uppercase tracking-[0.2em] hdr-faint border-l hdr-line pl-3">{{ branding.tagline }}</span>
+          </template>
+          <template v-else>
+          <div class="relative">
+            <div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft">
+              <span class="text-primary-foreground font-black text-xs tracking-tighter">MP</span>
+            </div>
+          </div>
+          <div class="flex flex-col text-left">
+            <span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1">Antigravity</span>
+            <span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint">Core OS v5</span>
+          </div>
+          </template>
+        </div>
+      </div>
+
       <!-- 👤 Right Section: User & Actions -->
-      <div class="flex items-center gap-2">
+      <div class="flex items-center gap-2 justify-self-end">
         <div class="hidden md:flex items-center gap-1 flex-nowrap shrink-0">
            <!-- 🌐 Language switcher -->
            <component :is="$c('ui.dropdown')" v-if="i18n" :modelValue="showLangMenu" @update:modelValue="showLangMenu = $event" align="right">
@@ -591,6 +594,12 @@ onMounted(() => {
   box-shadow: var(--shell-header-shadow, var(--header-shadow));
 }
 .shell-header__row { height: var(--header-row-h); }
+/* Three columns: the centre (logo) stays centred whatever the sides hold. The row is wider than the
+   page container the menu row uses. */
+.shell-header__wide {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: center; gap: var(--sp-4);
+  width: 100%; max-width: calc(var(--container) + var(--sp-8) * 6); margin: 0 auto; padding: 0 var(--sp-6);
+}
 /* Brand row: its own classes, not the semantic utilities — the dropdowns open inside the header and
    must keep the page's colours. */
 .hdr-ink { color: var(--header-fg); }
