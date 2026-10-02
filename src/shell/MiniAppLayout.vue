@@ -122,8 +122,24 @@ const publish = () => {
   shellNav.navigate = go
 }
 watch(() => [props.nav, props.active, props.variant, props.title, props.icon], publish, { immediate: true, deep: true })
-// Back from the Shell's route cache: the header band shows this app's menu again.
-onActivated(publish)
+
+/**
+ * The page on screen, for the Shell (kernel module state `shell.page`: `{ app, name }`) — every variant:
+ * the Shell titles the browser tab and its navigation history from it. Its name: the page's own title
+ * (`pageTitle`), else its menu item's label, else the app's title.
+ */
+const shellPage = $s?.getModuleState?.('shell.page', { app: '', name: '' })
+const pageName = computed(() => props.pageTitle || activeItem.value?.label || props.title || '')
+const publishPage = () => {
+  if (!shellPage) return
+  shellPage.app = props.title ?? ''
+  shellPage.name = pageName.value
+}
+watch(pageName, publishPage, { immediate: true })
+onBeforeUnmount(() => { if (shellPage && shellPage.app === (props.title ?? '')) Object.assign(shellPage, { app: '', name: '' }) })
+
+// Back from the Shell's route cache: the header band shows this app's menu again, the page its name.
+onActivated(() => { publish(); publishPage() })
 onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign(shellNav, { title: '', icon: null, items: [], active: '', navigate: null }) })
 </script>
 
