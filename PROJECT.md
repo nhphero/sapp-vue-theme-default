@@ -75,7 +75,7 @@ Trong dropdown chuyển app, **mỗi app (ô trong lưới và pill ở hàng G�
 
 ## Header: app gần đây
 
-Dropdown chuyển app có hàng **Gần đây** ở trên cùng: tối đa 5 app vừa mở (mới nhất trước, không tính app đang mở), dạng pill nhỏ, lọc theo ô tìm kiếm. Lưu theo trình duyệt ở localStorage `sapp:recent-apps` (mọi truy cập bọc try/catch — storage bị chặn thì hàng chỉ sống trong phiên). Nhãn `shell.recent` nằm trong i18n của `vue-sapp`.
+Dropdown chuyển app chia **2 cột**: có app **Gần đây** thì cột trái (hẹp, nền `--muted`) là danh sách dọc các app vừa mở — tối đa 5 (Admin → Config `apps.recentCount`), mới nhất trước, không tính app đang mở, kèm version, lọc theo ô tìm kiếm; cột phải là mọi app (lưới 2 cột). Không có app gần đây thì danh sách app chiếm hết. Màn hẹp (≤ 720px) hai phần xếp chồng. Kích thước theo token (`.apps-menu`, `.recent-apps`). Lưu theo trình duyệt ở localStorage `sapp:recent-apps` (mọi truy cập bọc try/catch — storage bị chặn thì hàng chỉ sống trong phiên). Nhãn `shell.recent` nằm trong i18n của `vue-sapp`.
 
 ## Ghi chú component
 
