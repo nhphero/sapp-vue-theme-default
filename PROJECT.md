@@ -124,3 +124,12 @@ original, Esc / outside click to close. `:preview="false"` keeps a plain image; 
 - `AppContainer` chạy được trong `<KeepAlive>` (một container mỗi app): khi ẩn bỏ qua mọi đổi route (trang khác / app khác — chỉ phản ứng với route có slug nó được mount); khi hiện lại lấy lại CSS scope của app và `runPathAction` sub-path hiện tại. `MiniAppLayout` `onActivated` publish lại menu lên dải header (`shell.nav`).
 - **Header một khối**: hàng brand (logo, ngôn ngữ, user) và dải app (chọn app, menu của app, điểm cắm `shell.band`) nằm chung nền `--card`, một viền + bóng nhẹ bên dưới, ngăn nhau bằng đường `--border-soft`. Mục menu: chữ `--muted-foreground`, hover `--foreground` trên `--muted`, mục đang mở `--primary` trên `--primary-soft`; nút chọn app nền `--muted`, icon trên `--primary-soft`. Tất cả từ token — đổi brand / sáng tối / độ tương phản là header đổi theo.
 - **`shell.page`**: `MiniAppLayout` publish trang đang hiển thị `{ app, name }` (tên = `pageTitle`, rồi nhãn mục menu, rồi tên app) ở mọi variant, lại khi được kích hoạt từ cache; Shell theme dùng để đặt tiêu đề tab trình duyệt và tên tab lịch sử.
+
+## `$hook`: `shell.hook-slot`, `.hook-btn`, `display.file`
+
+- **`shell.hook-slot`** (`shell/HookSlot.vue`) — `<component :is="$c('shell.hook-slot')" name="shell.menu.end" />` vẽ các entry của slot `$hook` (props `name`, `tag`, `context` — truyền thêm cho mọi entry). Slot trống không vẽ gì, kể cả wrapper.
+- Header đặt slot: `shell.header.start` (sau logo), `shell.header.end` (trước ngôn ngữ), `shell.menu.end` (đầu phải band — hiện cả khi chỉ có entry hook; layout sidebar: bên phải header), `shell.user-menu` (trên Sign out, `context.close`), `shell.sidebar.bottom` (trên nút thu gọn). `shell.footer` và `shell.overlay` do layout của Shell theme đặt (theme dashboard: `DashboardLayout.vue`).
+- **`.hook-btn`** (CSS global trong HookSlot.vue) — nút icon cho plugin: vuông `--control-h`, lấy màu chữ của vùng chứa (trên band: `--app-band-fg`), nền nhạt khi hover / `aria-pressed`; badge `.hook-btn__dot`, `.hook-btn__count`.
+- **`display.file`** (`components/file-view/FileView.vue`) — props `file { name, url, type?, size? }`, `mode` view|edit, `height`. Hỏi `$hook.resolve('file.viewer', file)` trước (plugin OnlyOffice…), không ai nhận thì: ảnh → `display.image`, PDF → iframe, còn lại → thẻ Open / Download.
+- `AppContainer` emit `app.mount { appId, moduleId }` sau khi mount mini app.
+
