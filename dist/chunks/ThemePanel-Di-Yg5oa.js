@@ -1,6 +1,6 @@
 import { defineComponent as E, inject as f, computed as N, ref as I, openBlock as a, createBlock as k, Teleport as A, createVNode as b, Transition as B, withCtx as F, unref as s, createElementBlock as r, createElementVNode as t, toDisplayString as l, normalizeClass as M, Fragment as p, renderList as c, createTextVNode as h, createCommentVNode as m, normalizeStyle as y } from "vue";
 import { Palette as P, X as V, Maximize2 as D, RotateCcw as O, Check as j, Copy as X } from "lucide-vue-next";
-import { _ as H } from "./LocaleFlag.vue_vue_type_script_setup_true_lang-D2eeZNym.js";
+import { L as H } from "./LocaleFlag-C6SPRotW.js";
 import { _ as R } from "./_plugin-vue_export-helper-CHgC5LLL.js";
 const W = {
   key: 0,
@@ -37,16 +37,16 @@ const W = {
 }, kt = {
   class: "tp-seg",
   role: "group"
-}, $t = ["aria-pressed", "onClick"], ft = { class: "tp-row" }, Ct = { class: "tp-out" }, wt = ["value"], Tt = { class: "tp-row" }, Lt = { class: "tp-out" }, zt = ["value"], St = { class: "tp-row" }, Et = ["value"], Nt = ["label"], It = ["value"], At = ["label"], Bt = ["value"], Ft = { class: "tp-actions" }, Mt = ["disabled"], Pt = /* @__PURE__ */ E({
+}, $t = ["aria-pressed", "onClick"], ft = { class: "tp-row" }, Ct = { class: "tp-out" }, wt = ["value"], Lt = { class: "tp-row" }, Tt = { class: "tp-out" }, zt = ["value"], St = { class: "tp-row" }, Et = ["value"], Nt = ["label"], It = ["value"], At = ["label"], Bt = ["value"], Ft = { class: "tp-actions" }, Mt = ["disabled"], Pt = /* @__PURE__ */ E({
   __name: "ThemePanel",
   setup(Vt) {
     const o = f("$themeConfig"), $ = f("$superApp"), v = $?.$i18n, C = { vi: "Tiếng Việt", en: "English" }, w = () => {
       o.toggle(!1), $?.$router?.push("/system/theme");
-    }, u = o.state, T = [
+    }, u = o.state, L = [
       { id: "light", label: "theme.light" },
       { id: "dark", label: "theme.dark" },
       { id: "system", label: "theme.system" }
-    ], L = [{ v: 0.9, label: "theme.compact" }, { v: 1, label: "theme.normal" }, { v: 1.1, label: "theme.spacious" }], z = N(() => !!u.brand && !o.swatches.some((n) => n.hex.toLowerCase() === u.brand.toLowerCase())), _ = I(!1), S = async () => {
+    ], T = [{ v: 0.9, label: "theme.compact" }, { v: 1, label: "theme.normal" }, { v: 1.1, label: "theme.spacious" }], z = N(() => !!u.brand && !o.swatches.some((n) => n.hex.toLowerCase() === u.brand.toLowerCase())), _ = I(!1), S = async () => {
       try {
         await navigator.clipboard.writeText(o.exportTokens()), _.value = !0, setTimeout(() => _.value = !1, 1400);
       } catch {
@@ -93,7 +93,7 @@ const W = {
               t("div", U, [
                 t("span", null, l(n.$t("theme.mode")), 1),
                 t("div", Y, [
-                  (a(), r(p, null, c(T, (e) => t("button", {
+                  (a(), r(p, null, c(L, (e) => t("button", {
                     key: e.id,
                     type: "button",
                     "aria-pressed": s(u).mode === e.id,
@@ -155,7 +155,7 @@ const W = {
               t("div", it, [
                 t("span", null, l(n.$t("theme.density")), 1),
                 t("div", rt, [
-                  (a(), r(p, null, c(L, (e) => t("button", {
+                  (a(), r(p, null, c(T, (e) => t("button", {
                     key: e.v,
                     type: "button",
                     "aria-pressed": s(u).density === e.v,
@@ -223,10 +223,10 @@ const W = {
                   onInput: i[4] || (i[4] = (e) => s(o).set({ radius: Number(e.target.value) }))
                 }, null, 44, wt)
               ]),
-              t("div", Tt, [
+              t("div", Lt, [
                 t("span", null, [
                   h(l(n.$t("theme.shadow")) + " ", 1),
-                  t("output", Lt, l(s(u).shadow.toFixed(1)) + "×", 1)
+                  t("output", Tt, l(s(u).shadow.toFixed(1)) + "×", 1)
                 ]),
                 t("input", {
                   class: "tp-range",
@@ -333,4 +333,4 @@ const W = {
 export {
   Ht as default
 };
-//# sourceMappingURL=ThemePanel-Uc2h0rYa.js.map
+//# sourceMappingURL=ThemePanel-Di-Yg5oa.js.map

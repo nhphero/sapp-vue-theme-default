@@ -1,9 +1,9 @@
-import { defineComponent as Ke, computed as v, ref as b, inject as Be, watch as U, onBeforeUnmount as Fe, onMounted as He, openBlock as s, createElementBlock as n, createElementVNode as l, normalizeClass as L, createBlock as p, Teleport as he, resolveDynamicComponent as h, withCtx as S, toDisplayString as d, createCommentVNode as c, Fragment as g, renderList as $, createTextVNode as X, withKeys as Ge, withModifiers as Z, createVNode as _, unref as r, createStaticVNode as Je } from "vue";
+import { defineComponent as Ke, computed as v, ref as b, inject as Fe, watch as U, onBeforeUnmount as Be, onMounted as He, openBlock as s, createElementBlock as n, createElementVNode as l, normalizeClass as L, createBlock as p, Teleport as he, resolveDynamicComponent as h, withCtx as S, toDisplayString as d, createCommentVNode as c, Fragment as g, renderList as $, createTextVNode as X, withKeys as Ge, withModifiers as Z, createVNode as _, unref as r, createStaticVNode as Je } from "vue";
 import { appIcon as We } from "../index.js";
 import { useRouter as Ye, useRoute as Qe } from "vue-router";
-import { LayoutGrid as me, Star as Xe, ChevronDown as F, Check as ge, User as Ze, Palette as qe, LogOut as et, PanelLeftOpen as tt, PanelLeftClose as at } from "lucide-vue-next";
+import { LayoutGrid as me, Star as Xe, ChevronDown as B, Check as ge, User as Ze, Palette as qe, LogOut as et, PanelLeftOpen as tt, PanelLeftClose as at } from "lucide-vue-next";
 import { SUPERAPP_EVENTS as st } from "@nhphero/vue-sapp/contracts";
-import { _ as fe } from "./LocaleFlag.vue_vue_type_script_setup_true_lang-D2eeZNym.js";
+import { L as fe } from "./LocaleFlag-C6SPRotW.js";
 import { _ as be } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
 import { _ as lt } from "./_plugin-vue_export-helper-CHgC5LLL.js";
 const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "shell-header w-full transition-colors duration-300" }, it = ["title", "aria-label"], rt = {
@@ -26,7 +26,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
   type: "button",
   class: "h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hdr-btn cursor-pointer transition-colors outline-none",
   "data-testid": "user-menu"
-}, jt = { class: "hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap" }, Tt = { class: "w-60" }, Pt = { class: "flex items-center gap-3 px-2 py-2.5 mb-1 border-b border-border-soft" }, Kt = { class: "min-w-0" }, Bt = { class: "text-sm font-semibold text-foreground truncate" }, Ft = { class: "text-xs text-faint truncate" }, Ht = { class: "page-container flex items-stretch gap-3" }, Gt = {
+}, jt = { class: "hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap" }, Tt = { class: "w-60" }, Pt = { class: "flex items-center gap-3 px-2 py-2.5 mb-1 border-b border-border-soft" }, Kt = { class: "min-w-0" }, Ft = { class: "text-sm font-semibold text-foreground truncate" }, Bt = { class: "text-xs text-faint truncate" }, Ht = { class: "page-container flex items-stretch gap-3" }, Gt = {
   key: 0,
   id: "shell-band-switch",
   class: "flex items-center shrink-0"
@@ -82,10 +82,10 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
         localStorage.setItem(_e, String(y.value));
       } catch {
       }
-    }, u = Be("$superApp"), ee = u.getModuleState("shell.layout", { sidebar: !1 });
+    }, u = Fe("$superApp"), ee = u.getModuleState("shell.layout", { sidebar: !1 });
     U(w, (e) => {
       ee.sidebar = e;
-    }, { immediate: !0 }), Fe(() => {
+    }, { immediate: !0 }), Be(() => {
       w.value && (ee.sidebar = !1);
     });
     const M = u, D = Ye(), te = Qe(), O = M.$appState, H = M.$themeConfig, x = v(() => M.$config?.branding ?? null), Se = v(() => H?.state?.mode === "dark" || H?.state?.mode === "system" && window.matchMedia?.("(prefers-color-scheme: dark)").matches), $e = ["brand", "gradient", "dark"], ae = v(() => Se.value || $e.includes(H?.state?.header)), z = M.$i18n, G = b(!1), Ae = { vi: "Tiếng Việt", en: "English", ja: "日本語", ko: "한국어", zh: "中文", fr: "Français", de: "Deutsch" }, Ce = (e) => {
@@ -178,13 +178,13 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
         t ? (t.items.push(a), t.icon ??= a.groupIcon) : e.push({ group: a.group, icon: a.groupIcon, items: [a] });
       }
       return e;
-    }), Y = (e) => e.find((a) => m.active === a.path) ?? null, B = v({
+    }), Y = (e) => e.find((a) => m.active === a.path) ?? null, F = v({
       get: () => O.current_workspace,
       set: (e) => {
         O.current_workspace = e;
       }
     });
-    v(() => V.value.find((e) => String(e.id) === String(B.value)) || V.value[0]), U(() => te.params.moduleId, (e) => {
+    v(() => V.value.find((e) => String(e.id) === String(F.value)) || V.value[0]), U(() => te.params.moduleId, (e) => {
       const a = Array.isArray(e) ? e[0] : e, t = a && (u.findAppByRoute?.(a)?.id ?? a);
       t && O.current_app !== t && (O.current_app = t);
     }, { immediate: !0 });
@@ -205,8 +205,8 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
       try {
         const e = await u.doAction("workspace.list");
         V.value = e || [];
-        const a = V.value.find((t) => String(t.id) === String(B.value));
-        (!B.value || !a) && V.value.length > 0 && (B.value = String(V.value[0].id));
+        const a = V.value.find((t) => String(t.id) === String(F.value));
+        (!F.value || !a) && V.value.length > 0 && (F.value = String(V.value[0].id));
       } catch {
       }
     }, Te = async () => {
@@ -268,7 +268,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                         "data-testid": "current-app-version",
                         title: W.value
                       }, d(K.value), 9, dt)) : c("", !0),
-                      _(r(F), {
+                      _(r(B), {
                         size: 14,
                         class: "text-faint group-hover/app:text-foreground transition-colors"
                       })
@@ -396,7 +396,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                       locale: r(z).locale,
                       size: 20
                     }, null, 8, ["locale"]),
-                    _(r(F), {
+                    _(r(B), {
                       size: 13,
                       class: "hdr-faint"
                     })
@@ -445,7 +445,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                     size: 28,
                     rounded: "lg"
                   }, null, 8, ["src", "name"]),
-                  _(r(F), {
+                  _(r(B), {
                     size: 13,
                     class: "hdr-faint"
                   })
@@ -461,8 +461,8 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                       rounded: "lg"
                     }, null, 8, ["src", "name"]),
                     l("div", Kt, [
-                      l("div", Bt, d(f.value?.username), 1),
-                      l("div", Ft, d(f.value?.email || f.value?.role), 1)
+                      l("div", Ft, d(f.value?.username), 1),
+                      l("div", Bt, d(f.value?.email || f.value?.role), 1)
                     ])
                   ]),
                   l("button", {
@@ -559,7 +559,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                         })) : c("", !0),
                         X(" " + d(t.group) + " ", 1),
                         Y(t.items) ? (s(), n("span", Zt, "· " + d(Y(t.items).label), 1)) : c("", !0),
-                        _(r(F), { size: 12 })
+                        _(r(B), { size: 12 })
                       ], 40, Xt)
                     ]),
                     _: 2
@@ -671,4 +671,4 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
 export {
   $a as default
 };
-//# sourceMappingURL=Header-BumwLDCp.js.map
+//# sourceMappingURL=Header-DqGUmVR5.js.map

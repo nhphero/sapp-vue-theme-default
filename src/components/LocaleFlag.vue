@@ -13,7 +13,9 @@ const known = computed(() => KNOWN.has(code.value));
 </script>
 
 <template>
-  <svg v-if="known" :width="size" :height="Math.round(size * 0.7)" viewBox="0 0 30 21" class="rounded-[3px] shrink-0 shadow-sm" aria-hidden="true">
+  <!-- The frame (3:2.1) clips and rounds; the flag fills it (`slice`), so no corner is cut or left empty at any size. -->
+  <span v-if="known" class="locale-flag" :style="{ width: size + 'px', height: (size * 0.7) + 'px' }" aria-hidden="true">
+  <svg viewBox="0 0 30 21" preserveAspectRatio="xMidYMid slice">
     <!-- Việt Nam -->
     <template v-if="code === 'vi'">
       <rect width="30" height="21" fill="#DA251D" />
@@ -48,6 +50,12 @@ const known = computed(() => KNOWN.has(code.value));
       <rect width="30" height="7" fill="#000" /><rect y="7" width="30" height="7" fill="#DD0000" /><rect y="14" width="30" height="7" fill="#FFCE00" />
     </template>
   </svg>
+  </span>
   <span v-else class="inline-flex items-center justify-center rounded-[3px] bg-muted text-faint font-mono font-bold uppercase shrink-0"
         :style="{ width: size + 'px', height: Math.round(size * 0.7) + 'px', fontSize: Math.round(size * 0.45) + 'px' }" aria-hidden="true">{{ code.slice(0, 2) }}</span>
 </template>
+
+<style scoped>
+.locale-flag { display: inline-block; flex: none; overflow: hidden; border-radius: 3px; box-shadow: 0 0 0 1px rgb(0 0 0 / .08); line-height: 0; }
+.locale-flag svg { display: block; width: 100%; height: 100%; }
+</style>
