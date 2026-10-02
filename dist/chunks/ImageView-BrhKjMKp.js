@@ -116,8 +116,8 @@ const T = ["role", "tabindex", "title", "onKeydown"], j = ["src", "alt"], F = ["
       ]))
     ], 42, T));
   }
-}), Y = /* @__PURE__ */ D(P, [["__scopeId", "data-v-4f199cc8"]]);
+}), Y = /* @__PURE__ */ D(P, [["__scopeId", "data-v-0d259d08"]]);
 export {
   Y as default
 };
-//# sourceMappingURL=ImageView-BgLLMszT.js.map
+//# sourceMappingURL=ImageView-BrhKjMKp.js.map

@@ -89,7 +89,7 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
 .image-view__empty { color: var(--faint); }
 
 /* Viewer: full screen, dark scrim, a bar on top, the image centred. */
-.image-viewer { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: rgb(8 10 12 / .86); }
+.image-viewer { position: fixed; inset: 0; z-index: 1000; display: flex; flex-direction: column; background: rgb(8 10 12 / .94); backdrop-filter: blur(6px); }
 .image-viewer__bar { display: flex; align-items: center; gap: var(--sp-1); padding: var(--sp-2) var(--sp-3); color: #fff; }
 .image-viewer__title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--text-sm); font-weight: 600; }
 .image-viewer__zoom { margin-right: var(--sp-2); font-size: var(--text-xs); font-variant-numeric: tabular-nums; opacity: .7; }
@@ -98,7 +98,8 @@ onBeforeUnmount(() => window.removeEventListener('keydown', onKey));
 .image-viewer__btn:disabled { opacity: .35; cursor: default; }
 .image-viewer__stage { flex: 1; min-height: 0; overflow: auto; display: grid; place-items: center; padding: var(--sp-6); }
 .image-viewer__img {
-  max-width: min(90vw, 1600px); max-height: calc(100vh - var(--control-h) * 3); object-fit: contain; transform-origin: center;
+  /* Large whatever its own size: a small logo / icon is scaled up to the stage (kept in proportion). */
+  width: min(80vw, 1200px); height: auto; max-height: calc(100vh - var(--control-h) * 3); object-fit: contain; transform-origin: center;
   transition: transform var(--dur) var(--ease); border-radius: var(--radius); box-shadow: var(--shadow-lg);
   /* checkerboard: transparent parts of a logo / icon stay visible */
   background: repeating-conic-gradient(#e9ecef 0% 25%, #fff 0% 50%) 50% / 16px 16px;
