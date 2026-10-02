@@ -306,7 +306,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <header class="w-full bg-background sticky top-0 z-[100] transition-colors duration-300">
+  <!-- One block: the brand row and the app band share the header surface; the menu's active item is colour. -->
+  <header class="shell-header w-full sticky top-0 z-[100] transition-colors duration-300">
     <div class="page-container h-(--header-h) flex items-center justify-between gap-4">
       
       <!-- 🗺️ Left Section: Branding & Navigation -->
@@ -574,23 +575,26 @@ onMounted(() => {
    both read `--secondary` and neither owns a colour of its own. Tune the surface
    in `hoff/tokens.css`, once, and they stay in step. */
 .app-band__end { margin-left: auto; display: flex; align-items: center; gap: var(--sp-1); padding-left: var(--sp-3); flex: none; }
+/* The header is one block: brand row and app band on the same surface, one edge below them. */
+.shell-header {
+  background: var(--card);
+  border-bottom: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+}
 .app-band {
-  --app-band:        var(--secondary);
-  --app-band-fg:     var(--secondary-foreground);
+  /* The band sits on the header's surface: ink and surface come from it, the menu's state from the brand. */
+  --app-band:        var(--card);
+  --app-band-fg:     var(--foreground);
 
-  background: var(--app-band);
+  background: transparent;
   border: 0;
-  /* Light-on-dark is over-thickened by subpixel rendering — text looks fat and
-     slightly blurred, which is what reads as "wrong font". Grayscale smoothing
-     restores the weight the typeface was drawn at. */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  border-top: 1px solid var(--border-soft);
 }
 
 /* A full header-height band: the menu is the app's main navigation and needs room to breathe. */
 .app-band .page-container { min-height: var(--header-h); }
 
-.app-band__sep { background: color-mix(in srgb, var(--app-band-fg) 26%, transparent); }
+.app-band__sep { background: var(--border-soft); }
 
 /* Switcher owns the band — it names the app the tabs belong to, so it stays the
    heavier item. Its icon chip is glass rather than `--primary-soft`: a near-white
@@ -604,21 +608,15 @@ onMounted(() => {
   height: 100%;
   padding: 0 var(--sp-3) 0 var(--sp-2);
   border: 0;
-  border-inline: 1px solid color-mix(in srgb, var(--app-band-fg) 16%, transparent);
+  border-inline: 1px solid var(--border-soft);
   border-radius: 0;
-  background: color-mix(in srgb, var(--app-band-fg) 12%, transparent);
+  background: var(--muted);
 }
-.app-chip span { color: var(--app-band-fg); }
-.app-chip span:first-child {
-  background: color-mix(in srgb, var(--app-band-fg) 20%, transparent);
-  color: var(--app-band-fg);
-}
-.app-chip > svg { color: color-mix(in srgb, var(--app-band-fg) 70%, var(--app-band)); }
-.app-chip:hover {
-  background: color-mix(in srgb, var(--app-band-fg) 22%, transparent);
-  border-color: color-mix(in srgb, var(--app-band-fg) 30%, transparent);
-}
-.app-chip:hover > svg { color: var(--app-band-fg); }
+.app-chip span { color: var(--foreground); }
+.app-chip span:first-child { background: var(--primary-soft); color: var(--primary); }
+.app-chip > svg { color: var(--muted-foreground); }
+.app-chip:hover { background: color-mix(in srgb, var(--primary) 8%, var(--muted)); }
+.app-chip:hover > svg { color: var(--foreground); }
 
 /* The band has no bottom border — .tabs must not draw one either. */
 .tabs--band {
@@ -659,7 +657,7 @@ onMounted(() => {
   /* 92%, not 100%: the active tab still has to win, and it does so on pure
      `--app-band-fg` plus the rail. Below ~88% the band's own hue starts tinting
      the letters and they read as dulled rather than as a quieter state. */
-  color: color-mix(in srgb, var(--app-band-fg) 92%, var(--app-band));
+  color: var(--muted-foreground);
   border: 0;
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
@@ -669,15 +667,15 @@ onMounted(() => {
    In `em`, so it follows the font size set in Theme Studio. */
 .tabs--band .tab { padding-top: 0.3em; }
 .tabs--band .tab:hover {
-  color: var(--app-band-fg);
-  background: color-mix(in srgb, var(--app-band-fg) 12%, transparent);
+  color: var(--foreground);
+  background: var(--muted);
 }
 /* Focus lands on the same plate as hover, with a ring in the band's own ink so it
    never borrows a colour from a surface it isn't sitting on. */
 .tabs--band .tab:focus-visible {
-  outline: 2px solid var(--app-band-fg);
+  outline: 2px solid var(--ring);
   outline-offset: -3px;
-  background: color-mix(in srgb, var(--app-band-fg) 12%, transparent);
+  background: var(--muted);
 }
 /* A group tab sits inside the popover's two wrappers (inline-block by default). Make them flex boxes
    centred like the band, so the group pill lines up exactly with the plain pills next to it. */
@@ -692,8 +690,8 @@ onMounted(() => {
 .band-group__current { font-weight: 600; text-transform: none; letter-spacing: normal; opacity: .85; }
 
 .tabs--band .tab[aria-selected="true"] {
-  color: var(--app-band-fg);
-  /* The selected page is a light plate of the band's own ink — one step above hover. */
-  background: color-mix(in srgb, var(--app-band-fg) 20%, transparent);
+  /* The page on screen is the brand's colour on its soft plate. */
+  color: var(--primary);
+  background: var(--primary-soft);
 }
 </style>
