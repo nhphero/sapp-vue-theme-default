@@ -24,63 +24,63 @@
       ],
       "vue": [
         "./node_modules/vue",
-        "../../master-app/node_modules/vue",
-        "/usr/src/master-app/node_modules/vue"
+        "../sapp-theme-dashboard/node_modules/vue",
+        "/usr/src/sapp-theme-dashboard/node_modules/vue"
       ],
       "vue-router": [
         "./node_modules/vue-router",
-        "../../master-app/node_modules/vue-router",
-        "/usr/src/master-app/node_modules/vue-router"
+        "../sapp-theme-dashboard/node_modules/vue-router",
+        "/usr/src/sapp-theme-dashboard/node_modules/vue-router"
       ],
       "pinia": [
         "./node_modules/pinia",
-        "../../master-app/node_modules/pinia",
-        "/usr/src/master-app/node_modules/pinia"
+        "../sapp-theme-dashboard/node_modules/pinia",
+        "/usr/src/sapp-theme-dashboard/node_modules/pinia"
       ],
       "radix-vue": [
         "./node_modules/radix-vue",
-        "../../master-app/node_modules/radix-vue",
-        "/usr/src/master-app/node_modules/radix-vue"
+        "../sapp-theme-dashboard/node_modules/radix-vue",
+        "/usr/src/sapp-theme-dashboard/node_modules/radix-vue"
       ],
       "@vueuse/core": [
         "./node_modules/@vueuse/core",
-        "../../master-app/node_modules/@vueuse/core",
-        "/usr/src/master-app/node_modules/@vueuse/core"
+        "../sapp-theme-dashboard/node_modules/@vueuse/core",
+        "/usr/src/sapp-theme-dashboard/node_modules/@vueuse/core"
       ],
       "lucide-vue-next": [
         "./node_modules/lucide-vue-next",
-        "../../master-app/node_modules/lucide-vue-next",
-        "/usr/src/master-app/node_modules/lucide-vue-next"
+        "../sapp-theme-dashboard/node_modules/lucide-vue-next",
+        "/usr/src/sapp-theme-dashboard/node_modules/lucide-vue-next"
       ],
       "class-variance-authority": [
         "./node_modules/class-variance-authority",
-        "../../master-app/node_modules/class-variance-authority",
-        "/usr/src/master-app/node_modules/class-variance-authority"
+        "../sapp-theme-dashboard/node_modules/class-variance-authority",
+        "/usr/src/sapp-theme-dashboard/node_modules/class-variance-authority"
       ],
       "clsx": [
         "./node_modules/clsx",
-        "../../master-app/node_modules/clsx",
-        "/usr/src/master-app/node_modules/clsx"
+        "../sapp-theme-dashboard/node_modules/clsx",
+        "/usr/src/sapp-theme-dashboard/node_modules/clsx"
       ],
       "tailwind-merge": [
         "./node_modules/tailwind-merge",
-        "../../master-app/node_modules/tailwind-merge",
-        "/usr/src/master-app/node_modules/tailwind-merge"
+        "../sapp-theme-dashboard/node_modules/tailwind-merge",
+        "/usr/src/sapp-theme-dashboard/node_modules/tailwind-merge"
       ],
       "@codemirror/*": [
         "./node_modules/@codemirror/*",
-        "../../master-app/node_modules/@codemirror/*",
-        "/usr/src/master-app/node_modules/@codemirror/*"
+        "../sapp-theme-dashboard/node_modules/@codemirror/*",
+        "/usr/src/sapp-theme-dashboard/node_modules/@codemirror/*"
       ],
       "chart.js/auto": [
         "./node_modules/chart.js/auto",
-        "../../master-app/node_modules/chart.js/auto",
-        "/usr/src/master-app/node_modules/chart.js/auto"
+        "../sapp-theme-dashboard/node_modules/chart.js/auto",
+        "/usr/src/sapp-theme-dashboard/node_modules/chart.js/auto"
       ],
       "chart.js": [
         "./node_modules/chart.js",
-        "../../master-app/node_modules/chart.js",
-        "/usr/src/master-app/node_modules/chart.js"
+        "../sapp-theme-dashboard/node_modules/chart.js",
+        "/usr/src/sapp-theme-dashboard/node_modules/chart.js"
       ]
     },
     "esModuleInterop": true

@@ -1,6 +1,6 @@
 # @nhphero/sapp-theme-default
 
-Default theme for the Super App shell (`master-app`), built on the **hoff-kit** design system
+Default theme for the Super App shell (`sapp-theme-dashboard`), built on the **hoff-kit** design system
 (`ai-agents/template/UI-TEMPLATES/hoff-kit`): two-tier tokens (primitive → semantic), light/dark via
 `data-theme`, product-level component classes (`.btn`, `.card`, `.badge`, `.alert`, `.field`, `.pop`, `.modal`…).
 Implements `ITheme` from `@nhphero/vue-sapp/contracts`.
@@ -16,7 +16,7 @@ Implements `ITheme` from `@nhphero/vue-sapp/contracts`.
 | `src/shell/` | Header, Sidebar, AppContainer, ModulePageLayout, CommandPalette, Toast/Message/Dialog providers, ThemeConnector |
 | `src/components/` | UI kit registered as `ui.*`, `form.*`, `display.*`, `layout.*`, `Table*` |
 | `src/store/ui.ts`, `src/services/ui.ts` | Pinia store + factories for toasts, messages and dialogs |
-| `src/services/themeConfig.ts`, `src/shell/ThemePanel.vue` | Live customization (mode, brand colour, text scale, density, radius, shadow, font) as CSS variables on `:root`, persisted in localStorage; exposed as `superApp.$themeConfig`, panel opened from the Header palette button or the ⌘K command `theme.customize`. The full page lives in the Shell: `master-app/src/pages/ThemeStudio.vue` at `/system/theme` (component gallery, live token table, JSON import/export) |
+| `src/services/themeConfig.ts`, `src/shell/ThemePanel.vue` | Live customization (mode, brand colour, text scale, density, radius, shadow, font) as CSS variables on `:root`, persisted in localStorage; exposed as `superApp.$themeConfig`, panel opened from the Header palette button or the ⌘K command `theme.customize`. The full page lives in the Shell: `packages/sapp-theme-dashboard/src/pages/ThemeStudio.vue` at `/system/theme` (component gallery, live token table, JSON import/export) |
 | `src/utils.ts` | `cn()` (clsx + tailwind-merge) |
 
 ## Component → hoff class map
@@ -61,7 +61,7 @@ npm i @nhphero/sapp-theme-default @nhphero/vue-sapp
 ## Usage in the Shell (this monorepo)
 
 ```css
-/* master-app/src/style.css */
+/* packages/sapp-theme-dashboard/src/style.css */
 @import "tailwindcss";
 @import "../../../../packages/sapp-theme-default/src/hoff/tokens.css";
 @import "../../../../packages/sapp-theme-default/src/hoff/core.css" layer(components);
@@ -75,7 +75,7 @@ import { defaultTheme, THEME, useUiStore } from '@nhphero/sapp-theme-default';
 const { messageService, dialogService, uiStore } = defaultTheme.register(app, superApp); // theme creates its own UI store
 ```
 
-Light mode is forced with `<html data-theme="light">` in `master-app/index.html`; set `data-theme="dark"` (or remove the attribute to follow the OS) once the shell's dark variants are complete.
+Light mode is forced with `<html data-theme="light">` in `packages/sapp-theme-dashboard/index.html`; set `data-theme="dark"` (or remove the attribute to follow the OS) once the shell's dark variants are complete.
 
 Mini apps import only `theme.css` (`theme(reference)`) and `utilities.css`; the `.btn`/`.card` classes are available at runtime because the Shell document loads `core.css`. Paths are relative to the Docker mount (`/packages`), 4 levels up from `<app>/src`.
 

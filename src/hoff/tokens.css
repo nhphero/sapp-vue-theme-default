@@ -88,7 +88,8 @@
   --info:         var(--blue-600);   --info-soft:    var(--blue-100);   --info-border:    var(--blue-300);
 
   /* ═══ CHỮ ═════════════════════════════════════════════════════════ */
-  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* Default font: Roboto (loaded from Google Fonts by the theme config, vietnamese subset). */
+  --font-sans: Roboto, sans-serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   /* thang chuẩn gốc 16px (đọc thoải mái trên màn lớn); Theme Studio scale bằng --scale-text */
   --text-xs: 12px;   --text-sm: 14px;    --text-base: 16px;

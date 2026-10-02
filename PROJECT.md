@@ -49,7 +49,7 @@ Toàn bộ giao diện chạy trên CSS variable ở `:root` (`hoff/tokens.css`)
 | `shadow` (0–2) | `--shadow-sm`, `--shadow`, `--shadow-lg` |
 | `fontFamily` | `--font-sans` (stack cục bộ, không gọi mạng) |
 
-Panel nhanh: `shell/ThemePanel.vue` (render trong `ThemeConnector`, id `layout.theme-panel`), mở bằng nút palette trên Header hoặc lệnh ⌘K `theme.customize`. Trang đầy đủ: `master-app/src/pages/ThemeStudio.vue` tại `/system/theme` (menu user → Theme Studio, lệnh ⌘K `theme.studio`): cùng bộ điều khiển + gallery mọi component, bảng token đang áp dụng, nhập/tải JSON, xuất CSS. Bằng code:
+Panel nhanh: `shell/ThemePanel.vue` (render trong `ThemeConnector`, id `layout.theme-panel`), mở bằng nút palette trên Header hoặc lệnh ⌘K `theme.customize`. Trang đầy đủ: `packages/sapp-theme-dashboard/src/pages/ThemeStudio.vue` tại `/system/theme` (menu user → Theme Studio, lệnh ⌘K `theme.studio`): cùng bộ điều khiển + gallery mọi component, bảng token đang áp dụng, nhập/tải JSON, xuất CSS. Bằng code:
 
 ```ts
 superApp.$themeConfig.toggle();                       // mở/đóng panel

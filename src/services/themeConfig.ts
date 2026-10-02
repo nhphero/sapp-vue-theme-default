@@ -32,6 +32,7 @@ export const SWATCHES = [
  * reads as "ugly" in Vietnamese UI text.
  */
 export const WEB_FONTS: Record<string, string> = {
+  'Roboto': 'Roboto:wght@400;500;700',                       // the default
   'Be Vietnam Pro': 'Be+Vietnam+Pro:wght@400;500;600;700',   // drawn for Vietnamese
   'Inter': 'Inter:wght@400;500;600;700',
   'Plus Jakarta Sans': 'Plus+Jakarta+Sans:wght@400;500;600;700',
@@ -68,7 +69,8 @@ export const SURFACES: ReadonlyArray<{ id: string; label: string; light: string;
 
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export const FONT_STACKS: Record<string, string> = {
-  'System UI': '',
+  // The machine's own UI font (the default is Roboto, so this one is spelled out).
+  'System UI': 'system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   'Neo-Grotesque': '"Inter", "Roboto", "Helvetica Neue", "Arial Nova", "Nimbus Sans", Arial, sans-serif',
   'Humanist': '"Seravek", "Gill Sans Nova", "Ubuntu", "Calibri", "DejaVu Sans", "Segoe UI", sans-serif',
   'Geometric': '"Avenir", "Avenir Next", "Montserrat", "Corbel", "URW Gothic", "Poppins", sans-serif',
@@ -78,7 +80,7 @@ export const FONT_STACKS: Record<string, string> = {
 };
 
 export const THEME_CONFIG_DEFAULTS: ThemeConfigState = Object.freeze({
-  mode: 'light', brand: '', font: 1, density: 1, fontFamily: 'System UI', radius: RADIUS_DEFAULT, shadow: SHADOW_DEFAULT,
+  mode: 'light', brand: '', font: 1, density: 1, fontFamily: 'Roboto', radius: RADIUS_DEFAULT, shadow: SHADOW_DEFAULT,
   surface: '',
 });
 
@@ -120,11 +122,13 @@ const shadowSet = (f: number): Record<string, string> => {
     '--shadow-lg': `0 4px 14px rgba(0,0,0,${a(0.10)}), 0 14px 36px rgba(0,0,0,${a(0.13)})`,
   };
 };
+/** A family name as CSS: bare when it is one word (Roboto), quoted otherwise ("Be Vietnam Pro"). */
+const family = (name: string) => (/^[A-Za-z][\w-]*$/.test(name) ? name : `"${name.replace(/"/g, '')}"`);
 const fontStack = (name: string) => {
-  if (!name || name === 'System UI') return '';
-  if (WEB_FONTS[name]) { ensureWebFont(name); return `"${name}", system-ui, sans-serif`; }
+  if (!name) return '';
+  if (WEB_FONTS[name]) { ensureWebFont(name); return `${family(name)}, sans-serif`; }
   if (FONT_STACKS[name] != null) return FONT_STACKS[name];
-  return `"${name.replace(/"/g, '')}", system-ui, sans-serif`;
+  return `${family(name)}, sans-serif`;
 };
 
 const KEYS = Object.keys(THEME_CONFIG_DEFAULTS) as (keyof ThemeConfigState)[];
