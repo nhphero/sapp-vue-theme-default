@@ -24,6 +24,9 @@ const $appState = ($s as any).$appState
 const themeConfig = ($s as any).$themeConfig
 const branding = computed(() => ($s as any).$config?.branding ?? null)
 const isDark = computed(() => themeConfig?.state?.mode === 'dark' || (themeConfig?.state?.mode === 'system' && window.matchMedia?.('(prefers-color-scheme: dark)').matches))
+/** Header presets on a dark surface (tokens.css `--header-on-dark`): the logo needs its dark variant or a light plate there too. */
+const DARK_HEADERS = ['brand', 'gradient', 'dark']
+const headerDark = computed(() => isDark.value || DARK_HEADERS.includes(themeConfig?.state?.header))
 const i18n = ($s as any).$i18n
 const showLangMenu = ref(false)
 const LOCALE_LABELS: Record<string, string> = { vi: 'Tiếng Việt', en: 'English', ja: '日本語', ko: '한국어', zh: '中文', fr: 'Français', de: 'Deutsch' }
@@ -315,11 +318,11 @@ onMounted(() => {
         <div class="flex items-center gap-3 cursor-pointer group/logo" data-testid="brand" :title="branding?.name" @click="router.push(branding?.homePath || '/')">
           <!-- 🏷️ Brand logo from createSapp({ branding }); dark surfaces get the dark variant or a light plate -->
           <template v-if="branding?.logo">
-            <img v-if="isDark && branding.logoDark" :src="branding.logoDark" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
-            <span v-else class="inline-flex items-center rounded-md" :class="isDark && 'bg-white/95 px-2 py-1'">
+            <img v-if="headerDark && branding.logoDark" :src="branding.logoDark" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
+            <span v-else class="inline-flex items-center rounded-md" :class="headerDark && 'bg-white/95 px-2 py-1'">
               <img :src="branding.logo" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
             </span>
-            <span v-if="branding.tagline" class="hidden lg:block text-[10px] font-bold uppercase tracking-[0.2em] text-faint border-l border-border-soft pl-3">{{ branding.tagline }}</span>
+            <span v-if="branding.tagline" class="hidden lg:block text-[10px] font-bold uppercase tracking-[0.2em] hdr-faint border-l hdr-line pl-3">{{ branding.tagline }}</span>
           </template>
           <template v-else>
           <div class="relative">
@@ -328,8 +331,8 @@ onMounted(() => {
             </div>
           </div>
           <div class="flex flex-col text-left">
-            <span class="text-[11px] font-black uppercase tracking-[0.4em] text-foreground group-hover/logo:text-primary transition-colors leading-none mb-1">Antigravity</span>
-            <span class="text-[9px] font-black uppercase tracking-[0.2em] text-faint">Core OS v5</span>
+            <span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1">Antigravity</span>
+            <span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint">Core OS v5</span>
           </div>
           </template>
         </div>
@@ -341,10 +344,10 @@ onMounted(() => {
            <!-- 🌐 Language switcher -->
            <component :is="$c('ui.dropdown')" v-if="i18n" :modelValue="showLangMenu" @update:modelValue="showLangMenu = $event" align="right">
              <template #trigger>
-               <button type="button" class="h-9 px-2 rounded-lg flex items-center gap-1 whitespace-nowrap shrink-0 hover:bg-muted text-muted-foreground hover:text-foreground transition-colors outline-none"
+               <button type="button" class="h-9 px-2 rounded-lg flex items-center gap-1 whitespace-nowrap shrink-0 hdr-btn transition-colors outline-none"
                        :title="$t('shell.language')" :aria-label="$t('shell.language')" data-testid="lang-switch">
                  <LocaleFlag :locale="i18n.locale" :size="20" />
-                 <ChevronDown :size="13" class="text-faint" />
+                 <ChevronDown :size="13" class="hdr-faint" />
                </button>
              </template>
              <template #content>
@@ -360,14 +363,14 @@ onMounted(() => {
            </component>
         </div>
 
-        <div class="h-6 w-px bg-border-soft mx-1 hidden md:block"></div>
+        <div class="h-6 w-px hdr-sep mx-1 hidden md:block"></div>
         
         <component :is="$c('ui.dropdown')" :modelValue="showUserMenu" @update:modelValue="showUserMenu = $event" align="right">
           <template #trigger>
-            <button type="button" class="h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hover:bg-muted cursor-pointer transition-colors outline-none" data-testid="user-menu">
-              <span class="hidden lg:block text-sm font-semibold text-foreground whitespace-nowrap">{{ me?.username || 'User' }}</span>
+            <button type="button" class="h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hdr-btn cursor-pointer transition-colors outline-none" data-testid="user-menu">
+              <span class="hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap">{{ me?.username || 'User' }}</span>
               <UserAvatar :src="me?.avatar" :name="me?.username || 'User'" :size="28" rounded="lg" />
-              <ChevronDown :size="13" class="text-faint" />
+              <ChevronDown :size="13" class="hdr-faint" />
             </button>
           </template>
 
@@ -577,15 +580,26 @@ onMounted(() => {
 .app-band__end { margin-left: auto; display: flex; align-items: center; gap: var(--sp-1); padding-left: var(--sp-3); flex: none; }
 /* The header is one block: brand row and app band on the same surface, one edge below them. */
 .shell-header {
-  background: var(--card);
+  /* Surface and ink from the header preset (tokens.css `--header-*`, Theme Studio → Header). A Shell
+     theme that paints one surface behind the header and a bar under it sets `--shell-header-bg: transparent`. */
+  background: var(--shell-header-bg, var(--header-bg));
+  color: var(--header-fg);
   /* No lines: one soft shadow below. A Shell theme that adds a bar under the header (navigation
      history) moves the shadow below that bar instead: `--shell-header-shadow: none`. */
-  box-shadow: var(--shell-header-shadow, var(--shadow-sm));
+  box-shadow: var(--shell-header-shadow, var(--header-shadow));
 }
+/* Brand row: its own classes, not the semantic utilities — the dropdowns open inside the header and
+   must keep the page's colours. */
+.hdr-ink { color: var(--header-fg); }
+.hdr-faint { color: var(--header-faint); }
+.hdr-line { border-color: var(--header-border); }
+.hdr-sep { background: var(--header-border); }
+.hdr-btn { color: var(--header-muted-fg); }
+.hdr-btn:hover { color: var(--header-fg); background: var(--header-hover-bg); }
 .app-band {
   /* The band sits on the header's surface: ink and surface come from it, the menu's state from the brand. */
-  --app-band:        var(--card);
-  --app-band-fg:     var(--foreground);
+  --app-band:        var(--header-bg);
+  --app-band-fg:     var(--header-fg);
 
   background: transparent;
   border: 0;
@@ -609,13 +623,14 @@ onMounted(() => {
   padding: 0 var(--sp-3) 0 var(--sp-2);
   border: 0;
   border-radius: 0;
-  background: var(--muted);
+  background: var(--header-chip-bg);
 }
-.app-chip span { color: var(--foreground); }
-.app-chip span:first-child { background: var(--primary-soft); color: var(--primary); }
-.app-chip > svg { color: var(--muted-foreground); }
-.app-chip:hover { background: color-mix(in srgb, var(--primary) 8%, var(--muted)); }
-.app-chip:hover > svg { color: var(--foreground); }
+.app-chip span { color: var(--header-fg); }
+.app-chip span:first-child { background: var(--header-active-bg); color: var(--header-active-fg); }
+.app-chip .app-version { color: var(--header-muted-fg); background: var(--header-hover-bg); border-color: transparent; }
+.app-chip > svg { color: var(--header-muted-fg); }
+.app-chip:hover { background: var(--header-hover-bg); }
+.app-chip:hover > svg { color: var(--header-fg); }
 
 /* The band has no bottom border — .tabs must not draw one either. */
 .tabs--band {
@@ -656,7 +671,7 @@ onMounted(() => {
   /* 92%, not 100%: the active tab still has to win, and it does so on pure
      `--app-band-fg` plus the rail. Below ~88% the band's own hue starts tinting
      the letters and they read as dulled rather than as a quieter state. */
-  color: var(--muted-foreground);
+  color: var(--header-muted-fg);
   border: 0;
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
@@ -666,15 +681,15 @@ onMounted(() => {
    In `em`, so it follows the font size set in Theme Studio. */
 .tabs--band .tab { padding-top: 0.3em; }
 .tabs--band .tab:hover {
-  color: var(--foreground);
-  background: var(--muted);
+  color: var(--header-fg);
+  background: var(--header-hover-bg);
 }
 /* Focus lands on the same plate as hover, with a ring in the band's own ink so it
    never borrows a colour from a surface it isn't sitting on. */
 .tabs--band .tab:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: -3px;
-  background: var(--muted);
+  background: var(--header-hover-bg);
 }
 /* A group tab sits inside the popover's two wrappers (inline-block by default). Make them flex boxes
    centred like the band, so the group pill lines up exactly with the plain pills next to it. */
@@ -690,7 +705,7 @@ onMounted(() => {
 
 .tabs--band .tab[aria-selected="true"] {
   /* The page on screen is the brand's colour on its soft plate. */
-  color: var(--primary);
-  background: var(--primary-soft);
+  color: var(--header-active-fg);
+  background: var(--header-active-bg);
 }
 </style>

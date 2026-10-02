@@ -99,6 +99,14 @@ const fill = (value: number, min: number, max: number) => `${((value - min) / (m
             </div>
           </div>
 
+          <div v-if="config.headers" class="tp-row">
+            <span>{{ $t('theme.header') }}</span>
+            <div class="tp-seg" role="group">
+              <button v-for="h in config.headers" :key="h.id" type="button" :aria-pressed="state.header === h.id"
+                      @click="config.set({ header: h.id })">{{ $t(h.label) }}</button>
+            </div>
+          </div>
+
           <div class="tp-row">
             <span>{{ $t('theme.radius') }} <output class="tp-out">{{ state.radius }}px</output></span>
             <input class="tp-range" type="range" min="0" max="14" step="1" :value="state.radius"

@@ -19,6 +19,17 @@ export declare const SURFACES: ReadonlyArray<{
     light: string;
     dark: string;
 }>;
+/** Contrast presets (data-contrast on <html>, tokens.css): how far apart page, card, text and borders sit. */
+export declare const CONTRASTS: ReadonlyArray<{
+    id: string;
+    label: string;
+}>;
+/** Header block presets (data-header on <html>, tokens.css `--header-*`): the colour and surface of the
+ *  Shell's header — brand row, app band and the bar under it. */
+export declare const HEADERS: ReadonlyArray<{
+    id: string;
+    label: string;
+}>;
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export declare const FONT_STACKS: Record<string, string>;
 export declare const THEME_CONFIG_DEFAULTS: ThemeConfigState;

@@ -74,6 +74,16 @@ export const CONTRASTS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'max',  label: 'theme.contrastMax' },
 ];
 
+/** Header block presets (data-header on <html>, tokens.css `--header-*`): the colour and surface of the
+ *  Shell's header — brand row, app band and the bar under it. */
+export const HEADERS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: '',         label: 'theme.headerLight' },
+  { id: 'tint',     label: 'theme.headerTint' },
+  { id: 'brand',    label: 'theme.headerBrand' },
+  { id: 'gradient', label: 'theme.headerGradient' },
+  { id: 'dark',     label: 'theme.headerDark' },
+];
+
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export const FONT_STACKS: Record<string, string> = {
   // The machine's own UI font (the default is Roboto, so this one is spelled out).
@@ -90,6 +100,7 @@ export const THEME_CONFIG_DEFAULTS: ThemeConfigState = Object.freeze({
   mode: 'light', brand: '', font: 1, density: 1, fontFamily: 'Roboto', radius: RADIUS_DEFAULT, shadow: SHADOW_DEFAULT,
   surface: '',
   contrast: '',
+  header: '',
 });
 
 const hexToHsl = (hex: string) => {
@@ -213,6 +224,9 @@ export function createThemeConfig(): IThemeConfig {
     if (CONTRASTS.some(c => c.id && c.id === look.contrast)) el.setAttribute('data-contrast', look.contrast);
     else el.removeAttribute('data-contrast');
 
+    if (HEADERS.some(h => h.id && h.id === look.header)) el.setAttribute('data-header', look.header);
+    else el.removeAttribute('data-header');
+
     const ff = fontStack(look.fontFamily);
     if (ff) el.style.setProperty('--font-sans', ff); else el.style.removeProperty('--font-sans');
 
@@ -239,6 +253,7 @@ export function createThemeConfig(): IThemeConfig {
     if (surf?.light) lines.push(`--background: ${surf.light};   /* dark: ${surf.dark} */`);
     const ff = fontStack(state.fontFamily);
     if (ff) lines.push(`--font-sans: ${ff};`);
+    if (state.header) lines.push(`/* header: ${state.header} — <html data-header="${state.header}"> (the [data-header] values of tokens.css) */`);
     if (state.contrast) lines.push(`/* contrast: ${state.contrast} — the [data-contrast="${state.contrast}"] values of tokens.css */`);
     if (lines.length === 1) lines.push('/* nothing differs from the defaults */');
     return lines.join('\n');
@@ -255,6 +270,7 @@ export function createThemeConfig(): IThemeConfig {
     webFonts: WEB_FONTS,
     surfaces: SURFACES,
     contrasts: CONTRASTS,
+    headers: HEADERS,
     set(patch) { if (!ui.locked) Object.assign(state, patch); },
     reset() { if (!ui.locked) Object.assign(state, base); },
     useDefaults(patch, options) {
