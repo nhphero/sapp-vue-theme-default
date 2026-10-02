@@ -113,8 +113,8 @@ type __VLS_Props = {
      */
     cellDetail?: boolean;
     /**
-     * Vertical rules between the columns too (the `clean` look draws horizontal ones only). The viewer can
-     * flip it in Columns → Show borders; that choice is remembered (with `persistId`) and wins.
+     * Light vertical rules between the columns (default on; `:bordered="false"` for horizontal rules only).
+     * The viewer can flip it in Columns → Show borders; that choice is remembered (with `persistId`) and wins.
      */
     bordered?: boolean;
     /**

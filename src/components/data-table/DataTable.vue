@@ -111,8 +111,8 @@ const props = withDefaults(defineProps<{
    */
   cellDetail?: boolean;
   /**
-   * Vertical rules between the columns too (the `clean` look draws horizontal ones only). The viewer can
-   * flip it in Columns → Show borders; that choice is remembered (with `persistId`) and wins.
+   * Light vertical rules between the columns (default on; `:bordered="false"` for horizontal rules only).
+   * The viewer can flip it in Columns → Show borders; that choice is remembered (with `persistId`) and wins.
    */
   bordered?: boolean;
   /**
@@ -122,7 +122,7 @@ const props = withDefaults(defineProps<{
   resizable?: boolean;
 }>(), {
   cellDetail: false,
-  bordered: false,
+  bordered: true,
   resizable: true,
   paginationPosition: 'bottom',
   allowCustomColumns: false,
@@ -983,7 +983,7 @@ const headerMenuOptions = computed(() => [
 th:hover > .dt-resize::after, .dt-resize.is-set::after { background: var(--border); }
 .dt-resize:hover::after, .dt-resize:active::after { top: 0; bottom: 0; width: 2px; background: var(--primary); }
 /* Borders option (clean look): vertical rules between the columns too. */
-.dt-bordered :is(th, td) + :is(th, td) { border-left: 1px solid var(--border-soft); }
+.dt-bordered :is(th, td) + :is(th, td) { border-left: 1px solid color-mix(in srgb, var(--border-soft) 70%, transparent); }
 
 /* ── Bulk-action bar ──────────────────────────────────────────────────────
    Pinned to the bottom edge of the viewport (`fixed`), centred, and stacked

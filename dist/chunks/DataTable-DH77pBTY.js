@@ -49,7 +49,7 @@ const it = ["data-variant"], ut = { class: "flex items-center gap-4" }, dt = { c
     bulkBarLabel: { default: "selected" },
     bulkBarClearLabel: { default: "Clear selection" },
     cellDetail: { type: Boolean, default: !1 },
-    bordered: { type: Boolean, default: !1 },
+    bordered: { type: Boolean, default: !0 },
     resizable: { type: Boolean, default: !0 }
   },
   emits: ["filter-by-value", "update:selected"],
@@ -654,8 +654,8 @@ const it = ["data-variant"], ut = { class: "flex items-center gap-4" }, dt = { c
       }, null, 8, ["options"]))
     ], 10, it));
   }
-}), es = /* @__PURE__ */ nt(qt, [["__scopeId", "data-v-740c84f9"]]);
+}), es = /* @__PURE__ */ nt(qt, [["__scopeId", "data-v-52695fca"]]);
 export {
   es as default
 };
-//# sourceMappingURL=DataTable-CZnGbd4F.js.map
+//# sourceMappingURL=DataTable-DH77pBTY.js.map
