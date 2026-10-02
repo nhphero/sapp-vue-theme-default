@@ -780,9 +780,9 @@ onMounted(() => {
 .app-band--classic .tabs--band { align-items: center; margin-left: 0; }
 .app-band--classic .tabs--band .tab {
   height: var(--control-h); padding: 0.2em var(--sp-4) 0; border-radius: var(--radius);
-  font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-wide);
+  font-size: var(--text-xs); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-wide);
 }
-.app-band--classic .tabs--band .tab :deep(svg) { width: 1.1em; height: 1.1em; }
+.app-band--classic .tabs--band .tab :deep(svg) { width: 1.2em; height: 1.2em; }
 .app-band--classic .tabs--band .tab:hover { background: var(--header-hover-bg); }
 .app-band--classic .tabs--band .tab[aria-selected="true"] { box-shadow: none; background: var(--header-active-bg); color: var(--header-active-fg); }
 

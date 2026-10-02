@@ -619,7 +619,7 @@ class Pt {
     }, { immediate: !0 }), e.registerComponent({ id: "layout.theme-panel", category: "Shell UI", component: n(() => import("./chunks/ThemePanel-Uc2h0rYa.js")) }), e.registerCommand({ id: "theme.customize", name: "Tuỳ chỉnh giao diện", category: "Theme", shortcut: "⌘⇧T", handler: () => l.toggle() }), e.registerCommand({ id: "theme.studio", name: "Theme Studio", description: "Trang tuỳ chỉnh giao diện đầy đủ", category: "Theme", handler: () => {
       e.$router?.push("/system/theme");
     } });
-    const m = n(() => import("./chunks/Header-CBVwlT5r.js"));
+    const m = n(() => import("./chunks/Header-BTyjBXRK.js"));
     e.registerComponent({ id: "Header", category: "Shell UI", component: m }), e.registerComponent({ id: "layout.header", category: "Shell UI", component: m });
     const C = n(() => import("./chunks/Sidebar-CCmpwaOA.js"));
     e.registerComponent({ id: "Sidebar", category: "Shell UI", component: C }), e.registerComponent({ id: "layout.sidebar", category: "Shell UI", component: C });
