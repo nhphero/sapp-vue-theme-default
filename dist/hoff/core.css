@@ -80,8 +80,10 @@
 /* The outer cells line up with a card's content edge (.card-head / .card-body: --sp-4). */
 .table-wrap th:first-child, .table-wrap td:first-child { padding-left: var(--sp-4); }
 .table-wrap th:last-child, .table-wrap td:last-child { padding-right: var(--sp-4); }
-/* Header row and body rows: one control high (tokens.css --control-h, Theme Studio → control size). */
-.table-wrap th, .table-wrap td { height: var(--control-h); }
+/* Body rows: one control high (tokens.css --control-h, Theme Studio → control size); the header row a
+   step taller, so it never reads smaller than the rows under it. */
+.table-wrap td { height: var(--control-h); }
+.table-wrap th { height: calc(var(--control-h) + var(--sp-3)); }
 .table-wrap td { line-height: 1.35; }
 /* Header carries no fill: it is set apart by weight, case, tracking, colour and a
    heavier rule. `background` stays opaque (the table surface) rather than

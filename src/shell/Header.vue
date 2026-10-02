@@ -777,8 +777,11 @@ onMounted(() => {
 /* The switcher: a shade darker plate, one control high. */
 .band-switch { align-self: center; }
 .band-switch .app-switch, .band-switch .app-switch > div:first-child { height: var(--control-h); }
-.band-switch .app-chip { height: var(--control-h); padding: 0 var(--sp-3) 0 var(--sp-2); border-radius: var(--radius); background: rgb(0 0 0 / .18); }
-.band-switch .app-chip:hover { background: rgb(0 0 0 / .26); }
+/* One surface only: no plate at rest (icon, name, a faint version), a single plate on hover / open. */
+.band-switch .app-chip { height: var(--control-h); padding: 0 var(--sp-3) 0 var(--sp-2); border-radius: var(--radius); background: transparent; }
+.band-switch .app-chip:hover, .band-switch .app-chip[aria-expanded="true"] { background: var(--header-hover-bg); }
+.band-switch .app-chip span:first-child { background: transparent; color: var(--header-fg); width: auto; }
+.band-switch .app-chip .app-version { background: transparent; border: 0; padding: 0; color: var(--header-faint); }
 /* Tabs: uppercase pills centred on the band; the page on screen a light plate. */
 .app-band--classic .tabs--band { align-items: center; margin-left: 0; }
 .app-band--classic .tabs--band .tab {
