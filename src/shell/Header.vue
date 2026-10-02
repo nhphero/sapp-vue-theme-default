@@ -803,4 +803,8 @@ onMounted(() => {
 .side-item .side-label { overflow: hidden; text-overflow: ellipsis; }
 .side-item .badge { margin-left: auto; }
 .side-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
+/* The page on screen: colour only — no plate, no bar. */
+.side-item[aria-current="page"] { background: transparent; color: var(--primary); }
+.side-item[aria-current="page"]::before { display: none; }
+.side-item[aria-current="page"]:hover { background: var(--muted); }
 </style>
