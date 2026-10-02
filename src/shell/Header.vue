@@ -374,7 +374,6 @@ onMounted(() => {
             <span v-else class="inline-flex items-center rounded-md" :class="headerDark && 'bg-white/95 px-2 py-1'">
               <img :src="branding.logo" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
             </span>
-            <span v-if="branding.tagline" class="hidden lg:block text-[10px] font-bold uppercase tracking-[0.2em] hdr-faint border-l hdr-line pl-3">{{ branding.tagline }}</span>
           </template>
           <template v-else>
           <div class="relative">
