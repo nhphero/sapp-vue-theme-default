@@ -761,7 +761,7 @@ onMounted(() => {
 .side-switch .apps-menu { width: auto; max-width: none; }
 .side-switch.is-collapsed :deep(.pop) { right: auto; }
 .side-switch.is-collapsed .apps-menu { width: calc(var(--touch) * 7); }
-.side-switch .app-chip > span:nth-child(2) { font-size: var(--text-base); }
+.side-switch .app-chip > span:nth-child(2) { font-size: var(--text-base); font-weight: 500; }
 .side-switch.is-collapsed { padding-inline: var(--sp-2); }
 .side-switch.is-collapsed .app-chip { justify-content: center; padding-inline: 0; }
 .side-switch.is-collapsed .app-chip > :not(:first-child) { display: none; }
@@ -773,14 +773,14 @@ onMounted(() => {
 .side-group { display: flex; flex-direction: column; gap: 2px; margin-top: var(--sp-3); }
 .side-group .nav-group { padding-bottom: var(--sp-1); }
 /* A step larger than the theme's .nav-item: the sidebar is the app's main navigation. */
-.side-item { white-space: nowrap; font-size: var(--text-base); padding-block: calc(var(--sp-2) * 1.15); }
+.side-item { white-space: nowrap; font-size: var(--text-base); font-weight: 400; padding-block: calc(var(--sp-2) * 1.15); }
 .side-item :deep(svg) { width: calc(var(--text-base) * 1.3); height: calc(var(--text-base) * 1.3); }
 .side-nav .nav-group { font-size: calc(var(--text-xs) * 1.1); }
 .side-item .side-label { overflow: hidden; text-overflow: ellipsis; }
 .side-item .badge { margin-left: auto; }
 .side-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
 /* The page on screen: colour only — no plate, no bar. */
-.side-item[aria-current="page"] { background: transparent; color: var(--primary); }
+.side-item[aria-current="page"] { background: transparent; color: var(--primary); font-weight: 400; }
 .side-item[aria-current="page"]::before { display: none; }
 .side-item[aria-current="page"]:hover { background: var(--muted); }
 .side-initial {
