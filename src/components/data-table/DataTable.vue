@@ -110,8 +110,20 @@ const props = withDefaults(defineProps<{
    * Turn it on for data-inspection grids (SQL console, logs).
    */
   cellDetail?: boolean;
+  /**
+   * Vertical rules between the columns too (the `clean` look draws horizontal ones only). The viewer can
+   * flip it in Columns → Show borders; that choice is remembered (with `persistId`) and wins.
+   */
+  bordered?: boolean;
+  /**
+   * Columns resize by dragging the right edge of their header (double-click the edge: back to auto). The
+   * widths are remembered with `persistId`. Default on.
+   */
+  resizable?: boolean;
 }>(), {
   cellDetail: false,
+  bordered: false,
+  resizable: true,
   paginationPosition: 'bottom',
   allowCustomColumns: false,
   showSearch: true,
@@ -144,6 +156,70 @@ const ownedSource: DataTableSource | null = props.source
     });
 
 const src = computed((): DataTableSource => props.source ?? (ownedSource as DataTableSource));
+
+/**
+ * The viewer's layout of this table — column widths (px, by column label) and borders on / off —
+ * remembered per `persistId` in localStorage (in memory only without one). Every access is guarded.
+ */
+const layoutKey = props.persistId ? `sapp.dt.layout.${props.persistId}` : '';
+function readLayout(): { widths: Record<string, number>; bordered?: boolean } {
+  if (!layoutKey) return { widths: {} };
+  try {
+    const value = JSON.parse(localStorage.getItem(layoutKey) || '{}');
+    return { widths: value && typeof value.widths === 'object' ? value.widths : {}, bordered: typeof value?.bordered === 'boolean' ? value.bordered : undefined };
+  } catch {
+    return { widths: {} };
+  }
+}
+const layout = ref(readLayout());
+function saveLayout(): void {
+  if (!layoutKey) return;
+  try { localStorage.setItem(layoutKey, JSON.stringify(layout.value)); } catch { /* storage unavailable — lasts for the page */ }
+}
+/** Borders: the viewer's choice when made, else the page's `bordered`. */
+const bordered = computed(() => layout.value.bordered ?? props.bordered);
+function setBordered(on: boolean): void {
+  layout.value = { ...layout.value, bordered: on };
+  saveLayout();
+}
+const widthOf = (col: string): number | undefined => layout.value.widths[col];
+/** A resized column: its width, held (min = max) so long text truncates instead of pushing it wider. */
+const widthStyle = (col: string) => {
+  const w = widthOf(col);
+  return w ? { width: `${w}px`, minWidth: `${w}px`, maxWidth: `${w}px`, overflow: 'hidden' } : undefined;
+};
+const MIN_COL = 56;
+function startResize(col: string, event: MouseEvent): void {
+  const th = (event.target as HTMLElement).closest('th') as HTMLElement | null;
+  if (!th) return;
+  const startX = event.clientX;
+  const startW = th.getBoundingClientRect().width;
+  const move = (e: MouseEvent) => {
+    layout.value = { ...layout.value, widths: { ...layout.value.widths, [col]: Math.max(MIN_COL, Math.round(startW + e.clientX - startX)) } };
+  };
+  const up = () => {
+    window.removeEventListener('mousemove', move);
+    window.removeEventListener('mouseup', up);
+    document.body.style.removeProperty('cursor');
+    document.body.style.removeProperty('user-select');
+    saveLayout();
+  };
+  document.body.style.cursor = 'col-resize';
+  document.body.style.userSelect = 'none';
+  window.addEventListener('mousemove', move);
+  window.addEventListener('mouseup', up);
+}
+/** Double-click the edge: that column back to its automatic width. */
+function resetWidth(col: string): void {
+  const widths = { ...layout.value.widths };
+  delete widths[col];
+  layout.value = { ...layout.value, widths };
+  saveLayout();
+}
+function resetWidths(): void {
+  layout.value = { ...layout.value, widths: {} };
+  saveLayout();
+}
 
 /**
  * Columns arrive as a prop and can change — a locale switch relabels every one of them.
@@ -590,7 +666,7 @@ const headerMenuOptions = computed(() => [
       @mouseup="stopDragging"
       @mouseleave="stopDragging"
     >
-      <table v-if="src.displayItems.value.length > 0" class="w-full table-auto min-w-max" :class="clean ? 'border-collapse' : 'border-separate border-spacing-0'">
+      <table v-if="src.displayItems.value.length > 0" class="w-full table-auto min-w-max" :class="[clean ? 'border-collapse' : 'border-separate border-spacing-0', clean && bordered && 'dt-bordered']">
         <thead>
           <tr>
             <th v-if="showSelect" class="sticky top-0 left-0 z-40 w-10 min-w-[40px] px-3 py-2 text-center" :class="clean ? 'border-b border-border-soft' : 'bg-muted/95 backdrop-blur-md border-b-2 border-r border-border'">
@@ -617,9 +693,16 @@ const headerMenuOptions = computed(() => [
                   'sticky right-0 z-30': clean && isStickyRight(col)
                 }
               ]"
+              :style="widthStyle(col)"
               @click="toggleSort(col, $event)"
               @contextmenu.prevent="handleHeaderContextMenu($event, col)"
             >
+              <!-- drag the edge to resize; double-click it: back to auto -->
+              <span
+                v-if="resizable" class="dt-resize" :class="widthOf(col) && 'is-set'" role="separator" aria-orientation="vertical"
+                :title="widthOf(col) ? 'Drag to resize · double-click: auto width' : 'Drag to resize'"
+                @mousedown.stop.prevent="startResize(col, $event)" @click.stop @dblclick.stop="resetWidth(col)"
+              ></span>
               <div class="flex items-center justify-between gap-2 w-full">
                 <!-- clean: size/weight/colour come from `.table-wrap th` (--text-sm, 600,
                      --table-head-fg). The old hardcoded `text-xs font-medium` overrode the
@@ -683,6 +766,7 @@ const headerMenuOptions = computed(() => [
                    'sticky right-0 z-10 !bg-card  group-hover/row:!bg-muted  border-l-2 border-border': isStickyRight(col)
                 }
               ]"
+              :style="widthStyle(col)"
               @dblclick="handleCellDblClick(col, row[col], i)"
               :title="row[col] === null ? 'NULL' : String(row[col])"
             >
@@ -775,7 +859,10 @@ const headerMenuOptions = computed(() => [
     >
       <!-- How many rows and which columns are the same kind of choice — they sit together. -->
       <template v-if="clean && allowCustomColumns" #end>
-        <component :is="$c('display.column-settings')" :source="src" />
+        <component
+          :is="$c('display.column-settings')" :source="src" :bordered="bordered" :has-widths="!!Object.keys(layout.widths).length"
+          @update:bordered="setBordered" @reset-widths="resetWidths"
+        />
       </template>
     </component>
 
@@ -890,6 +977,13 @@ const headerMenuOptions = computed(() => [
    Not `width: 1%`: the table is `min-w-max`, and a percentage makes the browser widen the whole
    table until 1% equals the content (≈100× wider), pushing every other column off screen. */
 .dt-fit-col { width: 0; white-space: nowrap; }
+/* Resize handle: the header's right edge; a hairline shows on hover / while a width is set. */
+.dt-resize { position: absolute; top: 0; right: -3px; bottom: 0; width: 7px; z-index: 2; cursor: col-resize; }
+.dt-resize::after { content: ''; position: absolute; top: 25%; bottom: 25%; left: 3px; width: 1px; background: transparent; transition: background-color var(--dur, .15s) ease; }
+th:hover > .dt-resize::after, .dt-resize.is-set::after { background: var(--border); }
+.dt-resize:hover::after, .dt-resize:active::after { top: 0; bottom: 0; width: 2px; left: 2.5px; background: var(--primary); }
+/* Borders option (clean look): vertical rules between the columns too. */
+.dt-bordered :is(th, td) + :is(th, td) { border-left: 1px solid var(--border-soft); }
 
 /* ── Bulk-action bar ──────────────────────────────────────────────────────
    Pinned to the bottom edge of the viewport (`fixed`), centred, and stacked

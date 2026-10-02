@@ -22,11 +22,13 @@ Shell: a Shell theme (e.g. `sapp-theme-dashboard`) is built on it.
 - **Tailwind mapping** (`theme.css`) — every Tailwind token on a hoff variable, legacy palette aliases
   (`slate`→`gray`, `indigo`→`brand`…), so utilities follow the theme.
 - **UI kit in the registry** — `ui.*`, `form.*` (input, select with search, switch, code editor,
-  icon picker…), `display.*` (data table, chart, **markdown**), `layout.*` (header, mini app layout,
+  icon picker…), `display.*` (data table, chart, **markdown**, **image** — thumbnail + full-screen viewer), `layout.*` (header, mini app layout,
   command palette…).
 - **Services** — `$message` (toasts, alert / confirm / prompt) and `$dialog` (any component in a modal).
-- **Live customization** — `superApp.$themeConfig`: mode, brand colour (full 50→950 ramp), font, text
-  scale, density, radius, shadow, page surface; the platform look (Admin → Theme) as the base,
+- **Live customization** — `superApp.$themeConfig`: mode, brand colour (full 50→950 ramp; text on it
+  picked by WCAG contrast, `--on-brand-<step>`), font, text scale, density, **control size** (one
+  height for every control, `--control-h`), radius, shadow, page surface, contrast, header preset
+  (`--header-*`); the platform look (Admin → Theme) as the base,
   optionally locked; the quick panel (⌘K `theme.customize`).
 
 ### Components → classes
@@ -42,7 +44,8 @@ Shell: a Shell theme (e.g. `sapp-theme-dashboard`) is built on it.
 | `display.data-table` | `.table-wrap` grid | `:fetch`, `:columns`, `persist-id`, sort, paging, selection. |
 | `display.chart` | Chart.js canvas | bar / stacked / line / area / donut / pie / scatter; colours from tokens. |
 | `display.markdown` | sanitised HTML | GitHub Markdown via `marked`, cleaned by `DOMPurify`. `url` (fetched) or `source`; relative links from the url's folder or `base-url`; slots `loading`, `empty`. |
-| `layout.mini-app` | page frame | Header, nav in the Shell band / sidebar / tabs, `.page-container`. |
+| `display.image` | thumbnail + viewer | `src`, `fit`; click opens it full screen; `:preview="false"` for a plain image. |
+| `layout.mini-app` | page frame | Header, nav in the Shell band / sidebar / tabs, `.page-container`; an in-app sidebar moves into the Shell sidebar when the Shell has one. |
 
 ## Configuration
 
@@ -71,7 +74,7 @@ import { defaultTheme, THEME } from '@nhphero/sapp-theme-default';
 const sapp = await createSapp({ theme: defaultTheme, tokens: THEME, /* … */ });
 ```
 
-Rules of thumb: tokens before values (no hardcoded colours or px), one accent used sparingly, every
+Rules of thumb: tokens before values (no hardcoded colours or px, no raw palette colours), one control height, one accent used sparingly, every
 screen has empty / loading / error states, status is never colour-only, SVG icons only.
 
 ## Develop
@@ -88,6 +91,8 @@ commit SHA in each `package.json`) and reinstall. A Shell theme bundles it into 
 
 ## Changes
 
+- **2026-10-02** — `display.image`; control size (`--control-h`), header presets (`--header-*`), contrast,
+  text on brand by WCAG contrast; mini app sidebar menus go to the Shell sidebar.
 - **2026-10-02** — `display.markdown`; default font Roboto, sans-serif.
 - **2026-10-02** — `$themeConfig.preview()`; platform look from `platformConfig.look`.
 - **2026-10-01** — App icons, `form.icon-picker`, per-app CSS scope.

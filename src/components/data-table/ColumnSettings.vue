@@ -11,10 +11,17 @@ const props = withDefaults(defineProps<{
   source: any;
   variant?: string;
   buttonClass?: string;
+  /** Borders between the columns (DataTable `bordered`); shown as a switch when the table passes it. */
+  bordered?: boolean;
+  /** Some column has a width of its own (resized) — offers "Reset column widths". */
+  hasWidths?: boolean;
 }>(), {
   variant: 'outline',
-  buttonClass: ''
+  buttonClass: '',
+  bordered: undefined,
+  hasWidths: false,
 });
+const emit = defineEmits<{ (e: 'update:bordered', value: boolean): void; (e: 'reset-widths'): void }>();
 
 const $superApp = inject<any>('$superApp');
 const columnSearch = $superApp.$vue.ref('');
@@ -97,7 +104,22 @@ const filteredColumns = computed(() => {
                <p class="text-xs font-medium">No columns found</p>
             </div>
          </div>
+         <!-- Table look: borders between the columns, column widths -->
+         <div v-if="bordered !== undefined || hasWidths" class="cs-footer">
+            <label v-if="bordered !== undefined" class="cs-row">
+               <span>Show borders</span>
+               <component :is="$c('form.switch')" :model-value="bordered" data-testid="table-borders" @update:model-value="emit('update:bordered', !!$event)" />
+            </label>
+            <button v-if="hasWidths" type="button" class="cs-reset" data-testid="table-reset-widths" @click="emit('reset-widths')">Reset column widths</button>
+         </div>
       </component>
     </component>
   </div>
 </template>
+
+<style scoped>
+.cs-footer { display: flex; flex-direction: column; gap: var(--sp-2); padding: var(--sp-3); border-top: 1px solid var(--border-soft); }
+.cs-row { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3); font-size: var(--text-sm); color: var(--foreground); cursor: pointer; }
+.cs-reset { align-self: flex-start; border: 0; background: transparent; padding: 0; font-size: var(--text-xs); font-weight: 600; color: var(--primary); cursor: pointer; }
+.cs-reset:hover { text-decoration: underline; }
+</style>

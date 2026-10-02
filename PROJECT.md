@@ -33,7 +33,7 @@ superApp.registerComponent({ id: 'form.input',  category: 'Form UI',   component
 superApp.registerComponent({ id: 'ui.modal',    category: 'UI Blocks', component: defineAsyncComponent(() => import('./components/modal/Modal.vue')) });
 ```
 
-Nhóm id hiện có: `ui.*` (button, button-copy, card, badge, alert, modal, popover, dropdown, context-menu, list-manager, search-input, text), `form.*` (input, input-number, switch, textarea, select [`:options` + `show-search` hoặc composition trigger/content/item] + select-trigger/value/content/item, code-editor, entity-selector), `display.*` (data-table, data-grid, column-settings, simple-pagination), `layout.*` (header, sidebar, module-page, module-header, dual-sidebar, action-bar, section-header, command-palette).
+Nhóm id hiện có: `ui.*` (button, button-copy, card, badge, alert, modal, popover, dropdown, context-menu, list-manager, search-input, text), `form.*` (input, input-number, switch, textarea, select [`:options` + `show-search` hoặc composition trigger/content/item] + select-trigger/value/content/item, code-editor, entity-selector), `display.*` (data-table, data-grid, column-settings, simple-pagination, chart, markdown, image), `layout.*` (header, sidebar, module-page, module-header, dual-sidebar, action-bar, section-header, command-palette).
 
 ## Tuỳ chỉnh giao diện live (màu · cỡ · hình khối)
 
@@ -42,11 +42,15 @@ Toàn bộ giao diện chạy trên CSS variable ở `:root` (`hoff/tokens.css`)
 | Tuỳ chọn | Biến CSS bị ghi đè |
 | --- | --- |
 | `mode` light / dark / system | `data-theme` trên `<html>` |
-| `brand` (#hex) | `--brand-50…950` sinh từ một màu gốc (HSL ladder, nấc nhạt giảm bão hoà) → `--primary`, `--ring`, `--link`… đổi theo |
+| `brand` (#hex) | `--brand-50…950` sinh từ một màu gốc (HSL ladder, nấc nhạt giảm bão hoà) → `--primary`, `--ring`, `--link`… đổi theo; chữ trên mỗi nấc brand `--on-brand-<step>` chọn đen / trắng theo độ tương phản WCAG |
 | `font` (0.85–1.2) | `--text-xs…3xl` và `--sp-*`, `--touch` |
 | `density` (0.9 / 1 / 1.1) | `--sp-*`, `--touch` nhân thêm |
 | `radius` (0–14px) | `--radius-sm`, `--radius`, `--radius-lg` |
 | `shadow` (0–2) | `--shadow-sm`, `--shadow`, `--shadow-lg` |
+| `surface` ('' / paper / deep / tint) | nền trang `--background` (giá trị riêng cho sáng / tối) |
+| `contrast` ('' / high / max) | `data-contrast` trên `<html>` — khoảng cách giữa nền, card, chữ, viền |
+| `header` ('' / tint / brand / gradient / dark) | `data-header` trên `<html>` → token `--header-*` (màu và nền của header Shell) |
+| `control` (0.9 / 1 / 1.15) | `--control-scale` → `--control-h`: **một chiều cao** cho mọi button / input / select / chip / pagination / dòng bảng (rule `ui.md` §2) |
 | `fontFamily` | `--font-sans`. **Mặc định `Roboto, sans-serif`** (`tokens.css` + `THEME_CONFIG_DEFAULTS`): web font tải từ Google Fonts (bộ `vietnamese`) ngay khi theme khởi động. Web font khác (`WEB_FONTS`) chỉ tải khi được chọn; stack cục bộ (`FONT_STACKS`, có *System UI* = font hệ thống) không gọi mạng |
 
 Panel nhanh: `shell/ThemePanel.vue` (render trong `ThemeConnector`, id `layout.theme-panel`), mở bằng nút palette trên Header hoặc lệnh ⌘K `theme.customize`. Trang đầy đủ: `packages/sapp-theme-dashboard/src/pages/ThemeStudio.vue` tại `/system/theme` (menu user → Theme Studio, lệnh ⌘K `theme.studio`): cùng bộ điều khiển + gallery mọi component, bảng token đang áp dụng, nhập/tải JSON, xuất CSS. Bằng code:
@@ -79,7 +83,7 @@ Dropdown chuyển app là **một cột, mỗi dòng một app** (icon, tên, ve
 
 ## Ghi chú component
 
-- `layout.mini-app` — khung trang chuẩn cho mini app: page header (icon/title/subtitle + slot `actions`), nav `shell` (mặc định: menu lên header Shell qua module state `shell.nav`), `sidebar` (cột trái 220px trong `.page-container`, slot `footer`) hoặc `tabs` (`nav: { label, path, icon?, badge? }[]`, `active`, emit `navigate`), nội dung canh `.page-container` (`contained=false` để full-bleed).
+- `layout.mini-app` — khung trang chuẩn cho mini app: page header (icon/title/subtitle + slot `actions`), nav `shell` (mặc định: menu lên Shell qua module state `shell.nav` — dải header ở layout classic, sidebar của Shell ở layout sidebar), `sidebar` (cột trái 220px trong `.page-container`, slot `footer`; Shell đang ở layout sidebar — module state `shell.layout` `{ sidebar: true }` do Header ghi — thì menu chuyển lên sidebar của Shell như `shell`) hoặc `tabs` (`nav: { label, path, icon?, badge? }[]`, `active`, emit `navigate`), nội dung canh `.page-container` (`contained=false` để full-bleed).
 - `form.select` — standalone với `:options` (string | {label,value,disabled}), `placeholder`, `size`, `show-search` (ô lọc `.pop-search`, ↑/↓/Enter/Esc); không truyền `options` thì là radix `SelectRoot` để ghép `form.select-trigger/-value/-content/-item`.
 - `display.data-table` — `variant="grid"` (mặc định, kiểu bảng tính) | `"clean"` (bảng hoff, chỉ kẻ ngang, pager ở đáy); `show-select` + `v-model:selected` (+ `row-key`) cho cột checkbox chọn dòng/chọn cả trang; slot `cell-<col>`, `toolbar-left/-actions`.
 - Header bảng (`.table-wrap th`) dùng `--table-head-bg/-fg` (đặc, không opacity: gray-800/gray-100, dark: gray-700/gray-100) để nổi hơn nền trang.

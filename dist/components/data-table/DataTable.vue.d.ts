@@ -112,6 +112,16 @@ type __VLS_Props = {
      * Turn it on for data-inspection grids (SQL console, logs).
      */
     cellDetail?: boolean;
+    /**
+     * Vertical rules between the columns too (the `clean` look draws horizontal ones only). The viewer can
+     * flip it in Columns → Show borders; that choice is remembered (with `persistId`) and wins.
+     */
+    bordered?: boolean;
+    /**
+     * Columns resize by dragging the right edge of their header (double-click the edge: back to auto). The
+     * widths are remembered with `persistId`. Default on.
+     */
+    resizable?: boolean;
 };
 /** Re-fetch the current page. */
 declare function refresh(): Promise<void>;
@@ -167,6 +177,8 @@ declare const __VLS_component: import("vue").DefineComponent<__VLS_Props, {
     bulkBarLabel: string;
     bulkBarClearLabel: string;
     cellDetail: boolean;
+    bordered: boolean;
+    resizable: boolean;
 }, {}, {}, {}, string, import("vue").ComponentProvideOptions, false, {}, any>;
 declare const _default: __VLS_WithSlots<typeof __VLS_component, __VLS_Slots>;
 export default _default;
