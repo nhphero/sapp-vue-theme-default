@@ -759,6 +759,9 @@ onMounted(() => {
 /* The apps menu as wide as the sidebar's switcher (its fixed width when the sidebar is collapsed). */
 .side-switch :deep(.pop) { right: 0; }
 .side-switch .apps-menu { width: auto; max-width: none; }
+/* At sidebar width a row keeps the name and version; "used …" is left out (the order still says it). */
+.side-switch .apps-item__used { display: none; }
+.side-switch .apps-item__name { min-width: 0; font-size: var(--text-base); font-weight: 500; }
 .side-switch.is-collapsed :deep(.pop) { right: auto; }
 .side-switch.is-collapsed .apps-menu { width: calc(var(--touch) * 7); }
 .side-switch .app-chip > span:nth-child(2) { font-size: var(--text-base); font-weight: 500; }
