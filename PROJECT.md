@@ -73,9 +73,9 @@ Nút chuyển app hiện version dạng badge nhỏ cùng hàng với tên app �
 Trong dropdown chuyển app, **mỗi app (ô trong lưới và pill ở hàng Gần đây) hiện version ngay sau tên** theo cùng quy tắc (`describeVersion`), class `.tile-version` (token `--text-xs`, `--sp-1`). Manifest chỉ nạp khi mở menu lần đầu (kernel cache theo URL), nạp lại khi version của app đổi.
 
 
-## Header: app gần đây
+## Header: thứ tự app (yêu thích, dùng gần nhất)
 
-Dropdown chuyển app chia **2 cột**: có app **Gần đây** thì cột trái (hẹp, nền `--muted`) là danh sách dọc các app vừa mở — tối đa 5 (Admin → Config `apps.recentCount`), mới nhất trước, không tính app đang mở, kèm version, lọc theo ô tìm kiếm; cột phải là mọi app (lưới 2 cột). Không có app gần đây thì danh sách app chiếm hết. Màn hẹp (≤ 720px) hai phần xếp chồng. Kích thước theo token (`.apps-menu`, `.recent-apps`). Lưu theo trình duyệt ở localStorage `sapp:recent-apps` (mọi truy cập bọc try/catch — storage bị chặn thì hàng chỉ sống trong phiên). Nhãn `shell.recent` nằm trong i18n của `vue-sapp`.
+Dropdown chuyển app là **một cột, mỗi dòng một app** (icon, tên, version, mô tả; bên phải là lúc dùng gần nhất và nút sao). Thứ tự ưu tiên: **yêu thích** → **dùng gần nhất** (`last_used`) → tên. `last_used` của từng app (`appId → epoch ms`) lưu theo trình duyệt ở localStorage `sapp:app-last-used`, ghi mỗi lần mở app; danh sách `sapp:recent-apps` cũ được đọc một lần rồi bỏ. Mọi truy cập bọc try/catch. Ô tìm lọc theo tên / mô tả / id. Kích thước theo token (`.apps-menu`, `.apps-item`).
 
 ## Ghi chú component
 
