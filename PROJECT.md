@@ -77,6 +77,14 @@ Trong dropdown chuyển app, **mỗi app (ô trong lưới và pill ở hàng G�
 
 Dropdown chuyển app có hàng **Gần đây** ở trên cùng: tối đa 5 app vừa mở (mới nhất trước, không tính app đang mở), dạng pill nhỏ, lọc theo ô tìm kiếm. Lưu theo trình duyệt ở localStorage `sapp:recent-apps` (mọi truy cập bọc try/catch — storage bị chặn thì hàng chỉ sống trong phiên). Nhãn `shell.recent` nằm trong i18n của `vue-sapp`.
 
+## Markdown: `display.markdown`
+
+`components/markdown/Markdown.vue` — render Markdown (GitHub flavoured: bảng, task list, code block) bằng `marked`, HTML làm sạch bằng `DOMPurify` (bỏ script, event handler, link `javascript:`), link mở tab mới, link / ảnh tương đối resolve theo `base-url`. Nạp lần đầu dùng (async). Style theo token (`--text-*`, `--sp-*`, `--muted`, `--border-soft`…). Ví dụ: Admin → Packages → một package hiện README.md của version.
+
+```vue
+<component :is="$c('display.markdown')" :source="readme" :base-url="`${files}/${pkg}/${version}/`" />
+```
+
 ## Icon của app: `APP_ICONS`, `ui.app-icon`, `form.icon-picker`
 
 - `src/services/appIcons.ts` — `APP_ICONS`: bộ icon Lucide chọn lọc (~100, theo tên PascalCase lưu trong registry: `Database`, `BookOpen`…), `appIcon(name)` (không có → `LayoutGrid`). Mọi danh sách app (Header, Home, Admin) resolve qua đây; thêm icon vào đây là chọn được ở mọi nơi. Export từ package: `APP_ICONS`, `APP_ICON_NAMES`, `appIcon`.

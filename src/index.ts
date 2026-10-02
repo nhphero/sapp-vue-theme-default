@@ -134,6 +134,8 @@ export class DefaultTheme implements ITheme {
     superApp.registerComponent({ id: 'display.data-table', category: 'Display UI', component: defineAsyncComponent(() => import('./components/data-table/DataTable.vue')) });
     superApp.registerComponent({ id: 'display.column-settings', category: 'Display UI', component: defineAsyncComponent(() => import('./components/data-table/ColumnSettings.vue')) });
     superApp.registerComponent({ id: 'display.simple-pagination', category: 'Display UI', component: defineAsyncComponent(() => import('./components/data-table/SimplePagination.vue')) });
+    // Markdown (GitHub flavoured), sanitised — a package's README, docs. Loaded on first use (marked + DOMPurify).
+    superApp.registerComponent({ id: 'display.markdown', category: 'Display UI', component: defineAsyncComponent(() => import('./components/markdown/Markdown.vue')) });
     superApp.registerComponent({ id: 'Table', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/Table.vue')) });
     superApp.registerComponent({ id: 'TableBody', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/TableBody.vue')) });
     superApp.registerComponent({ id: 'TableCell', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/TableCell.vue')) });
