@@ -311,7 +311,7 @@ onMounted(() => {
 <template>
   <!-- One block: the brand row and the app band share the header surface; the menu's active item is colour. -->
   <header class="shell-header w-full sticky top-0 z-[100] transition-colors duration-300">
-    <div class="page-container h-(--header-h) flex items-center justify-between gap-4">
+    <div class="page-container shell-header__row flex items-center justify-between gap-4">
       
       <!-- 🗺️ Left Section: Branding & Navigation -->
       <div class="flex items-center gap-3 min-w-0">
@@ -452,7 +452,7 @@ onMounted(() => {
           </component>
         </div>
 
-        <div v-if="showAppNav" class="app-band__sep self-center h-5 w-px shrink-0"></div>
+        <div v-if="showAppNav" class="app-band__sep shrink-0"></div>
 
         <nav v-if="showAppNav" class="tabs tabs--band min-w-0 overflow-x-auto no-scrollbar" role="tablist" data-testid="app-nav">
           <template v-for="section in bandSections" :key="section.group ?? section.item.path">
@@ -578,8 +578,11 @@ onMounted(() => {
    both read `--secondary` and neither owns a colour of its own. Tune the surface
    in `hoff/tokens.css`, once, and they stay in step. */
 .app-band__end { margin-left: auto; display: flex; align-items: center; gap: var(--sp-1); padding-left: var(--sp-3); flex: none; }
-/* The header is one block: brand row and app band on the same surface, one edge below them. */
+/* Two thin rows on one surface: the brand row (logo, language, user) and the app band (switcher +
+   the app's pages). Heights scale with the header token, so Theme Studio's size / density carry. */
 .shell-header {
+  --header-row-h:  calc(var(--header-h) * 0.85);
+  --header-band-h: calc(var(--header-h) * 0.77);
   /* Surface and ink from the header preset (tokens.css `--header-*`, Theme Studio → Header). A Shell
      theme that paints one surface behind the header and a bar under it sets `--shell-header-bg: transparent`. */
   background: var(--shell-header-bg, var(--header-bg));
@@ -588,6 +591,7 @@ onMounted(() => {
      history) moves the shadow below that bar instead: `--shell-header-shadow: none`. */
   box-shadow: var(--shell-header-shadow, var(--header-shadow));
 }
+.shell-header__row { height: var(--header-row-h); }
 /* Brand row: its own classes, not the semantic utilities — the dropdowns open inside the header and
    must keep the page's colours. */
 .hdr-ink { color: var(--header-fg); }
@@ -596,116 +600,70 @@ onMounted(() => {
 .hdr-sep { background: var(--header-border); }
 .hdr-btn { color: var(--header-muted-fg); }
 .hdr-btn:hover { color: var(--header-fg); background: var(--header-hover-bg); }
-.app-band {
-  /* The band sits on the header's surface: ink and surface come from it, the menu's state from the brand. */
-  --app-band:        var(--header-bg);
-  --app-band-fg:     var(--header-fg);
 
+.app-band {
+  /* The band sits on the header's surface: controls on it (shell.band) read these. */
+  --app-band:    var(--header-bg);
+  --app-band-fg: var(--header-fg);
   background: transparent;
   border: 0;
 }
+.app-band .page-container { height: var(--header-band-h); }
+/* Between the app's name and its pages. */
+.app-band__sep { align-self: center; height: 45%; width: 1px; background: var(--header-border); }
 
-/* A full header-height band: the menu is the app's main navigation and needs room to breathe. */
-.app-band .page-container { min-height: var(--header-h); }
-
-.app-band__sep { display: none; }
-
-/* Switcher owns the band — it names the app the tabs belong to, so it stays the
-   heavier item. Its icon chip is glass rather than `--primary-soft`: a near-white
-   plate reads as a hole punched in a coloured bar. */
-/* The switcher always carries its own plate, so it reads as a control at rest
-   instead of only revealing itself on hover. It fills the band's full height — no margin, no
-   radius — so it reads as the band's leading segment rather than a button floating in it. */
+/* The switcher names the app: plain text on the band (no plate), its icon in the brand's soft colour.
+   It fills the band's height so the whole strip is clickable. */
 .app-switch { align-self: stretch; }
 .app-switch > div:first-child { height: 100%; }
 .app-chip {
   height: 100%;
-  padding: 0 var(--sp-3) 0 var(--sp-2);
+  padding: 0 var(--sp-2) 0 0;
   border: 0;
   border-radius: 0;
-  background: var(--header-chip-bg);
+  background: transparent;
 }
 .app-chip span { color: var(--header-fg); }
-.app-chip span:first-child { background: var(--header-active-bg); color: var(--header-active-fg); }
+.app-chip span:first-child { width: var(--sp-6); height: var(--sp-6); background: var(--header-active-bg); color: var(--header-active-fg); }
 .app-chip .app-version { color: var(--header-muted-fg); background: var(--header-hover-bg); border-color: transparent; }
 .app-chip > svg { color: var(--header-muted-fg); }
-.app-chip:hover { background: var(--header-hover-bg); }
 .app-chip:hover > svg { color: var(--header-fg); }
 
-/* The band has no bottom border — .tabs must not draw one either. */
+/* The app's pages: sentence-case labels, full band height; the page on screen is the accent colour
+   with a 2px underline on the band's bottom edge (tokens.css `--header-accent`). */
 .tabs--band {
   border-bottom: 0;
-  /* Tabs are pills centred on the band's middle line — not stretched boxes with an underline,
-     whose border/rail always pulled the label off-centre. */
-  align-items: center;
+  align-self: stretch;
+  align-items: stretch;
   gap: var(--sp-1);
   scrollbar-width: none;   /* `no-scrollbar` is not a defined utility in this theme */
 }
 .tabs--band::-webkit-scrollbar { display: none; }
-
-/* One weight for every tab. Switching weight on select re-measures the text and
-   shifts the whole strip sideways; colour and the rail carry the state instead.
-   The resting colour is mixed toward the surface rather than made translucent, so
-   it stays a solid, predictable colour at any density or backdrop. */
 .tabs--band .tab {
-  /* A fixed-height pill: the label is centred inside it by flexbox, the pill is centred on the band. */
-  height: calc(var(--touch) * 0.8);
-  padding-top: 0;
-  padding-bottom: 0;
-  /* Wider than the in-card `.tab`: uppercase labels side by side need air between them. */
-  padding-left: var(--sp-4);
-  padding-right: var(--sp-4);
+  height: 100%;
+  padding: 0 var(--sp-3);
   margin-bottom: 0;
-  border-radius: var(--radius);
-  /* Uppercase sets optically larger than lowercase at the same size, so --text-xs
-     here reads about like --text-sm did before; weight goes up to 700 to keep the
-     stroke from thinning out at the smaller size. */
-  /* A step below the app switcher (--text-sm): the switcher names the app, the tabs are its pages. */
-  font-size: calc(var(--text-xs) * 0.92);
-  font-weight: 700;
-  /* Uppercase also throws away the word-shape cue, so it needs real tracking to
-     stay legible — `--tracking-wide` is the token this theme already uses for
-     uppercase labels (table headers, section titles). */
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-wide);
-  /* 92%, not 100%: the active tab still has to win, and it does so on pure
-     `--app-band-fg` plus the rail. Below ~88% the band's own hue starts tinting
-     the letters and they read as dulled rather than as a quieter state. */
-  color: var(--header-muted-fg);
   border: 0;
-  transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
+  border-radius: 0;
+  background: transparent;
+  font-size: var(--text-sm);
+  /* One weight for every state: a weight change re-measures the label and shifts the strip. */
+  font-weight: 500;
+  color: var(--header-muted-fg);
+  transition: color var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
 }
-/* Optical centring of an uppercase label: caps have no descenders, yet the line box keeps room for
-   them below, so geometrically-centred caps look high. The pill has a fixed height and centres its
-   content, so a top padding moves the label down by half of it — 0.3em ≈ the missing descender share.
-   In `em`, so it follows the font size set in Theme Studio. */
-.tabs--band .tab { padding-top: 0.3em; }
-.tabs--band .tab:hover {
-  color: var(--header-fg);
-  background: var(--header-hover-bg);
-}
-/* Focus lands on the same plate as hover, with a ring in the band's own ink so it
-   never borrows a colour from a surface it isn't sitting on. */
-.tabs--band .tab:focus-visible {
-  outline: 2px solid var(--ring);
-  outline-offset: -3px;
-  background: var(--header-hover-bg);
-}
-/* A group tab sits inside the popover's two wrappers (inline-block by default). Make them flex boxes
-   centred like the band, so the group pill lines up exactly with the plain pills next to it. */
-.band-group, .band-group__trigger { display: flex; align-items: center; }
+.tabs--band .tab:hover { color: var(--header-fg); }
+.tabs--band .tab:focus { outline: none; }
+.tabs--band .tab:focus-visible { outline: 2px solid var(--header-accent); outline-offset: -4px; border-radius: var(--radius); background: transparent; }
+.tabs--band .tab[aria-selected="true"] { color: var(--header-accent); box-shadow: inset 0 -2px 0 var(--header-accent); }
+/* A group tab sits inside the popover's two wrappers: stretch them so its underline lines up too. */
+.band-group, .band-group__trigger { display: flex; align-items: stretch; }
 /* Tabs never take focus from a mouse click (`@mousedown.prevent`), so no box is left behind after
-   navigating; keyboard focus still gets the ring below. */
+   navigating; keyboard focus still gets the ring above. */
 
 /* A listed-but-unavailable page (e.g. not migrated yet): visible, not clickable. */
 .pop-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; pointer-events: none; }
 
 /* The active page's name after a group label reads quieter than the group itself. */
-.band-group__current { font-weight: 600; text-transform: none; letter-spacing: normal; opacity: .85; }
-
-.tabs--band .tab[aria-selected="true"] {
-  /* The page on screen is the brand's colour on its soft plate. */
-  color: var(--header-active-fg);
-  background: var(--header-active-bg);
-}
+.band-group__current { font-weight: 500; opacity: .8; }
 </style>

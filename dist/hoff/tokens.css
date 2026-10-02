@@ -247,6 +247,8 @@
   --header-hover-bg: var(--muted);       --header-chip-bg: var(--muted);
   --header-active-bg: var(--primary-soft);  --header-active-fg: var(--primary);
   --header-border: var(--border-soft);   --header-shadow: var(--shadow-sm);
+  /* the page on screen in the app band: text and underline */
+  --header-accent: var(--primary);
   /* the brand logo needs a light plate on a dark header surface (Header.vue) */
   --header-on-dark: 0;
 }
@@ -265,6 +267,7 @@
   --header-hover-bg: rgb(255 255 255 / .12);  --header-chip-bg: rgb(0 0 0 / .16);
   --header-active-bg: #fff;              --header-active-fg: var(--brand-700);
   --header-border: rgb(255 255 255 / .14);   --header-shadow: var(--shadow);
+  --header-accent: #fff;
   --header-on-dark: 1;
 }
 :root[data-header="brand"], [data-header-preview="brand"]    { --header-bg: var(--brand-700); }
@@ -273,6 +276,7 @@
   --header-bg: var(--gray-950);
   --header-chip-bg: rgb(255 255 255 / .06);  --header-hover-bg: rgb(255 255 255 / .08);
   --header-active-bg: color-mix(in srgb, var(--brand-400) 24%, transparent);  --header-active-fg: var(--brand-200);
+  --header-accent: var(--brand-300);
   --header-border: rgb(255 255 255 / .08);
 }
 
