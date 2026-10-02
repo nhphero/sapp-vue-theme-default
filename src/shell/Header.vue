@@ -37,18 +37,17 @@ const homeState = computed<any>(() => $superApp?.getModuleState?.('home', { favo
 const favoriteKeys = computed<string[]>(() => homeState.value?.favorites ?? [])
 const isFavorite = (key: string) => favoriteKeys.value.includes(key)
 const toggleFavorite = (key: string) => homeState.value?.toggleFavorite?.(key)
-/** One list, one app per row: the apps used most recently first (by last use), then the others —
- *  favourites first (in the order they were starred), then by name. */
+/** One list, one app per row, by priority: favourites first, then the most recently used
+ *  (last use per app, sapp:app-last-used), then by name. */
 const appSections = (q?: string) => {
   const s = (q || '').trim().toLowerCase()
   const hit = (a: any) => !s || `${a.label} ${a.detail || ''} ${a.id}`.toLowerCase().includes(s)
   const list = tiles.value.filter(hit)
-  const rank = (a: any) => { const i = favoriteKeys.value.indexOf(a.key); return i === -1 ? Number.MAX_SAFE_INTEGER : i }
   const ordered = [...list].sort((a: any, b: any) => {
+    const fav = Number(isFavorite(b.key)) - Number(isFavorite(a.key))
+    if (fav !== 0) return fav
     const used = (lastUsed.value[b.id] ?? 0) - (lastUsed.value[a.id] ?? 0)
     if (used !== 0) return used
-    const fav = rank(a) - rank(b)
-    if (fav !== 0) return fav
     return String(a.label).localeCompare(String(b.label))
   })
   return ordered.length ? [{ key: 'apps', label: '', tiles: ordered }] : []
@@ -413,7 +412,7 @@ onMounted(() => {
           </template>
 
           <template #content="{ query }">
-            <!-- One column, one app per row: most recently used first (sapp:app-last-used). -->
+            <!-- One column, one app per row: favourites, then most recently used (sapp:app-last-used), then by name. -->
             <div class="apps-menu">
               <div class="apps-menu__all">
               <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
@@ -487,7 +486,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* The menu: one column, one app per row, most recently used first. Widths in tokens (scale with Theme Studio). */
+/* The menu: one column, one app per row — favourites, then most recently used. Widths in tokens (scale with Theme Studio). */
 .apps-menu { width: calc(var(--sp-8) * 7.5); max-width: calc(100vw - var(--sp-6)); padding-top: var(--sp-1); }
 .apps-menu__all { min-width: 0; }
 .apps-list { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--sp-2) var(--sp-1); }
