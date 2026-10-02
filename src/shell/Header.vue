@@ -135,6 +135,11 @@ const apps = computed(() => {
     }))
 })
 
+/**
+ * Controls at the right end of the app band, published by the Shell theme through the kernel's module
+ * state `shell.band` (`end`: components, rendered in order) — e.g. the navigation history toggle.
+ */
+const shellBand = $superApp.getModuleState('shell.band', { end: [] as any[] })
 /** Menu of the mounted mini app, published by `layout.mini-app` (theme) through the kernel's module state. */
 const shellNav = $superApp.getModuleState('shell.nav', { moduleId: '', title: '', icon: null, items: [], active: '', navigate: null })
 /** True while a mini app is mounted (`/app/<id>/…`); Shell pages (Home, Theme Studio…) show the generic switcher. */
@@ -480,6 +485,10 @@ onMounted(() => {
             </component>
           </template>
         </nav>
+
+        <div v-if="shellBand.end?.length" class="app-band__end" data-testid="app-band-end">
+          <component :is="item" v-for="(item, i) in shellBand.end" :key="i" />
+        </div>
       </div>
     </div>
   </header>
@@ -564,6 +573,7 @@ onMounted(() => {
    The band and the table header are the same thing — a structural surface — so
    both read `--secondary` and neither owns a colour of its own. Tune the surface
    in `hoff/tokens.css`, once, and they stay in step. */
+.app-band__end { margin-left: auto; display: flex; align-items: center; gap: var(--sp-1); padding-left: var(--sp-3); flex: none; }
 .app-band {
   --app-band:        var(--secondary);
   --app-band-fg:     var(--secondary-foreground);

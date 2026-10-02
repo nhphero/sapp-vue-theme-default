@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, inject, markRaw, ref, watch, onBeforeUnmount } from 'vue'
+import { computed, inject, markRaw, ref, watch, onBeforeUnmount, onActivated } from 'vue'
 import { ChevronDown, LayoutGrid } from 'lucide-vue-next'
 
 /**
@@ -122,6 +122,8 @@ const publish = () => {
   shellNav.navigate = go
 }
 watch(() => [props.nav, props.active, props.variant, props.title, props.icon], publish, { immediate: true, deep: true })
+// Back from the Shell's route cache: the header band shows this app's menu again.
+onActivated(publish)
 onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign(shellNav, { title: '', icon: null, items: [], active: '', navigate: null }) })
 </script>
 

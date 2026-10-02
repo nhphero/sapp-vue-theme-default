@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, onBeforeUnmount, inject, provide, shallowRef, markRaw } from 'vue'
+import { ref, watch, onMounted, onBeforeUnmount, onActivated, onDeactivated, inject, provide, shallowRef, markRaw } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { CSS_SCOPE_KEY } from '../composables/cssScope'
 
@@ -95,11 +95,34 @@ const loadModule = async () => {
   }
 }
 
+/**
+ * Kept alive by the Shell's route cache (one container per app): while hidden it ignores route
+ * changes — they belong to another app or page — and on its return it takes its app's CSS scope back
+ * and catches up with the sub-path it is shown at.
+ */
+const active = ref(true)
+let activatedOnce = false
+/** The app this container shows: the first path segment it was mounted at (the Shell keys containers by it). */
+const firstSegment = () => {
+  const param = route.params.moduleId
+  return (Array.isArray(param) ? param[0] : String(param ?? '').split('/')[0]) ?? ''
+}
+const ownSegment = firstSegment()
+onActivated(() => {
+  active.value = true
+  if (!activatedOnce) { activatedOnce = true; return }   // the first activation is the mount
+  if (currentActiveModuleId.value) setCssScope($superApp.getModuleCssScope?.(currentActiveModuleId.value) ?? currentActiveModuleId.value)
+  loadModule()
+})
+onDeactivated(() => { active.value = false })
+
 onMounted(() => {
   loadModule()
 })
 
 watch(() => route.params.moduleId, () => {
+  // Another page, or another app (its own container takes it) — not this one's business.
+  if (!active.value || route.name !== 'AppGateway' || firstSegment() !== ownSegment) return
   loadModule()
 })
 </script>
