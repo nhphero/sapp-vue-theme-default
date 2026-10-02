@@ -978,10 +978,10 @@ const headerMenuOptions = computed(() => [
    table until 1% equals the content (≈100× wider), pushing every other column off screen. */
 .dt-fit-col { width: 0; white-space: nowrap; }
 /* Resize handle: the header's right edge; a hairline shows on hover / while a width is set. */
-.dt-resize { position: absolute; top: 0; right: -3px; bottom: 0; width: 7px; z-index: 2; cursor: col-resize; }
-.dt-resize::after { content: ''; position: absolute; top: 25%; bottom: 25%; left: 3px; width: 1px; background: transparent; transition: background-color var(--dur, .15s) ease; }
+.dt-resize { position: absolute; top: 0; right: 0; bottom: 0; width: 8px; z-index: 2; cursor: col-resize; }
+.dt-resize::after { content: ''; position: absolute; top: 25%; bottom: 25%; right: 0; width: 1px; background: transparent; transition: background-color var(--dur, .15s) ease; }
 th:hover > .dt-resize::after, .dt-resize.is-set::after { background: var(--border); }
-.dt-resize:hover::after, .dt-resize:active::after { top: 0; bottom: 0; width: 2px; left: 2.5px; background: var(--primary); }
+.dt-resize:hover::after, .dt-resize:active::after { top: 0; bottom: 0; width: 2px; background: var(--primary); }
 /* Borders option (clean look): vertical rules between the columns too. */
 .dt-bordered :is(th, td) + :is(th, td) { border-left: 1px solid var(--border-soft); }
 
