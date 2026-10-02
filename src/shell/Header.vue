@@ -254,6 +254,11 @@ const fetchMe = async () => {
   }
 }
 $superApp.on?.('auth:profile-updated', (user: any) => { me.value = { ...(me.value || {}), ...user } })
+/**
+ * The avatar: the user record's (auth.me), else the session's (`$authState.user` — an SSO session keeps
+ * its avatar there; auth.me knows nothing of it).
+ */
+const avatarSrc = computed(() => me.value?.avatar || ($superApp as any)?.$authState?.user?.avatar || null)
 
 const handleLogout = async () => {
   // Lets the auth provider (SSO) drop its own tokens too — the app session only, never the IdP session.
@@ -410,7 +415,7 @@ onMounted(() => {
           <template #trigger>
             <button type="button" class="h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hdr-btn cursor-pointer transition-colors outline-none" data-testid="user-menu">
               <span class="hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap">{{ me?.username || 'User' }}</span>
-              <UserAvatar :src="me?.avatar" :name="me?.username || 'User'" :size="28" rounded="lg" />
+              <UserAvatar :src="avatarSrc" :name="me?.username || 'User'" :size="28" rounded="lg" />
               <ChevronDown :size="13" class="hdr-faint" />
             </button>
           </template>
@@ -418,7 +423,7 @@ onMounted(() => {
           <template #content>
             <div class="w-60">
               <div class="flex items-center gap-3 px-2 py-2.5 mb-1 border-b border-border-soft">
-                 <UserAvatar :src="me?.avatar" :name="me?.username || 'User'" :size="36" rounded="lg" />
+                 <UserAvatar :src="avatarSrc" :name="me?.username || 'User'" :size="36" rounded="lg" />
                  <div class="min-w-0">
                    <div class="text-sm font-semibold text-foreground truncate">{{ me?.username }}</div>
                    <div class="text-xs text-faint truncate">{{ me?.email || me?.role }}</div>

@@ -1,141 +1,141 @@
-import { defineComponent as je, computed as m, ref as x, inject as Te, watch as O, onBeforeUnmount as Pe, onMounted as Ke, openBlock as a, createElementBlock as n, createElementVNode as l, normalizeClass as L, createBlock as p, Teleport as pe, resolveDynamicComponent as v, withCtx as $, toDisplayString as d, createCommentVNode as c, Fragment as g, renderList as S, createTextVNode as W, withKeys as Fe, withModifiers as Q, createVNode as b, unref as r, createStaticVNode as Be } from "vue";
-import { appIcon as He } from "../index.js";
-import { useRouter as Je, useRoute as Ye } from "vue-router";
-import { LayoutGrid as ve, Star as Ge, ChevronDown as T, Check as he, User as We, Palette as Qe, LogOut as Xe, PanelLeftOpen as Ze, PanelLeftClose as qe } from "lucide-vue-next";
-import { SUPERAPP_EVENTS as et } from "@nhphero/vue-sapp/contracts";
-import { L as me } from "./LocaleFlag-C6SPRotW.js";
-import { _ as ge } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
-import { _ as tt } from "./_plugin-vue_export-helper-CHgC5LLL.js";
-const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "shell-header w-full transition-colors duration-300" }, lt = ["title", "aria-label"], nt = {
+import { defineComponent as Te, computed as m, ref as x, inject as Pe, watch as O, onBeforeUnmount as Ke, onMounted as Fe, openBlock as a, createElementBlock as n, createElementVNode as l, normalizeClass as L, createBlock as p, Teleport as ve, resolveDynamicComponent as v, withCtx as $, toDisplayString as d, createCommentVNode as c, Fragment as g, renderList as S, createTextVNode as W, withKeys as Be, withModifiers as Q, createVNode as f, unref as r, createStaticVNode as He } from "vue";
+import { appIcon as Je } from "../index.js";
+import { useRouter as Ye, useRoute as Ge } from "vue-router";
+import { LayoutGrid as he, Star as We, ChevronDown as T, Check as me, User as Qe, Palette as Xe, LogOut as Ze, PanelLeftOpen as qe, PanelLeftClose as et } from "lucide-vue-next";
+import { SUPERAPP_EVENTS as tt } from "@nhphero/vue-sapp/contracts";
+import { L as ge } from "./LocaleFlag-C6SPRotW.js";
+import { _ as fe } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
+import { _ as at } from "./_plugin-vue_export-helper-CHgC5LLL.js";
+const st = { class: "shell-head w-full sticky top-0 z-[100]" }, lt = { class: "shell-header w-full transition-colors duration-300" }, nt = ["title", "aria-label"], ot = {
   class: "text-sm font-semibold text-foreground whitespace-nowrap",
   "data-testid": "current-app"
-}, ot = ["title"], it = { class: "apps-menu" }, rt = { class: "apps-menu__all" }, dt = {
+}, it = ["title"], rt = { class: "apps-menu" }, dt = { class: "apps-menu__all" }, ct = {
   key: 0,
   class: "px-3 py-6 text-sm text-faint text-center"
-}, ct = ["data-testid"], ut = {
+}, ut = ["data-testid"], pt = {
   key: 0,
   class: "pop-head flex items-center gap-1.5"
-}, pt = { class: "text-faint font-normal" }, vt = { class: "apps-list" }, ht = ["aria-current", "onClick", "onKeydown"], mt = { class: "apps-item__icon" }, gt = { class: "apps-item__text" }, ft = { class: "apps-item__name" }, bt = { class: "truncate" }, _t = ["title"], yt = ["title"], kt = ["aria-pressed", "aria-label", "onClick"], wt = { class: "flex items-center justify-center min-w-0" }, xt = ["title"], $t = ["src", "alt"], St = ["src", "alt"], At = {
+}, vt = { class: "text-faint font-normal" }, ht = { class: "apps-list" }, mt = ["aria-current", "onClick", "onKeydown"], gt = { class: "apps-item__icon" }, ft = { class: "apps-item__text" }, bt = { class: "apps-item__name" }, _t = { class: "truncate" }, yt = ["title"], kt = ["title"], wt = ["aria-pressed", "aria-label", "onClick"], xt = { class: "flex items-center justify-center min-w-0" }, $t = ["title"], St = ["src", "alt"], At = ["src", "alt"], Ct = {
   key: 2,
   class: "hidden lg:block hdr-tagline border-l hdr-line"
-}, Ct = { class: "flex items-center gap-2 justify-self-end" }, Lt = {
+}, Lt = { class: "flex items-center gap-2 justify-self-end" }, zt = {
   key: 0,
   class: "flex items-center gap-1",
   "data-testid": "app-band-end"
-}, zt = { class: "hidden md:flex items-center gap-1 flex-nowrap shrink-0" }, Et = ["title", "aria-label"], Vt = { class: "w-52" }, Dt = { class: "pop-head" }, Mt = ["aria-selected", "onClick"], Ot = { class: "flex items-center gap-2.5" }, Nt = {
+}, Et = { class: "hidden md:flex items-center gap-1 flex-nowrap shrink-0" }, Vt = ["title", "aria-label"], Dt = { class: "w-52" }, Mt = { class: "pop-head" }, Ot = ["aria-selected", "onClick"], Nt = { class: "flex items-center gap-2.5" }, Ut = {
   type: "button",
   class: "h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hdr-btn cursor-pointer transition-colors outline-none",
   "data-testid": "user-menu"
-}, Ut = { class: "hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap" }, It = { class: "w-60" }, Rt = { class: "flex items-center gap-3 px-2 py-2.5 mb-1 border-b border-border-soft" }, jt = { class: "min-w-0" }, Tt = { class: "text-sm font-semibold text-foreground truncate" }, Pt = { class: "text-xs text-faint truncate" }, Kt = { class: "page-container flex items-stretch gap-3" }, Ft = {
+}, It = { class: "hidden lg:block text-sm font-semibold hdr-ink whitespace-nowrap" }, Rt = { class: "w-60" }, jt = { class: "flex items-center gap-3 px-2 py-2.5 mb-1 border-b border-border-soft" }, Tt = { class: "min-w-0" }, Pt = { class: "text-sm font-semibold text-foreground truncate" }, Kt = { class: "text-xs text-faint truncate" }, Ft = { class: "page-container flex items-stretch gap-3" }, Bt = {
   key: 0,
   id: "shell-band-switch",
   class: "flex items-center shrink-0"
-}, Bt = {
+}, Ht = {
   key: 1,
   class: "app-band__sep",
   "aria-hidden": "true"
-}, Ht = {
+}, Jt = {
   key: 2,
   class: "tabs tabs--band min-w-0 overflow-x-auto no-scrollbar",
   role: "tablist",
   "data-testid": "app-nav"
-}, Jt = ["aria-selected", "onClick"], Yt = {
+}, Yt = ["aria-selected", "onClick"], Gt = {
   key: 1,
   class: "badge"
-}, Gt = ["aria-selected", "data-testid"], Wt = {
+}, Wt = ["aria-selected", "data-testid"], Qt = {
   key: 1,
   class: "band-group__current"
-}, Qt = {
+}, Xt = {
   class: "min-w-56 flex flex-col",
   role: "menu"
-}, Xt = ["aria-selected", "disabled", "aria-disabled", "onClick"], Zt = { class: "flex-1" }, qt = {
+}, Zt = ["aria-selected", "disabled", "aria-disabled", "onClick"], qt = { class: "flex-1" }, ea = {
   key: 3,
   class: "app-band__end",
   "data-testid": "app-band-end"
-}, ea = ["aria-current", "title", "onClick"], ta = {
+}, ta = ["aria-current", "title", "onClick"], aa = {
   key: 1,
   class: "side-initial"
-}, aa = { class: "side-label" }, sa = {
+}, sa = { class: "side-label" }, la = {
   key: 2,
   class: "badge side-label"
-}, la = ["data-testid"], na = { class: "nav-group side-label" }, oa = ["disabled", "aria-disabled", "aria-current", "title", "onClick"], ia = {
+}, na = ["data-testid"], oa = { class: "nav-group side-label" }, ia = ["disabled", "aria-disabled", "aria-current", "title", "onClick"], ra = {
   key: 1,
   class: "side-initial"
-}, ra = { class: "side-label" }, da = ["aria-pressed", "title"], ca = {
+}, da = { class: "side-label" }, ca = ["aria-pressed", "title"], ua = {
   key: 0,
   class: "side-label"
-}, fe = "sapp:sidebar-collapsed", be = "sapp:app-last-used", _e = "sapp:recent-apps", ua = /* @__PURE__ */ je({
+}, be = "sapp:sidebar-collapsed", _e = "sapp:app-last-used", ye = "sapp:recent-apps", pa = /* @__PURE__ */ Te({
   __name: "Header",
   props: {
     layout: { default: "band" }
   },
-  setup(ye) {
-    const X = ye, k = m(() => X.layout === "sidebar"), A = m(() => X.layout === "classic"), _ = x((() => {
+  setup(ke) {
+    const X = ke, k = m(() => X.layout === "sidebar"), A = m(() => X.layout === "classic"), b = x((() => {
       try {
-        return localStorage.getItem(fe) === "true";
+        return localStorage.getItem(be) === "true";
       } catch {
         return !1;
       }
-    })()), ke = () => {
-      _.value = !_.value;
+    })()), we = () => {
+      b.value = !b.value;
       try {
-        localStorage.setItem(fe, String(_.value));
+        localStorage.setItem(be, String(b.value));
       } catch {
       }
-    }, u = Te("$superApp"), Z = u.getModuleState("shell.layout", { sidebar: !1 });
+    }, u = Pe("$superApp"), Z = u.getModuleState("shell.layout", { sidebar: !1 });
     O(k, (e) => {
       Z.sidebar = e;
-    }, { immediate: !0 }), Pe(() => {
+    }, { immediate: !0 }), Ke(() => {
       k.value && (Z.sidebar = !1);
     });
-    const V = u, D = Je(), q = Ye(), P = V.$appState, K = V.$themeConfig, w = m(() => V.$config?.branding ?? null), we = m(() => K?.state?.mode === "dark" || K?.state?.mode === "system" && window.matchMedia?.("(prefers-color-scheme: dark)").matches), xe = ["brand", "gradient", "dark"], ee = m(() => we.value || xe.includes(K?.state?.header)), z = V.$i18n, F = x(!1), $e = { vi: "Tiếng Việt", en: "English", ja: "日本語", ko: "한국어", zh: "中文", fr: "Français", de: "Deutsch" }, Se = (e) => {
+    const V = u, D = Ye(), q = Ge(), P = V.$appState, K = V.$themeConfig, w = m(() => V.$config?.branding ?? null), xe = m(() => K?.state?.mode === "dark" || K?.state?.mode === "system" && window.matchMedia?.("(prefers-color-scheme: dark)").matches), $e = ["brand", "gradient", "dark"], ee = m(() => xe.value || $e.includes(K?.state?.header)), z = V.$i18n, F = x(!1), Se = { vi: "Tiếng Việt", en: "English", ja: "日本語", ko: "한국어", zh: "中文", fr: "Français", de: "Deutsch" }, Ae = (e) => {
       z?.setLocale(e), F.value = !1;
-    }, Ae = m(
-      () => ne.value.map((e) => ({ key: `app:${e.id}`, id: e.id, label: e.label, detail: e.detail, icon: e.icon, run: () => Re(e.path) }))
-    ), te = m(() => u?.getModuleState?.("home", { favorites: [] })), Ce = m(() => te.value?.favorites ?? []), N = (e) => Ce.value.includes(e), Le = (e) => te.value?.toggleFavorite?.(e), ae = (e) => {
-      const s = (e || "").trim().toLowerCase(), t = (y) => !s || `${y.label} ${y.detail || ""} ${y.id}`.toLowerCase().includes(s), i = [...Ae.value.filter(t)].sort((y, G) => {
-        const ce = Number(N(G.key)) - Number(N(y.key));
-        if (ce !== 0) return ce;
-        const ue = (E.value[G.id] ?? 0) - (E.value[y.id] ?? 0);
-        return ue !== 0 ? ue : String(y.label).localeCompare(String(G.label));
+    }, Ce = m(
+      () => ne.value.map((e) => ({ key: `app:${e.id}`, id: e.id, label: e.label, detail: e.detail, icon: e.icon, run: () => je(e.path) }))
+    ), te = m(() => u?.getModuleState?.("home", { favorites: [] })), Le = m(() => te.value?.favorites ?? []), N = (e) => Le.value.includes(e), ze = (e) => te.value?.toggleFavorite?.(e), ae = (e) => {
+      const s = (e || "").trim().toLowerCase(), t = (y) => !s || `${y.label} ${y.detail || ""} ${y.id}`.toLowerCase().includes(s), i = [...Ce.value.filter(t)].sort((y, G) => {
+        const ue = Number(N(G.key)) - Number(N(y.key));
+        if (ue !== 0) return ue;
+        const pe = (E.value[G.id] ?? 0) - (E.value[y.id] ?? 0);
+        return pe !== 0 ? pe : String(y.label).localeCompare(String(G.label));
       });
       return i.length ? [{ key: "apps", label: "", tiles: i }] : [];
     }, E = x((() => {
       try {
-        const e = JSON.parse(localStorage.getItem(be) || "null");
+        const e = JSON.parse(localStorage.getItem(_e) || "null");
         if (e && typeof e == "object" && !Array.isArray(e))
           return Object.fromEntries(Object.entries(e).filter(([, o]) => typeof o == "number"));
-        const s = JSON.parse(localStorage.getItem(_e) || "[]"), t = Date.now();
+        const s = JSON.parse(localStorage.getItem(ye) || "[]"), t = Date.now();
         return Array.isArray(s) ? Object.fromEntries(s.filter((o) => typeof o == "string").map((o, i) => [o, t - i * 1e3])) : {};
       } catch {
         return {};
       }
-    })()), ze = (e) => {
+    })()), Ee = (e) => {
       E.value = { ...E.value, [e]: Date.now() };
       try {
-        localStorage.setItem(be, JSON.stringify(E.value)), localStorage.removeItem(_e);
+        localStorage.setItem(_e, JSON.stringify(E.value)), localStorage.removeItem(ye);
       } catch {
       }
     }, se = (e) => {
       const s = E.value[e];
       return s ? V.$f?.formatRelative?.(new Date(s).toISOString()) ?? new Date(s).toLocaleString() : "";
-    }, U = x(!1), Ee = (e) => {
+    }, U = x(!1), Ve = (e) => {
       U.value = e;
-    }, I = x(!1), f = x(null), B = x([]), Ve = (e) => He(e), le = () => {
+    }, I = x(!1), _ = x(null), B = x([]), De = (e) => Je(e), le = () => {
       typeof u?.getRegisteredApps == "function" && (B.value = u.getRegisteredApps());
-    }, De = ["superadmin", "admin"], Me = m(() => u?.$policy?.can?.("role", De) ?? !1), ne = m(() => B.value.filter((e) => e.isEnabled !== !1).filter((e) => (e.code ?? e.id) !== "admin" || Me.value).map((e) => ({
+    }, Me = ["superadmin", "admin"], Oe = m(() => u?.$policy?.can?.("role", Me) ?? !1), ne = m(() => B.value.filter((e) => e.isEnabled !== !1).filter((e) => (e.code ?? e.id) !== "admin" || Oe.value).map((e) => ({
       id: e.id,
       label: e.name,
       // Routes follow the slug (changeable); the id stays the key.
       path: typeof u.appPath == "function" ? u.appPath(e.id, (e.code ?? e.id) === "admin" ? "apps" : "") : `/app/${e.slug || e.id}`,
-      icon: Ve(e.icon),
+      icon: De(e.icon),
       detail: e.description || "Micro-Frontend App"
     }))), R = u.getModuleState("shell.band", { end: [] }), h = u.getModuleState("shell.nav", { moduleId: "", title: "", icon: null, items: [], active: "", navigate: null }), oe = m(() => q.path.startsWith("/app/")), C = m(() => {
       const e = oe.value ? P.current_app : null, s = e && ne.value.find((t) => t.id === e);
-      return s || (e && h.title ? { id: e, label: h.title, icon: h.icon || ve } : { id: "default", label: z?.t("shell.apps") ?? "Apps", icon: ve });
+      return s || (e && h.title ? { id: e, label: h.title, icon: h.icon || he } : { id: "default", label: z?.t("shell.apps") ?? "Apps", icon: he });
     }), H = m(() => oe.value && h.items.length > 0);
     O(() => C.value.id, (e) => {
-      e && e !== "default" && ze(e);
+      e && e !== "default" && Ee(e);
     }, { immediate: !0 });
     const ie = async (e) => {
       if (!e || e === "default" || typeof u.loadAppManifest != "function") return null;
@@ -149,16 +149,16 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
       const s = await ie(e);
       C.value.id !== e || !s || (j.value = s.label, J.value = s.title);
     }, { immediate: !0 });
-    const M = x({}), Oe = () => {
-      for (const e of Ne()) {
+    const M = x({}), Ne = () => {
+      for (const e of Ue()) {
         const s = `${e.id}@${e.version ?? ""}`;
         re.has(s) || (re.add(s), ie(e.id).then((t) => {
           t && (M.value = { ...M.value, [e.id]: t });
         }));
       }
-    }, re = /* @__PURE__ */ new Set(), Ne = () => typeof u?.getRegisteredApps == "function" ? u.getRegisteredApps() : [];
+    }, re = /* @__PURE__ */ new Set(), Ue = () => typeof u?.getRegisteredApps == "function" ? u.getRegisteredApps() : [];
     O(U, (e) => {
-      e && Oe();
+      e && Ne();
     });
     const de = m(() => {
       const e = [];
@@ -176,21 +176,21 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
       const s = Array.isArray(e) ? e[0] : e, t = s && (u.findAppByRoute?.(s)?.id ?? s);
       t && P.current_app !== t && (P.current_app = t);
     }, { immediate: !0 });
-    const Ue = async () => {
+    const Ie = async () => {
       try {
-        f.value = await u.doAction("auth.me");
+        _.value = await u.doAction("auth.me");
       } catch {
         try {
-          f.value = JSON.parse(localStorage.getItem("user") || "null");
+          _.value = JSON.parse(localStorage.getItem("user") || "null");
         } catch {
         }
       }
     };
     u.on?.("auth:profile-updated", (e) => {
-      f.value = { ...f.value || {}, ...e };
+      _.value = { ..._.value || {}, ...e };
     });
-    const Ie = async () => {
-      u.emit?.(et.AUTH_LOGOUT);
+    const ce = m(() => _.value?.avatar || u?.$authState?.user?.avatar || null), Re = async () => {
+      u.emit?.(tt.AUTH_LOGOUT);
       try {
         u.doAction("auth.logout"), localStorage.removeItem("accessToken"), D.push("/login").catch(() => {
           window.location.href = "/login";
@@ -198,33 +198,33 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
       } catch {
         localStorage.removeItem("accessToken"), window.location.href = "/login";
       }
-    }, Re = (e) => {
+    }, je = (e) => {
       U.value = !1, D.push(e);
     };
-    return Ke(() => {
-      Ue(), le(), typeof u?.on == "function" && u.on("apps:updated", (e) => {
+    return Fe(() => {
+      Ie(), le(), typeof u?.on == "function" && u.on("apps:updated", (e) => {
         Array.isArray(e) ? B.value = e : le();
       });
-    }), (e, s) => (a(), n("div", at, [
-      l("header", st, [
+    }), (e, s) => (a(), n("div", st, [
+      l("header", lt, [
         l("div", {
           class: L(["shell-header__row shell-header__wide", [k.value && "is-sidebar", A.value && "is-classic"]])
         }, [
           l("div", {
             class: L(["flex items-center min-w-0 justify-self-start", (k.value || A.value) && "hidden"])
           }, [
-            (a(), p(pe, {
+            (a(), p(ve, {
               defer: "",
               to: k.value ? "#shell-sidebar" : "#shell-band-switch",
               disabled: !k.value && !A.value
             }, [
               l("div", {
-                class: L(["flex items-center shrink-0 min-w-0", [k.value && ["side-switch", _.value && "is-collapsed"], A.value && "band-switch"]])
+                class: L(["flex items-center shrink-0 min-w-0", [k.value && ["side-switch", b.value && "is-collapsed"], A.value && "band-switch"]])
               }, [
                 (a(), p(v(e.$c("ui.dropdown")), {
                   class: "app-switch",
                   modelValue: U.value,
-                  "onUpdate:modelValue": s[0] || (s[0] = (t) => Ee(t)),
+                  "onUpdate:modelValue": s[0] || (s[0] = (t) => Ve(t)),
                   search: "",
                   "search-placeholder": e.$t("shell.searchApps")
                 }, {
@@ -241,33 +241,33 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                       }, [
                         (a(), p(v(C.value.icon), { size: 16 }))
                       ], 2),
-                      l("span", nt, d(C.value.label), 1),
+                      l("span", ot, d(C.value.label), 1),
                       j.value ? (a(), n("span", {
                         key: 0,
                         class: "app-version",
                         "data-testid": "current-app-version",
                         title: J.value
-                      }, d(j.value), 9, ot)) : c("", !0),
-                      b(r(T), {
+                      }, d(j.value), 9, it)) : c("", !0),
+                      f(r(T), {
                         size: 14,
                         class: "text-faint group-hover/app:text-foreground transition-colors"
                       })
-                    ], 8, lt)
+                    ], 8, nt)
                   ]),
                   content: $(({ query: t }) => [
-                    l("div", it, [
-                      l("div", rt, [
-                        ae(t).length ? c("", !0) : (a(), n("div", dt, d(e.$t("common.empty")), 1)),
+                    l("div", rt, [
+                      l("div", dt, [
+                        ae(t).length ? c("", !0) : (a(), n("div", ct, d(e.$t("common.empty")), 1)),
                         (a(!0), n(g, null, S(ae(t), (o) => (a(), n("section", {
                           key: o.key,
                           class: "pt-1 last:pb-3",
                           "data-testid": `apps-section-${o.key}`
                         }, [
-                          o.label ? (a(), n("div", ut, [
+                          o.label ? (a(), n("div", pt, [
                             W(d(o.label), 1),
-                            l("span", pt, d(o.tiles.length), 1)
+                            l("span", vt, d(o.tiles.length), 1)
                           ])) : c("", !0),
-                          l("div", vt, [
+                          l("div", ht, [
                             (a(!0), n(g, null, S(o.tiles, (i) => (a(), n("div", {
                               key: i.key,
                               role: "button",
@@ -275,23 +275,23 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                               class: "apps-item group",
                               "aria-current": i.id === C.value.id ? "true" : void 0,
                               onClick: (y) => i.run(),
-                              onKeydown: Fe((y) => i.run(), ["enter"])
+                              onKeydown: Be((y) => i.run(), ["enter"])
                             }, [
-                              l("span", mt, [
+                              l("span", gt, [
                                 (a(), p(v(i.icon), {
                                   size: 16,
                                   "stroke-width": "1.75"
                                 }))
                               ]),
-                              l("span", gt, [
-                                l("span", ft, [
-                                  l("span", bt, d(i.label), 1),
+                              l("span", ft, [
+                                l("span", bt, [
+                                  l("span", _t, d(i.label), 1),
                                   M.value[i.id] ? (a(), n("span", {
                                     key: 0,
                                     class: "tile-version",
                                     title: M.value[i.id].title,
                                     "data-testid": "tile-version"
-                                  }, d(M.value[i.id].label), 9, _t)) : c("", !0)
+                                  }, d(M.value[i.id].label), 9, yt)) : c("", !0)
                                 ])
                               ]),
                               se(i.id) ? (a(), n("span", {
@@ -299,23 +299,23 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                                 class: "apps-item__used",
                                 title: new Date(E.value[i.id]).toLocaleString(),
                                 "data-testid": "tile-last-used"
-                              }, d(se(i.id)), 9, yt)) : c("", !0),
+                              }, d(se(i.id)), 9, kt)) : c("", !0),
                               l("button", {
                                 type: "button",
                                 class: "icon-btn apps-item__star",
                                 "aria-pressed": N(i.key),
                                 "aria-label": e.$t("shell.toggleFavorite"),
                                 "data-testid": "tile-star",
-                                onClick: Q((y) => Le(i.key), ["stop"])
+                                onClick: Q((y) => ze(i.key), ["stop"])
                               }, [
-                                b(r(Ge), {
+                                f(r(We), {
                                   size: 14,
                                   class: L(N(i.key) ? "fill-warning text-warning" : "text-faint")
                                 }, null, 8, ["class"])
-                              ], 8, kt)
-                            ], 40, ht))), 128))
+                              ], 8, wt)
+                            ], 40, mt))), 128))
                           ])
-                        ], 8, ct))), 128))
+                        ], 8, ut))), 128))
                       ])
                     ])
                   ]),
@@ -324,7 +324,7 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
               ], 2)
             ], 8, ["to", "disabled"]))
           ], 2),
-          l("div", wt, [
+          l("div", xt, [
             l("div", {
               class: "flex items-center gap-3 cursor-pointer group/logo",
               "data-testid": "brand",
@@ -337,7 +337,7 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                   src: w.value.logoDark,
                   alt: w.value.name,
                   class: "h-7 w-auto max-w-[200px] object-contain"
-                }, null, 8, $t)) : (a(), n("span", {
+                }, null, 8, St)) : (a(), n("span", {
                   key: 1,
                   class: L(["inline-flex items-center rounded-md", ee.value && "bg-white/95 px-2 py-1"])
                 }, [
@@ -345,19 +345,19 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                     src: w.value.logo,
                     alt: w.value.name,
                     class: "h-7 w-auto max-w-[200px] object-contain"
-                  }, null, 8, St)
+                  }, null, 8, At)
                 ], 2)),
-                A.value && w.value.tagline ? (a(), n("span", At, d(w.value.tagline), 1)) : c("", !0)
+                A.value && w.value.tagline ? (a(), n("span", Ct, d(w.value.tagline), 1)) : c("", !0)
               ], 64)) : (a(), n(g, { key: 1 }, [
-                s[8] || (s[8] = Be('<div class="relative" data-v-5cd2c294><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-5cd2c294><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-5cd2c294>MP</span></div></div><div class="flex flex-col text-left" data-v-5cd2c294><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-5cd2c294>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-5cd2c294>Core OS v5</span></div>', 2))
+                s[8] || (s[8] = He('<div class="relative" data-v-4fd5ae3f><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-4fd5ae3f><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-4fd5ae3f>MP</span></div></div><div class="flex flex-col text-left" data-v-4fd5ae3f><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-4fd5ae3f>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-4fd5ae3f>Core OS v5</span></div>', 2))
               ], 64))
-            ], 8, xt)
+            ], 8, $t)
           ]),
-          l("div", Ct, [
-            k.value && r(R).end?.length ? (a(), n("div", Lt, [
+          l("div", Lt, [
+            k.value && r(R).end?.length ? (a(), n("div", zt, [
               (a(!0), n(g, null, S(r(R).end, (t, o) => (a(), p(v(t), { key: o }))), 128))
             ])) : c("", !0),
-            l("div", zt, [
+            l("div", Et, [
               r(z) ? (a(), p(v(e.$c("ui.dropdown")), {
                 key: 0,
                 modelValue: F.value,
@@ -372,39 +372,39 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                     "aria-label": e.$t("shell.language"),
                     "data-testid": "lang-switch"
                   }, [
-                    b(me, {
+                    f(ge, {
                       locale: r(z).locale,
                       size: 20
                     }, null, 8, ["locale"]),
-                    b(r(T), {
+                    f(r(T), {
                       size: 13,
                       class: "hdr-faint"
                     })
-                  ], 8, Et)
+                  ], 8, Vt)
                 ]),
                 content: $(() => [
-                  l("div", Vt, [
-                    l("div", Dt, d(e.$t("shell.language")), 1),
+                  l("div", Dt, [
+                    l("div", Mt, d(e.$t("shell.language")), 1),
                     (a(!0), n(g, null, S(r(z).availableLocales, (t) => (a(), n("button", {
                       key: t,
                       type: "button",
                       class: "pop-item justify-between whitespace-nowrap",
                       "aria-selected": r(z).locale === t,
-                      onClick: (o) => Se(t)
+                      onClick: (o) => Ae(t)
                     }, [
-                      l("span", Ot, [
-                        b(me, {
+                      l("span", Nt, [
+                        f(ge, {
                           locale: t,
                           size: 22
                         }, null, 8, ["locale"]),
-                        l("span", null, d($e[t] ?? t), 1)
+                        l("span", null, d(Se[t] ?? t), 1)
                       ]),
-                      r(z).locale === t ? (a(), p(r(he), {
+                      r(z).locale === t ? (a(), p(r(me), {
                         key: 0,
                         size: 14,
                         class: "text-primary"
                       })) : c("", !0)
-                    ], 8, Mt))), 128))
+                    ], 8, Ot))), 128))
                   ])
                 ]),
                 _: 1
@@ -417,32 +417,32 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
               align: "right"
             }, {
               trigger: $(() => [
-                l("button", Nt, [
-                  l("span", Ut, d(f.value?.username || "User"), 1),
-                  b(ge, {
-                    src: f.value?.avatar,
-                    name: f.value?.username || "User",
+                l("button", Ut, [
+                  l("span", It, d(_.value?.username || "User"), 1),
+                  f(fe, {
+                    src: ce.value,
+                    name: _.value?.username || "User",
                     size: 28,
                     rounded: "lg"
                   }, null, 8, ["src", "name"]),
-                  b(r(T), {
+                  f(r(T), {
                     size: 13,
                     class: "hdr-faint"
                   })
                 ])
               ]),
               content: $(() => [
-                l("div", It, [
-                  l("div", Rt, [
-                    b(ge, {
-                      src: f.value?.avatar,
-                      name: f.value?.username || "User",
+                l("div", Rt, [
+                  l("div", jt, [
+                    f(fe, {
+                      src: ce.value,
+                      name: _.value?.username || "User",
                       size: 36,
                       rounded: "lg"
                     }, null, 8, ["src", "name"]),
-                    l("div", jt, [
-                      l("div", Tt, d(f.value?.username), 1),
-                      l("div", Pt, d(f.value?.email || f.value?.role), 1)
+                    l("div", Tt, [
+                      l("div", Pt, d(_.value?.username), 1),
+                      l("div", Kt, d(_.value?.email || _.value?.role), 1)
                     ])
                   ]),
                   l("button", {
@@ -453,7 +453,7 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                       r(D).push("/account/profile"), I.value = !1;
                     })
                   }, [
-                    b(r(We), {
+                    f(r(Qe), {
                       size: 15,
                       class: "text-muted-foreground"
                     }),
@@ -466,7 +466,7 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                       r(D).push("/system/theme"), I.value = !1;
                     })
                   }, [
-                    b(r(Qe), {
+                    f(r(Xe), {
                       size: 15,
                       class: "text-muted-foreground"
                     }),
@@ -476,9 +476,9 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                   l("button", {
                     type: "button",
                     class: "pop-item danger",
-                    onClick: Ie
+                    onClick: Re
                   }, [
-                    b(r(Xe), { size: 15 }),
+                    f(r(Ze), { size: 15 }),
                     l("span", null, d(e.$t("shell.logout")), 1)
                   ])
                 ])
@@ -492,10 +492,10 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
         key: 0,
         class: L(["app-band", A.value && "app-band--classic"])
       }, [
-        l("div", Kt, [
-          A.value ? (a(), n("div", Ft)) : c("", !0),
-          A.value && H.value ? (a(), n("div", Bt)) : c("", !0),
-          H.value ? (a(), n("nav", Ht, [
+        l("div", Ft, [
+          A.value ? (a(), n("div", Bt)) : c("", !0),
+          A.value && H.value ? (a(), n("div", Ht)) : c("", !0),
+          H.value ? (a(), n("nav", Jt, [
             (a(!0), n(g, null, S(de.value, (t) => (a(), n(g, {
               key: t.group ?? t.item.path
             }, [
@@ -514,8 +514,8 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                   size: 13
                 })) : c("", !0),
                 W(" " + d(t.item.label) + " ", 1),
-                t.item.badge !== void 0 ? (a(), n("span", Yt, d(t.item.badge), 1)) : c("", !0)
-              ], 40, Jt)) : (a(), p(v(e.$c("ui.popover")), {
+                t.item.badge !== void 0 ? (a(), n("span", Gt, d(t.item.badge), 1)) : c("", !0)
+              ], 40, Yt)) : (a(), p(v(e.$c("ui.popover")), {
                 key: 1,
                 class: "band-group",
                 align: "start"
@@ -538,9 +538,9 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                           size: 13
                         })) : c("", !0),
                         W(" " + d(t.group) + " ", 1),
-                        Y(t.items) ? (a(), n("span", Wt, "· " + d(Y(t.items).label), 1)) : c("", !0),
-                        b(r(T), { size: 12 })
-                      ], 40, Gt)
+                        Y(t.items) ? (a(), n("span", Qt, "· " + d(Y(t.items).label), 1)) : c("", !0),
+                        f(r(T), { size: 12 })
+                      ], 40, Wt)
                     ]),
                     _: 2
                   }, 1024)),
@@ -549,7 +549,7 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                     class: "p-1"
                   }, {
                     default: $(() => [
-                      l("div", Qt, [
+                      l("div", Xt, [
                         (a(!0), n(g, null, S(t.items, (i) => (a(), n("button", {
                           key: i.path,
                           type: "button",
@@ -567,13 +567,13 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                             size: 15,
                             class: "text-muted-foreground"
                           })) : c("", !0),
-                          l("span", Zt, d(i.label), 1),
-                          r(h).active === i.path ? (a(), p(r(he), {
+                          l("span", qt, d(i.label), 1),
+                          r(h).active === i.path ? (a(), p(r(me), {
                             key: 1,
                             size: 14,
                             class: "text-primary"
                           })) : c("", !0)
-                        ], 8, Xt))), 128))
+                        ], 8, Zt))), 128))
                       ])
                     ]),
                     _: 2
@@ -583,18 +583,18 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
               }, 1024))
             ], 64))), 128))
           ])) : c("", !0),
-          r(R).end?.length ? (a(), n("div", qt, [
+          r(R).end?.length ? (a(), n("div", ea, [
             (a(!0), n(g, null, S(r(R).end, (t, o) => (a(), p(v(t), { key: o }))), 128))
           ])) : c("", !0)
         ])
       ], 2)),
-      k.value ? (a(), p(pe, {
+      k.value ? (a(), p(ve, {
         key: 1,
         defer: "",
         to: "#shell-sidebar"
       }, [
         l("nav", {
-          class: L(["side-nav", _.value && "is-collapsed"]),
+          class: L(["side-nav", b.value && "is-collapsed"]),
           "data-testid": "app-nav"
         }, [
           H.value ? (a(!0), n(g, { key: 0 }, S(de.value, (t) => (a(), n(g, {
@@ -605,18 +605,18 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
               type: "button",
               class: "nav-item side-item",
               "aria-current": r(h).active === t.item.path ? "page" : void 0,
-              title: _.value ? t.item.label : void 0,
+              title: b.value ? t.item.label : void 0,
               onClick: (o) => r(h).navigate?.(t.item.path)
             }, [
-              t.item.icon ? (a(), p(v(t.item.icon), { key: 0 })) : (a(), n("span", ta, d(String(t.item.label).charAt(0)), 1)),
-              l("span", aa, d(t.item.label), 1),
-              t.item.badge !== void 0 ? (a(), n("span", sa, d(t.item.badge), 1)) : c("", !0)
-            ], 8, ea)) : (a(), n("div", {
+              t.item.icon ? (a(), p(v(t.item.icon), { key: 0 })) : (a(), n("span", aa, d(String(t.item.label).charAt(0)), 1)),
+              l("span", sa, d(t.item.label), 1),
+              t.item.badge !== void 0 ? (a(), n("span", la, d(t.item.badge), 1)) : c("", !0)
+            ], 8, ta)) : (a(), n("div", {
               key: 1,
               class: "side-group",
               "data-testid": `app-nav-group-${t.group}`
             }, [
-              l("div", na, d(t.group), 1),
+              l("div", oa, d(t.group), 1),
               (a(!0), n(g, null, S(t.items, (o) => (a(), n("button", {
                 key: o.path,
                 type: "button",
@@ -624,31 +624,31 @@ const at = { class: "shell-head w-full sticky top-0 z-[100]" }, st = { class: "s
                 disabled: o.disabled,
                 "aria-disabled": o.disabled || void 0,
                 "aria-current": r(h).active === o.path ? "page" : void 0,
-                title: _.value ? o.label : void 0,
+                title: b.value ? o.label : void 0,
                 onClick: (i) => r(h).navigate?.(o.path)
               }, [
-                o.icon ? (a(), p(v(o.icon), { key: 0 })) : (a(), n("span", ia, d(String(o.label).charAt(0)), 1)),
-                l("span", ra, d(o.label), 1)
-              ], 8, oa))), 128))
-            ], 8, la))
+                o.icon ? (a(), p(v(o.icon), { key: 0 })) : (a(), n("span", ra, d(String(o.label).charAt(0)), 1)),
+                l("span", da, d(o.label), 1)
+              ], 8, ia))), 128))
+            ], 8, na))
           ], 64))), 128)) : c("", !0)
         ], 2),
         l("button", {
           type: "button",
           class: "side-collapse",
-          "aria-pressed": _.value,
-          title: _.value ? "Expand the sidebar" : "Collapse the sidebar",
+          "aria-pressed": b.value,
+          title: b.value ? "Expand the sidebar" : "Collapse the sidebar",
           "data-testid": "sidebar-collapse",
-          onClick: ke
+          onClick: we
         }, [
-          (a(), p(v(_.value ? r(Ze) : r(qe)), { size: 16 })),
-          _.value ? c("", !0) : (a(), n("span", ca, "Collapse"))
-        ], 8, da)
+          (a(), p(v(b.value ? r(qe) : r(et)), { size: 16 })),
+          b.value ? c("", !0) : (a(), n("span", ua, "Collapse"))
+        ], 8, ca)
       ])) : c("", !0)
     ]));
   }
-}), wa = /* @__PURE__ */ tt(ua, [["__scopeId", "data-v-5cd2c294"]]);
+}), xa = /* @__PURE__ */ at(pa, [["__scopeId", "data-v-4fd5ae3f"]]);
 export {
-  wa as default
+  xa as default
 };
-//# sourceMappingURL=Header-C1Ly-7-P.js.map
+//# sourceMappingURL=Header-CKiMCInL.js.map
