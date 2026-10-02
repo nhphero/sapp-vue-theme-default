@@ -77,6 +77,13 @@ Trong dropdown chuyển app, **mỗi app (ô trong lưới và pill ở hàng G�
 
 Dropdown chuyển app có hàng **Gần đây** ở trên cùng: tối đa 5 app vừa mở (mới nhất trước, không tính app đang mở), dạng pill nhỏ, lọc theo ô tìm kiếm. Lưu theo trình duyệt ở localStorage `sapp:recent-apps` (mọi truy cập bọc try/catch — storage bị chặn thì hàng chỉ sống trong phiên). Nhãn `shell.recent` nằm trong i18n của `vue-sapp`.
 
+## Ghi chú component
+
+- `layout.mini-app` — khung trang chuẩn cho mini app: page header (icon/title/subtitle + slot `actions`), nav `shell` (mặc định: menu lên header Shell qua module state `shell.nav`), `sidebar` (cột trái 220px trong `.page-container`, slot `footer`) hoặc `tabs` (`nav: { label, path, icon?, badge? }[]`, `active`, emit `navigate`), nội dung canh `.page-container` (`contained=false` để full-bleed).
+- `form.select` — standalone với `:options` (string | {label,value,disabled}), `placeholder`, `size`, `show-search` (ô lọc `.pop-search`, ↑/↓/Enter/Esc); không truyền `options` thì là radix `SelectRoot` để ghép `form.select-trigger/-value/-content/-item`.
+- `display.data-table` — `variant="grid"` (mặc định, kiểu bảng tính) | `"clean"` (bảng hoff, chỉ kẻ ngang, pager ở đáy); `show-select` + `v-model:selected` (+ `row-key`) cho cột checkbox chọn dòng/chọn cả trang; slot `cell-<col>`, `toolbar-left/-actions`.
+- Header bảng (`.table-wrap th`) dùng `--table-head-bg/-fg` (đặc, không opacity: gray-800/gray-100, dark: gray-700/gray-100) để nổi hơn nền trang.
+
 ## Markdown: `display.markdown`
 
 `components/markdown/Markdown.vue` — render Markdown (GitHub flavoured: bảng, task list, code block) bằng `marked`, HTML làm sạch bằng `DOMPurify` (bỏ script, event handler, link `javascript:`), link mở tab mới, link / ảnh tương đối resolve theo `base-url`. Nạp lần đầu dùng (async). Style theo token (`--text-*`, `--sp-*`, `--muted`, `--border-soft`…). Ví dụ: Admin → Packages → một package hiện README.md của version.
