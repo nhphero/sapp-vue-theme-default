@@ -47,7 +47,7 @@ Toàn bộ giao diện chạy trên CSS variable ở `:root` (`hoff/tokens.css`)
 | `density` (0.9 / 1 / 1.1) | `--sp-*`, `--touch` nhân thêm |
 | `radius` (0–14px) | `--radius-sm`, `--radius`, `--radius-lg` |
 | `shadow` (0–2) | `--shadow-sm`, `--shadow`, `--shadow-lg` |
-| `fontFamily` | `--font-sans` (stack cục bộ, không gọi mạng) |
+| `fontFamily` | `--font-sans`. **Mặc định `Roboto, sans-serif`** (`tokens.css` + `THEME_CONFIG_DEFAULTS`): web font tải từ Google Fonts (bộ `vietnamese`) ngay khi theme khởi động. Web font khác (`WEB_FONTS`) chỉ tải khi được chọn; stack cục bộ (`FONT_STACKS`, có *System UI* = font hệ thống) không gọi mạng |
 
 Panel nhanh: `shell/ThemePanel.vue` (render trong `ThemeConnector`, id `layout.theme-panel`), mở bằng nút palette trên Header hoặc lệnh ⌘K `theme.customize`. Trang đầy đủ: `packages/sapp-theme-dashboard/src/pages/ThemeStudio.vue` tại `/system/theme` (menu user → Theme Studio, lệnh ⌘K `theme.studio`): cùng bộ điều khiển + gallery mọi component, bảng token đang áp dụng, nhập/tải JSON, xuất CSS. Bằng code:
 
