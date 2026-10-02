@@ -756,6 +756,12 @@ onMounted(() => {
 }
 .side-switch .app-chip:hover { background: color-mix(in srgb, var(--primary) 8%, var(--muted)); }
 .side-switch .app-chip > span:nth-child(2) { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; text-align: left; }
+/* The apps menu as wide as the sidebar's switcher (its fixed width when the sidebar is collapsed). */
+.side-switch :deep(.pop) { right: 0; }
+.side-switch .apps-menu { width: auto; max-width: none; }
+.side-switch.is-collapsed :deep(.pop) { right: auto; }
+.side-switch.is-collapsed .apps-menu { width: calc(var(--touch) * 7); }
+.side-switch .app-chip > span:nth-child(2) { font-size: var(--text-base); }
 .side-switch.is-collapsed { padding-inline: var(--sp-2); }
 .side-switch.is-collapsed .app-chip { justify-content: center; padding-inline: 0; }
 .side-switch.is-collapsed .app-chip > :not(:first-child) { display: none; }
@@ -766,7 +772,10 @@ onMounted(() => {
 }
 .side-group { display: flex; flex-direction: column; gap: 2px; margin-top: var(--sp-3); }
 .side-group .nav-group { padding-bottom: var(--sp-1); }
-.side-item { white-space: nowrap; }
+/* A step larger than the theme's .nav-item: the sidebar is the app's main navigation. */
+.side-item { white-space: nowrap; font-size: var(--text-base); padding-block: calc(var(--sp-2) * 1.15); }
+.side-item :deep(svg) { width: calc(var(--text-base) * 1.3); height: calc(var(--text-base) * 1.3); }
+.side-nav .nav-group { font-size: calc(var(--text-xs) * 1.1); }
 .side-item .side-label { overflow: hidden; text-overflow: ellipsis; }
 .side-item .badge { margin-left: auto; }
 .side-item[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
