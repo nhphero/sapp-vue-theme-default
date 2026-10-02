@@ -116,6 +116,9 @@
   --dur-fast: 120ms;  --dur: 200ms;  --dur-slow: 320ms;
   --container: 1680px;               /* header + trang Shell (.page-container) */
   --touch: 44px;
+  /* One height for every control on a page — button, input, select, chip, pagination — default or
+     `sm` alike (`sm` only tightens padding). `lg` is --touch. Follows font × density through --touch. */
+  --control-h: calc(var(--touch) * 0.82);
   --header-h: 52px;                  /* shell bar; scale theo cỡ chữ + mật độ */
   /* table header — xám nhẹ (--muted là vùng chìm trong card trắng); đường kẻ dày ở
      dưới neo nó xuống thân bảng. Mực lấy --brand-900 chứ KHÔNG dùng --secondary:

@@ -41,13 +41,13 @@ const pages = computed(() => {
     <!-- Left Section: Status info -->
     <div v-if="variant === 'default'" class="flex items-center gap-6">
       <div class="flex items-center gap-2">
-        <span class="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Total:</span>
-        <span class="text-[11px] font-bold text-foreground tabular-nums">{{ source.pagination.total.toLocaleString() }}</span>
+        <span class="text-xs text-muted-foreground font-semibold">Total:</span>
+        <span class="text-xs font-bold text-foreground tabular-nums">{{ source.pagination.total.toLocaleString() }}</span>
       </div>
       <div class="h-4 w-px bg-border/50"></div>
       <div class="flex items-center gap-2">
-        <span class="text-[10px] text-muted-foreground uppercase font-black tracking-widest">Showing:</span>
-        <span class="text-[11px] font-bold text-foreground tabular-nums">
+        <span class="text-xs text-muted-foreground font-semibold">Showing:</span>
+        <span class="text-xs font-bold text-foreground tabular-nums">
           {{ (source.pagination.page - 1) * source.pagination.pageSize + 1 }} - 
           {{ Math.min(source.pagination.page * source.pagination.pageSize, source.pagination.total) }}
         </span>
@@ -55,7 +55,7 @@ const pages = computed(() => {
     </div>
     
     <!-- Minimalist Status info (Inline) -->
-    <div v-else class="hidden sm:flex items-center gap-1.5 text-[10px] font-medium text-muted-foreground/40 tabular-nums select-none mt-0.5">
+    <div v-else class="hidden sm:flex items-center gap-1.5 text-xs font-medium text-faint tabular-nums select-none mt-0.5">
        <span>{{ (source.pagination.page - 1) * source.pagination.pageSize + 1 }}</span>
        <span class="opacity-30">-</span>
        <span>{{ Math.min(source.pagination.page * source.pagination.pageSize, source.pagination.total) }}</span>
@@ -69,7 +69,7 @@ const pages = computed(() => {
       <div class="flex items-center gap-0.5">
         <template v-if="variant === 'default'">
           <component :is="$c('ui.button')" 
-            variant="ghost" size="icon" class="h-7 w-7 rounded-md"
+            variant="ghost" size="icon"
             :disabled="source.pagination.page <= 1 || source.pagination.loading"
             @click="source.setPage(1)"
           >
@@ -78,7 +78,7 @@ const pages = computed(() => {
         </template>
         
         <component :is="$c('ui.button')" 
-          variant="ghost" size="icon" class="h-8 w-8 rounded-full hover:bg-muted/60"
+          variant="ghost" size="icon"
           :disabled="source.pagination.page <= 1 || source.pagination.loading"
           @click="source.setPage(source.pagination.page - 1)"
         >
@@ -87,8 +87,8 @@ const pages = computed(() => {
 
         <!-- Minimalist Page Indicator -->
         <template v-if="variant === 'minimal'">
-           <div class="flex items-center gap-2 px-3 text-[11px] font-mono select-none">
-              <span class="text-primary font-black">{{ source.pagination.page }}</span>
+           <div class="flex items-center gap-2 px-3 text-xs font-mono select-none">
+              <span class="text-primary font-semibold">{{ source.pagination.page }}</span>
               <span class="text-muted-foreground/20">/</span>
               <span class="text-muted-foreground/60 font-medium">{{ source.pagination.totalPages }}</span>
            </div>
@@ -96,13 +96,13 @@ const pages = computed(() => {
 
         <!-- Full Page Numbers -->
         <template v-else v-for="p in pages" :key="p">
-          <div v-if="p === '...'" class="px-1 text-muted-foreground/40">
+          <div v-if="p === '...'" class="px-1 text-faint">
             <MoreHorizontal :size="12" />
           </div>
           <component :is="$c('ui.button')" 
             v-else
             :variant="p === source.pagination.page ? 'default' : 'ghost'"
-            size="sm" class="h-7 min-w-[28px] px-2 text-[10px] font-bold rounded-md"
+            size="sm"
             :class="{ 'opacity-50 pointer-events-none': source.pagination.loading }"
             @click="source.setPage(Number(p))"
           >
@@ -111,7 +111,7 @@ const pages = computed(() => {
         </template>
 
         <component :is="$c('ui.button')" 
-          variant="ghost" size="icon" class="h-8 w-8 rounded-full hover:bg-muted/60"
+          variant="ghost" size="icon"
           :disabled="source.pagination.page >= source.pagination.totalPages || source.pagination.loading"
           @click="source.setPage(source.pagination.page + 1)"
         >
@@ -120,7 +120,7 @@ const pages = computed(() => {
 
         <template v-if="variant === 'default'">
           <component :is="$c('ui.button')" 
-            variant="ghost" size="icon" class="h-7 w-7 rounded-md"
+            variant="ghost" size="icon"
             :disabled="source.pagination.page >= source.pagination.totalPages || source.pagination.loading"
             @click="source.setPage(source.pagination.totalPages)"
           >
@@ -132,12 +132,12 @@ const pages = computed(() => {
       <!-- Page Size Selector -->
       <div class="flex items-center gap-1 ml-2">
         <component :is="$c('form.select')" :modelValue="String(source.pagination.pageSize)" @update:modelValue="(v: string) => source.setPageSize(Number(v))">
-          <component :is="$c('form.select-trigger')" class="h-7 min-w-[50px] text-[10px] font-black px-1.5 bg-transparent border-none shadow-none hover:bg-muted/50 transition-colors focus:ring-0">
+          <component :is="$c('form.select-trigger')" class="control-sm">
             <component :is="$c('form.select-value')" />
           </component>
           <component :is="$c('form.select-content')">
             <component :is="$c('form.select-item')" v-for="size in [20, 50, 100, 200, 500]" :key="size" :value="String(size)">
-              <span class="text-[10px] font-bold">{{ size }}</span>
+              <span class="text-xs font-bold">{{ size }}</span>
             </component>
           </component>
         </component>

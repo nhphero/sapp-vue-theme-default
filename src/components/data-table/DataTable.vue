@@ -523,7 +523,7 @@ const headerMenuOptions = computed(() => [
           v-model="src.searchQuery.value" 
           placeholder="Search results in current page..." 
           :show-clear="true"
-          class="max-w-sm h-9"
+          class="control-lg max-w-full"
         />
         <slot name="toolbar-extra"></slot>
       </div>
@@ -555,8 +555,8 @@ const headerMenuOptions = computed(() => [
 
         <!-- Essential Stats (Total Only) -->
         <div class="flex items-center gap-2 pl-4 border-l border-border ml-1">
-           <span class="text-[9px] text-faint uppercase font-bold tracking-widest">Total:</span>
-           <span class="text-[11px] font-mono font-bold text-primary tabular-nums">{{ src.pagination.total.toLocaleString() }}</span>
+           <span class="text-xs text-faint  font-bold">Total:</span>
+           <span class="text-xs font-mono font-bold text-primary tabular-nums">{{ src.pagination.total.toLocaleString() }}</span>
         </div>
       </div>
       <div class="flex items-center gap-4">
@@ -596,7 +596,7 @@ const headerMenuOptions = computed(() => [
             <th v-if="showSelect" class="sticky top-0 left-0 z-40 w-10 min-w-[40px] px-3 py-2 text-center" :class="clean ? 'border-b border-border-soft' : 'bg-muted/95 backdrop-blur-md border-b-2 border-r border-border'">
               <input type="checkbox" class="accent-primary w-4 h-4 cursor-pointer align-middle" :checked="pageAllSelected" :indeterminate="pageSomeSelected" :aria-label="'select page'" data-testid="select-all" @change="togglePage()">
             </th>
-            <th v-if="!clean" class="sticky top-0 left-0 z-40 bg-muted/95 backdrop-blur-md border-b-2 border-r-2 border-border w-14 min-w-[56px] px-3 py-2 text-[10px] font-medium tracking-widest text-faint font-bold text-center">
+            <th v-if="!clean" class="sticky top-0 left-0 z-40 bg-muted/95 backdrop-blur-md border-b-2 border-r-2 border-border w-14 min-w-[56px] px-3 py-2 text-xs font-medium text-faint font-bold text-center">
               #
             </th>
             <th 
@@ -622,11 +622,11 @@ const headerMenuOptions = computed(() => [
             >
               <div class="flex items-center justify-between gap-2 w-full">
                 <!-- clean: size/weight/colour come from `.table-wrap th` (--text-xs, 700,
-                     --table-head-fg). The old hardcoded `text-[10px] font-medium` overrode the
+                     --table-head-fg). The old hardcoded `text-xs font-medium` overrode the
                      token and left the header greyed out and two sizes too small. -->
                 <span 
-                  class="tracking-wider transition-colors truncate flex-1"
-                  :class="[getAlignClass(col), clean ? 'text-inherit' : 'text-[10px] font-bold text-muted-foreground group-hover:text-primary']"
+                  class=" transition-colors truncate flex-1"
+                  :class="[getAlignClass(col), clean ? 'text-inherit' : 'text-xs font-bold text-muted-foreground group-hover:text-primary']"
                 >
                   {{ col }}
                 </span>
@@ -662,10 +662,10 @@ const headerMenuOptions = computed(() => [
             :class="[clean ? 'bg-card hover:bg-muted' : 'hover:bg-muted/30', !clean && showSelect && isSelected(row) && 'bg-primary/5']"
             :data-state="showSelect && isSelected(row) ? 'selected' : undefined"
           >
-            <td v-if="showSelect" class="sticky left-0 z-20 w-10 min-w-[40px] px-3 text-center" :class="clean ? 'border-b border-border-soft bg-inherit' : 'py-2.5 border-r border-b border-border/30 !bg-white'" @click.stop>
+            <td v-if="showSelect" class="sticky left-0 z-20 w-10 min-w-[40px] px-3 text-center" :class="clean ? 'border-b border-border-soft bg-inherit' : 'py-2.5 border-r border-b border-border/30 !bg-card'" @click.stop>
               <input type="checkbox" :key="String(keyOf(row))" class="accent-primary w-4 h-4 cursor-pointer align-middle" :checked="isSelected(row)" data-testid="select-row" @change="toggleRow(row)">
             </td>
-            <td v-if="!clean" class="sticky left-0 z-20 w-14 min-w-[56px] px-3 py-2.5 border-r-2 border-b border-border/30 text-center font-mono text-[10px] text-muted-foreground/60 !bg-white group-hover/row:!bg-slate-50  group-hover/row:text-primary transition-colors">
+            <td v-if="!clean" class="sticky left-0 z-20 w-14 min-w-[56px] px-3 py-2.5 border-r-2 border-b border-border/30 text-center font-mono text-xs text-muted-foreground/60 !bg-card group-hover/row:!bg-muted  group-hover/row:text-primary transition-colors">
               {{ (src.pagination.page - 1) * src.pagination.pageSize + i + 1 }}
             </td>
             <td
@@ -679,26 +679,26 @@ const headerMenuOptions = computed(() => [
                    'sticky left-0 z-10 bg-inherit': isStickyLeft(col),
                    'sticky right-0 z-10 bg-inherit': isStickyRight(col)
                  } : {
-                   'sticky left-[56px] z-10 !bg-white  group-hover/row:!bg-slate-50  border-r-2 border-border': isStickyLeft(col),
-                   'sticky right-0 z-10 !bg-white  group-hover/row:!bg-slate-50  border-l-2 border-border': isStickyRight(col)
+                   'sticky left-[56px] z-10 !bg-card  group-hover/row:!bg-muted  border-r-2 border-border': isStickyLeft(col),
+                   'sticky right-0 z-10 !bg-card  group-hover/row:!bg-muted  border-l-2 border-border': isStickyRight(col)
                 }
               ]"
               @dblclick="handleCellDblClick(col, row[col], i)"
               :title="row[col] === null ? 'NULL' : String(row[col])"
             >
               <template v-if="row[col] === null">
-                <span class="text-[11px] font-mono italic text-muted-foreground/30 block w-full truncate" :class="getAlignClass(col)">NULL</span>
+                <span class="text-xs font-mono italic text-muted-foreground/30 block w-full truncate" :class="getAlignClass(col)">NULL</span>
               </template>
               <slot v-else :name="`cell-${col}`" :value="row[col]" :row="row" :column="col" :index="i">
                 <template v-if="isJson(String(row[col]))">
                   <div class="flex items-center gap-2 w-full overflow-hidden" :class="getAlignClass(col) === 'text-center' ? 'justify-center' : (getAlignClass(col) === 'text-right' ? 'justify-end' : 'justify-start')">
-                    <span class="shrink-0 px-1.5 py-0.5 rounded-[4px] bg-primary/10 text-primary text-[8px] font-medium leading-none border border-primary/20 uppercase tracking-tighter">JSON</span>
-                    <span class="text-[11px] font-mono truncate opacity-80" :class="getAlignClass(col)">{{ row[col] }}</span>
+                    <span class="shrink-0 px-1.5 py-0.5 rounded-[4px] bg-primary/10 text-primary text-[8px] font-medium leading-none border border-primary/20">JSON</span>
+                    <span class="text-xs font-mono truncate opacity-80" :class="getAlignClass(col)">{{ row[col] }}</span>
                   </div>
                 </template>
                 <template v-else>
                   <div 
-                    class="text-[11px] font-mono text-foreground/90 truncate" 
+                    class="text-xs font-mono text-foreground/90 truncate" 
                     :class="getAlignClass(col)"
                   >
                     {{ formatDisplayValue(row[col]) }}
@@ -729,7 +729,7 @@ const headerMenuOptions = computed(() => [
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4" />
           </svg>
         </div>
-        <p class="text-xs text-muted-foreground uppercase tracking-wider font-medium">No Records Found</p>
+        <p class="text-xs text-muted-foreground font-medium">No Records Found</p>
       </div>
     </div>
 
@@ -788,8 +788,8 @@ const headerMenuOptions = computed(() => [
       <template #header>
         <div class="flex items-center justify-between w-full pr-8">
           <div class="flex flex-col gap-1">
-            <h3 class="text-xs font-black uppercase tracking-widest text-primary">{{ cellDetailColumn }}</h3>
-            <span class="text-[9px] text-muted-foreground uppercase font-black tracking-tighter opacity-50">Row #{{ cellDetailRow + 1 }} • {{ isJsonData ? 'Structured Object' : 'Raw Data' }}</span>
+            <h3 class="text-xs font-semibold text-primary">{{ cellDetailColumn }}</h3>
+            <span class="text-xs text-muted-foreground  font-semibold opacity-50">Row #{{ cellDetailRow + 1 }} • {{ isJsonData ? 'Structured Object' : 'Raw Data' }}</span>
           </div>
         </div>
       </template>
@@ -806,13 +806,13 @@ const headerMenuOptions = computed(() => [
             />
            <div v-if="src.onCellUpdate" class="mt-3 flex items-center gap-2 px-1">
               <div class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></div>
-              <span class="text-[10px] text-amber-600 font-black uppercase tracking-widest italic">
+              <span class="text-xs text-amber-600 font-semibold italic">
                 Direct write mode active • Changes will commit to remote provider
               </span>
            </div>
            <div v-else class="mt-3 flex items-center gap-2 px-1 opacity-50">
               <div class="w-1.5 h-1.5 rounded-full bg-slate-400"></div>
-              <span class="text-[10px] text-faint font-black uppercase tracking-widest italic">
+              <span class="text-xs text-faint font-semibold italic">
                 Read-only context • Modification disabled for this result set
               </span>
            </div>
@@ -827,7 +827,7 @@ const headerMenuOptions = computed(() => [
               variant="ghost" 
               size="sm" 
               @click="closeCellDetail" 
-              class="text-[10px] font-black uppercase tracking-widest px-8 hover:bg-muted"
+              class="text-xs font-semibold px-8 hover:bg-muted"
               :disabled="isSaving"
             >
               {{ src.onCellUpdate ? 'Discard' : 'Close' }}

@@ -21,7 +21,7 @@ const jumpToPage = () => {
 <template>
   <div class="pagination justify-between px-4 py-2 shrink-0 bg-card border-t border-border-soft">
     <div class="flex items-center gap-2">
-      <span class="text-xs text-faint uppercase tracking-wide">{{ $t('common.page') }}</span>
+      <span class="text-sm text-muted-foreground">{{ $t('common.page') }}</span>
       <button type="button" class="btn icon sm" aria-label="Trang trước"
         :disabled="source.pagination.page <= 1 || source.pagination.loading"
         @click="source.setPage(source.pagination.page - 1)">
@@ -29,9 +29,9 @@ const jumpToPage = () => {
       </button>
       <div class="input sm flex items-center gap-1 w-auto px-2">
         <input type="number" v-model="pageInput" @keydown.enter="jumpToPage" @blur="jumpToPage"
-          class="w-8 bg-transparent border-0 outline-none text-center text-xs font-semibold text-primary tabular-nums p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
-        <span class="text-xs text-faint">/</span>
-        <span class="text-xs font-semibold tabular-nums">{{ source.pagination.totalPages }}</span>
+          class="w-8 bg-transparent border-0 outline-none text-center text-sm font-semibold text-primary tabular-nums p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none" />
+        <span class="text-sm text-faint">/</span>
+        <span class="text-sm font-semibold tabular-nums">{{ source.pagination.totalPages }}</span>
       </div>
       <button type="button" class="btn icon sm" aria-label="Trang sau"
         :disabled="source.pagination.page >= source.pagination.totalPages || source.pagination.loading"
@@ -41,9 +41,9 @@ const jumpToPage = () => {
     </div>
 
     <div class="flex items-center gap-2">
-      <span class="text-xs text-faint uppercase tracking-wide">{{ $t('common.perPage') }}</span>
+      <span class="text-sm text-muted-foreground">{{ $t('common.perPage') }}</span>
       <component :is="$c('form.select')" :modelValue="String(source.pagination.pageSize)" @update:modelValue="(v: string) => source.setPageSize(Number(v))">
-        <component :is="$c('form.select-trigger')" class="sm min-w-[72px] w-auto">
+        <component :is="$c('form.select-trigger')" class="control-sm">
           <component :is="$c('form.select-value')" />
         </component>
         <component :is="$c('form.select-content')">

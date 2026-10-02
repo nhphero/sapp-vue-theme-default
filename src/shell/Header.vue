@@ -790,6 +790,9 @@ onMounted(() => {
 .side-item[aria-current="page"] { background: transparent; color: var(--primary); font-weight: 400; }
 .side-item[aria-current="page"]::before { display: none; }
 .side-item[aria-current="page"]:hover { background: var(--muted); }
+/* No ring left after a click (the menu re-renders under the pointer); keyboard focus gets a soft plate. */
+.side-item:focus { outline: none; }
+.side-item:focus-visible { outline: none; background: var(--muted); box-shadow: inset 0 0 0 2px var(--ring); }
 .side-initial {
   flex: none; display: grid; place-items: center; width: var(--sp-5); height: var(--sp-5); border-radius: var(--radius-sm, 4px);
   background: var(--muted); font-size: var(--text-xs); font-weight: 700; text-transform: uppercase;

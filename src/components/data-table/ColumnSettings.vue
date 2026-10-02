@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
   buttonClass?: string;
 }>(), {
   variant: 'outline',
-  buttonClass: 'h-8 px-3 gap-2 text-[10px] font-medium uppercase tracking-wider bg-background border-border shadow-sm hover:border-primary/40 transition-all rounded-lg'
+  buttonClass: ''
 });
 
 const $superApp = inject<any>('$superApp');
@@ -40,13 +40,13 @@ const filteredColumns = computed(() => {
       <component :is="$c('ui.popover-content')" align="end" class="w-80 p-0 bg-card border-border shadow-2xl rounded-2xl overflow-hidden flex flex-col">
          <div class="px-3 py-3 border-b border-border bg-muted/20 flex flex-col gap-2.5">
             <div class="flex items-center justify-between px-1">
-               <span class="text-[9px] font-black text-muted-foreground uppercase tracking-widest">Columns Settings</span>
+               <span class="text-xs font-semibold text-muted-foreground">Columns Settings</span>
                <div class="flex items-center gap-1.5">
                   <button @click="source.hiddenColumns.value = []" 
-                          class="text-[9px] font-bold text-primary hover:underline uppercase tracking-tighter">Show All</button>
-                  <span class="text-[9px] text-muted-foreground/30">/</span>
+                          class="text-xs font-bold text-primary hover:underline">Show All</button>
+                  <span class="text-xs text-muted-foreground/30">/</span>
                   <button @click="source.hiddenColumns.value = [...source.columns.value]" 
-                          class="text-[9px] font-bold text-muted-foreground hover:text-red-500 uppercase tracking-tighter transition-colors">Hide All</button>
+                          class="text-xs font-bold text-muted-foreground hover:text-danger transition-colors">Hide All</button>
                </div>
             </div>
             <div class="relative group">
@@ -69,12 +69,12 @@ const filteredColumns = computed(() => {
                      <div class="w-2.5 h-2.5 rounded-full bg-card shadow-sm transition-transform"
                           :class="source.hiddenColumns.value.includes(col) ? 'translate-x-0' : 'translate-x-3'"></div>
                   </div>
-                  <span class="text-[11px] font-medium truncate transition-colors" :class="source.hiddenColumns.value.includes(col) ? 'opacity-40 line-through text-faint' : 'text-muted-foreground '">{{ col }}</span>
+                  <span class="text-xs font-medium truncate transition-colors" :class="source.hiddenColumns.value.includes(col) ? 'opacity-40 line-through text-faint' : 'text-muted-foreground '">{{ col }}</span>
                </div>
 
                <div class="flex items-center gap-1 transition-opacity">
                   <component :is="$c('ui.button')" 
-                    variant="ghost" size="icon" class="h-6 w-6 rounded-md hover:bg-primary/10"
+                    variant="ghost" size="icon"
                     :class="{ 'text-primary bg-primary/10 opacity-100': source.stickyLeft.value.includes(col) }"
                     title="Pin to Left"
                     @click.stop="source.toggleSticky(col, source.stickyLeft.value.includes(col) ? 'none' : 'left')"
@@ -82,7 +82,7 @@ const filteredColumns = computed(() => {
                      <ArrowLeft :size="12" />
                   </component>
                   <component :is="$c('ui.button')" 
-                    variant="ghost" size="icon" class="h-6 w-6 rounded-md hover:bg-primary/10"
+                    variant="ghost" size="icon"
                     :class="{ 'text-primary bg-primary/10 opacity-100': source.stickyRight.value.includes(col) }"
                     title="Pin to Right"
                     @click.stop="source.toggleSticky(col, source.stickyRight.value.includes(col) ? 'none' : 'right')"
@@ -94,7 +94,7 @@ const filteredColumns = computed(() => {
             
             <div v-if="filteredColumns.length === 0" class="py-10 text-center opacity-30">
                <Search :size="20" class="mx-auto mb-2" />
-               <p class="text-[10px] font-medium uppercase tracking-wider">No columns found</p>
+               <p class="text-xs font-medium">No columns found</p>
             </div>
          </div>
       </component>

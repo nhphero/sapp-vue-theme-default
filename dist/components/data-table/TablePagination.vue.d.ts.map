@@ -1,1 +1,1 @@
-{"version":3,"file":"TablePagination.vue.d.ts","sourceRoot":"","sources":["../../../src/components/data-table/TablePagination.vue"],"names":[],"mappings":"AA8JA,KAAK,WAAW,GAAG;IACjB,MAAM,EAAE,GAAG,CAAC;IACZ,OAAO,CAAC,EAAE,SAAS,GAAG,SAAS,CAAC;CACjC,CAAC;;aADU,SAAS,GAAG,SAAS;;AAufjC,wBAOG"}
+{"version":3,"file":"TablePagination.vue.d.ts","sourceRoot":"","sources":["../../../src/components/data-table/TablePagination.vue"],"names":[],"mappings":"AA8JA,KAAK,WAAW,GAAG;IACjB,MAAM,EAAE,GAAG,CAAC;IACZ,OAAO,CAAC,EAAE,SAAS,GAAG,SAAS,CAAC;CACjC,CAAC;;aADU,SAAS,GAAG,SAAS;;AA2cjC,wBAOG"}

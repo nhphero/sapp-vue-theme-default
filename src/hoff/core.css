@@ -61,7 +61,7 @@
 
 /* Filter chips: one toggle group above a list (`aria-pressed` / `aria-selected` marks the active one). */
 .filter-chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-.filter-chip { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: calc(var(--touch) * 0.8); padding: 0 var(--sp-3);
+.filter-chip { display: inline-flex; align-items: center; gap: var(--sp-2); min-height: var(--control-h); padding: 0 var(--sp-3);
   border: 1px solid var(--border-soft); border-radius: 999px; background: var(--card); color: var(--muted-foreground);
   font-size: var(--text-sm); font-weight: 500; cursor: pointer; transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease); }
 .filter-chip:hover { color: var(--foreground); border-color: var(--border); }
@@ -115,7 +115,7 @@
 
 /* ── button ──────────────────────────────────────────────────────── */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
-  min-height: 36px; padding: 0 var(--sp-4); border-radius: var(--radius); cursor: pointer;
+  min-height: var(--control-h); padding: 0 var(--sp-4); border-radius: var(--radius); cursor: pointer;
   font: 600 var(--text-sm)/1 var(--font-sans); white-space: nowrap; text-decoration: none;
   border: 1px solid var(--border); background: var(--card); color: var(--foreground);
   transition: background var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease); }
@@ -129,10 +129,10 @@
 .btn.link { border-color: transparent; background: transparent; color: var(--link); padding: 0; min-height: 0; }
 .btn.link:hover { text-decoration: underline; }
 .btn[disabled], .btn[aria-disabled="true"] { opacity: .55; cursor: not-allowed; pointer-events: none; }
-.btn.sm { min-height: 30px; padding: 0 var(--sp-3); font-size: var(--text-xs); }
+/* `sm` keeps the one control height (tokens.css --control-h) — only the padding tightens. */
+.btn.sm { min-height: var(--control-h); padding: 0 var(--sp-3); }
 .btn.lg { min-height: var(--touch); padding: 0 var(--sp-5); font-size: var(--text-base); }
-.btn.icon { padding: 0; width: 36px; min-height: 36px; }
-.btn.icon.sm { width: 30px; min-height: 30px; }
+.btn.icon, .btn.icon.sm { padding: 0; width: var(--control-h); min-height: var(--control-h); }
 .btn.icon.lg { width: var(--touch); min-height: var(--touch); }
 .btn svg { flex: none; }
 
@@ -156,7 +156,7 @@
 /* ── form ────────────────────────────────────────────────────────── */
 .label { display: block; font-size: var(--text-sm); font-weight: 600; color: var(--foreground); }
 .input, .field input, .field select, .field textarea {
-  display: block; width: 100%; min-height: 36px; padding: 0 var(--sp-3);
+  display: block; width: 100%; min-height: var(--control-h); padding: 0 var(--sp-3);
   font: var(--text-sm)/1.4 var(--font-sans); color: var(--foreground);
   background: var(--card); border: 1px solid var(--input); border-radius: var(--radius);
   transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease); }
@@ -166,7 +166,7 @@
 .input:disabled, .field input:disabled, .field textarea:disabled { opacity: .55; cursor: not-allowed; background: var(--muted); }
 .input[aria-invalid="true"], .field.invalid input, .field.invalid select, .field.invalid textarea { border-color: var(--danger); }
 .input.textarea, .field textarea { padding: var(--sp-2) var(--sp-3); min-height: 88px; line-height: var(--leading); }
-.input.sm { min-height: 30px; font-size: var(--text-xs); padding: 0 var(--sp-2); }
+.input.sm { min-height: var(--control-h); }
 .input.lg { min-height: var(--touch); font-size: var(--text-base); }
 .field { margin-bottom: var(--sp-4); }
 .field label { display: block; font-size: var(--text-sm); font-weight: 600; margin-bottom: var(--sp-1); }
@@ -254,7 +254,7 @@ input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; accent-
 
 /* ── combobox with search ────────────────────────────────────────── */
 .combo { position: relative; min-width: 180px; }
-.combo-input { width: 100%; min-height: 36px; padding: 0 30px 0 var(--sp-3); font: inherit; font-size: var(--text-sm); color: var(--foreground);
+.combo-input { width: 100%; min-height: var(--control-h); padding: 0 30px 0 var(--sp-3); font: inherit; font-size: var(--text-sm); color: var(--foreground);
   background: var(--card); border: 1px solid var(--input); border-radius: var(--radius); cursor: pointer; text-overflow: ellipsis; }
 .combo-input::placeholder { color: var(--faint); }
 .combo-input[aria-expanded="true"] { border-color: var(--ring); cursor: text; }
@@ -272,7 +272,7 @@ input[type="checkbox"], input[type="radio"] { width: 16px; height: 16px; accent-
 
 /* ── pagination · tabs ───────────────────────────────────────────── */
 .pagination { display: flex; align-items: center; gap: var(--sp-2); justify-content: flex-end; font-size: var(--text-sm); color: var(--muted-foreground); }
-.pagination .btn { min-height: 32px; padding: 0 var(--sp-3); }
+.pagination .btn { min-height: var(--control-h); padding: 0 var(--sp-3); }
 .tabs { display: flex; gap: var(--sp-2); border-bottom: 1px solid var(--border-soft); }
 /* Room around each label and between its parts (label · count badge · status dot), so a tab strip
    reads as separate targets rather than one run of text. */
