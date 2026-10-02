@@ -773,7 +773,11 @@ onMounted(() => {
   transition: background-color var(--dur) var(--ease), color var(--dur) var(--ease);
 }
 .side-app__icon { display: grid; place-items: center; width: calc(var(--touch) * 0.8); height: calc(var(--touch) * 0.8); border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow-sm); }
-.side-app__label { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: calc(var(--text-xs) * 0.9); font-weight: 600; line-height: 1.2; }
+/* Up to two lines, centred: app names are often two words. */
+.side-app__label {
+  max-width: 100%; overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2;
+  text-align: center; overflow-wrap: anywhere; font-size: calc(var(--text-xs) * 0.9); font-weight: 600; line-height: 1.2;
+}
 .side-app__fav { position: absolute; top: calc(var(--sp-1) * 0.75); right: var(--sp-2); fill: var(--warning); color: var(--warning); }
 .side-app:hover { color: var(--foreground); }
 .side-app:hover .side-app__icon { color: var(--primary); }
