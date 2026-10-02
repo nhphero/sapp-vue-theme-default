@@ -654,8 +654,8 @@ const it = ["data-variant"], ut = { class: "flex items-center gap-4" }, dt = { c
       }, null, 8, ["options"]))
     ], 10, it));
   }
-}), es = /* @__PURE__ */ nt(qt, [["__scopeId", "data-v-52695fca"]]);
+}), es = /* @__PURE__ */ nt(qt, [["__scopeId", "data-v-a179ce86"]]);
 export {
   es as default
 };
-//# sourceMappingURL=DataTable-DH77pBTY.js.map
+//# sourceMappingURL=DataTable-DtUihb23.js.map

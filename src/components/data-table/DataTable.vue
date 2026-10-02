@@ -977,13 +977,12 @@ const headerMenuOptions = computed(() => [
    Not `width: 1%`: the table is `min-w-max`, and a percentage makes the browser widen the whole
    table until 1% equals the content (≈100× wider), pushing every other column off screen. */
 .dt-fit-col { width: 0; white-space: nowrap; }
-/* Resize handle: the header's right edge; a hairline shows on hover / while a width is set. */
+/* Resize handle: the header's right edge; a line only while hovered / dragged (never a second border). */
 .dt-resize { position: absolute; top: 0; right: 0; bottom: 0; width: 8px; z-index: 2; cursor: col-resize; }
 .dt-resize::after { content: ''; position: absolute; top: 25%; bottom: 25%; right: 0; width: 1px; background: transparent; transition: background-color var(--dur, .15s) ease; }
-th:hover > .dt-resize::after, .dt-resize.is-set::after { background: var(--border); }
 .dt-resize:hover::after, .dt-resize:active::after { top: 0; bottom: 0; width: 2px; background: var(--primary); }
 /* Borders option (clean look): vertical rules between the columns too. */
-.dt-bordered :is(th, td) + :is(th, td) { border-left: 1px solid color-mix(in srgb, var(--border-soft) 70%, transparent); }
+.dt-bordered :is(th, td) + :is(th, td) { border-left: 1px solid color-mix(in srgb, var(--border-soft) 45%, transparent); }
 
 /* ── Bulk-action bar ──────────────────────────────────────────────────────
    Pinned to the bottom edge of the viewport (`fixed`), centred, and stacked
