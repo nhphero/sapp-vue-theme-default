@@ -84,6 +84,13 @@ export const HEADERS: ReadonlyArray<{ id: string; label: string }> = [
   { id: 'dark',     label: 'theme.headerDark' },
 ];
 
+/** Control size presets (`--control-scale` → tokens.css `--control-h`): every control's one height. */
+export const CONTROLS: ReadonlyArray<{ v: number; label: string }> = [
+  { v: 0.9,  label: 'theme.controlCompact' },
+  { v: 1,    label: 'theme.controlDefault' },
+  { v: 1.15, label: 'theme.controlLarge' },
+];
+
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export const FONT_STACKS: Record<string, string> = {
   // The machine's own UI font (the default is Roboto, so this one is spelled out).
@@ -101,6 +108,7 @@ export const THEME_CONFIG_DEFAULTS: ThemeConfigState = Object.freeze({
   surface: '',
   contrast: '',
   header: '',
+  control: 1,
 });
 
 const hexToHsl = (hex: string) => {
@@ -224,6 +232,9 @@ export function createThemeConfig(): IThemeConfig {
     if (CONTRASTS.some(c => c.id && c.id === look.contrast)) el.setAttribute('data-contrast', look.contrast);
     else el.removeAttribute('data-contrast');
 
+    const ctl = Number(look.control) || 1;
+    if (ctl !== 1) el.style.setProperty('--control-scale', String(ctl)); else el.style.removeProperty('--control-scale');
+
     if (HEADERS.some(h => h.id && h.id === look.header)) el.setAttribute('data-header', look.header);
     else el.removeAttribute('data-header');
 
@@ -271,6 +282,7 @@ export function createThemeConfig(): IThemeConfig {
     surfaces: SURFACES,
     contrasts: CONTRASTS,
     headers: HEADERS,
+    controls: CONTROLS,
     set(patch) { if (!ui.locked) Object.assign(state, patch); },
     reset() { if (!ui.locked) Object.assign(state, base); },
     useDefaults(patch, options) {

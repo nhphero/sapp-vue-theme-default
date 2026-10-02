@@ -773,9 +773,10 @@ onMounted(() => {
 /* Tabs: uppercase pills centred on the band; the page on screen a light plate. */
 .app-band--classic .tabs--band { align-items: center; margin-left: 0; }
 .app-band--classic .tabs--band .tab {
-  height: calc(var(--touch) * 0.75); padding: 0.3em var(--sp-3) 0; border-radius: var(--radius);
-  font-size: calc(var(--text-xs) * 0.95); font-weight: 650; text-transform: uppercase; letter-spacing: var(--tracking-wide);
+  height: var(--control-h); padding: 0.2em var(--sp-4) 0; border-radius: var(--radius);
+  font-size: var(--text-sm); font-weight: 600; text-transform: uppercase; letter-spacing: var(--tracking-wide);
 }
+.app-band--classic .tabs--band .tab :deep(svg) { width: 1.1em; height: 1.1em; }
 .app-band--classic .tabs--band .tab:hover { background: var(--header-hover-bg); }
 .app-band--classic .tabs--band .tab[aria-selected="true"] { box-shadow: none; background: var(--header-active-bg); color: var(--header-active-fg); }
 

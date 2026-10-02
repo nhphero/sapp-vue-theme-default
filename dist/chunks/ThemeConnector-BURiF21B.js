@@ -1,6 +1,6 @@
 import { defineComponent as p, inject as d, onMounted as f, openBlock as s, createElementBlock as u, Fragment as h, createElementVNode as E, unref as T, createBlock as _, createCommentVNode as k } from "vue";
 import { THEME as y } from "../index.js";
-import C from "./ThemePanel-x3IBQrbd.js";
+import C from "./ThemePanel-Uc2h0rYa.js";
 const N = /* @__PURE__ */ p({
   __name: "ThemeConnector",
   setup(g) {
@@ -32,4 +32,4 @@ const N = /* @__PURE__ */ p({
 export {
   N as default
 };
-//# sourceMappingURL=ThemeConnector-5EOVn-zh.js.map
+//# sourceMappingURL=ThemeConnector-BURiF21B.js.map

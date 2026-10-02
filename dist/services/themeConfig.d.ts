@@ -30,6 +30,11 @@ export declare const HEADERS: ReadonlyArray<{
     id: string;
     label: string;
 }>;
+/** Control size presets (`--control-scale` → tokens.css `--control-h`): every control's one height. */
+export declare const CONTROLS: ReadonlyArray<{
+    v: number;
+    label: string;
+}>;
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export declare const FONT_STACKS: Record<string, string>;
 export declare const THEME_CONFIG_DEFAULTS: ThemeConfigState;

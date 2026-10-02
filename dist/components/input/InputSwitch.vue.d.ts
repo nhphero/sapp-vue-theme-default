@@ -1,6 +1,6 @@
 declare const _default: import("vue").DefineComponent<import("vue").ExtractPropTypes<{
     modelValue: {
-        type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
+        type: (NumberConstructor | StringConstructor | BooleanConstructor)[];
         default: boolean;
     };
     label: {
@@ -8,11 +8,11 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         default: string;
     };
     trueValue: {
-        type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
+        type: (NumberConstructor | StringConstructor | BooleanConstructor)[];
         default: boolean;
     };
     falseValue: {
-        type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
+        type: (NumberConstructor | StringConstructor | BooleanConstructor)[];
         default: boolean;
     };
     trueLabel: {
@@ -40,7 +40,7 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
     change: (...args: any[]) => void;
 }, string, import("vue").PublicProps, Readonly<import("vue").ExtractPropTypes<{
     modelValue: {
-        type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
+        type: (NumberConstructor | StringConstructor | BooleanConstructor)[];
         default: boolean;
     };
     label: {
@@ -48,11 +48,11 @@ declare const _default: import("vue").DefineComponent<import("vue").ExtractPropT
         default: string;
     };
     trueValue: {
-        type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
+        type: (NumberConstructor | StringConstructor | BooleanConstructor)[];
         default: boolean;
     };
     falseValue: {
-        type: (NumberConstructor | BooleanConstructor | StringConstructor)[];
+        type: (NumberConstructor | StringConstructor | BooleanConstructor)[];
         default: boolean;
     };
     trueLabel: {

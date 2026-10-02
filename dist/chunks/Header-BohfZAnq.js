@@ -369,7 +369,7 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
                 ], 2)),
                 A.value && x.value.tagline ? (s(), n("span", zt, d(x.value.tagline), 1)) : c("", !0)
               ], 64)) : (s(), n(g, { key: 1 }, [
-                a[8] || (a[8] = Je('<div class="relative" data-v-eb804d9f><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-eb804d9f><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-eb804d9f>MP</span></div></div><div class="flex flex-col text-left" data-v-eb804d9f><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-eb804d9f>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-eb804d9f>Core OS v5</span></div>', 2))
+                a[8] || (a[8] = Je('<div class="relative" data-v-9017dc8c><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-9017dc8c><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-9017dc8c>MP</span></div></div><div class="flex flex-col text-left" data-v-9017dc8c><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-9017dc8c>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-9017dc8c>Core OS v5</span></div>', 2))
               ], 64))
             ], 8, At)
           ]),
@@ -667,8 +667,8 @@ const nt = { class: "shell-head w-full sticky top-0 z-[100]" }, ot = { class: "s
       ])) : c("", !0)
     ]));
   }
-}), $a = /* @__PURE__ */ lt(ha, [["__scopeId", "data-v-eb804d9f"]]);
+}), $a = /* @__PURE__ */ lt(ha, [["__scopeId", "data-v-9017dc8c"]]);
 export {
   $a as default
 };
-//# sourceMappingURL=Header-DetAp4pt.js.map
+//# sourceMappingURL=Header-BohfZAnq.js.map
