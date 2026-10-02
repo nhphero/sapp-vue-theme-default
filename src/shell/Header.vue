@@ -37,54 +37,59 @@ const homeState = computed<any>(() => $superApp?.getModuleState?.('home', { favo
 const favoriteKeys = computed<string[]>(() => homeState.value?.favorites ?? [])
 const isFavorite = (key: string) => favoriteKeys.value.includes(key)
 const toggleFavorite = (key: string) => homeState.value?.toggleFavorite?.(key)
-/** One flat list: favourites first (in the order they were starred), then every other app.
- *  No section headers — the star on each tile already says which ones are favourites. */
+/** One list, one app per row: the apps used most recently first (by last use), then the others —
+ *  favourites first (in the order they were starred), then by name. */
 const appSections = (q?: string) => {
   const s = (q || '').trim().toLowerCase()
   const hit = (a: any) => !s || `${a.label} ${a.detail || ''} ${a.id}`.toLowerCase().includes(s)
   const list = tiles.value.filter(hit)
   const rank = (a: any) => { const i = favoriteKeys.value.indexOf(a.key); return i === -1 ? Number.MAX_SAFE_INTEGER : i }
-  const ordered = [...list].sort((a: any, b: any) => rank(a) - rank(b))
+  const ordered = [...list].sort((a: any, b: any) => {
+    const used = (lastUsed.value[b.id] ?? 0) - (lastUsed.value[a.id] ?? 0)
+    if (used !== 0) return used
+    const fav = rank(a) - rank(b)
+    if (fav !== 0) return fav
+    return String(a.label).localeCompare(String(b.label))
+  })
   return ordered.length ? [{ key: 'apps', label: '', tiles: ordered }] : []
 }
 
 /**
- * Recently opened apps — the switcher's top row (newest first, at most recentMax, the open app left
- * out). How many: Admin → Config (`apps.recentCount`, 0 hides the row), else RECENT_MAX. Kept per
- * browser in localStorage; every access is guarded (private mode, blocked storage).
+ * When each app was last opened (`appId → epoch ms`), kept per browser in localStorage
+ * (`sapp:app-last-used`) — it orders the switcher and shows "used …" on each row. Every access is
+ * guarded (private mode, blocked storage: the times only last for the page). The older
+ * `sapp:recent-apps` list (most recent first) is read once into it.
  */
-const RECENT_KEY = 'sapp:recent-apps'
-const RECENT_MAX = 5
-const LIMIT = 10
-const recentMax = computed(() => {
-  const n = Number(($s as any).state?.platformConfig?.apps?.recentCount)
-  return Number.isFinite(n) ? Math.min(LIMIT, Math.max(0, Math.round(n))) : RECENT_MAX
-})
-const readRecent = (): string[] => {
+const LAST_USED_KEY = 'sapp:app-last-used'
+const OLD_RECENT_KEY = 'sapp:recent-apps'
+const readLastUsed = (): Record<string, number> => {
   try {
-    const value = JSON.parse(localStorage.getItem(RECENT_KEY) || '[]')
-    return Array.isArray(value) ? value.filter((id: unknown) => typeof id === 'string') : []
+    const value = JSON.parse(localStorage.getItem(LAST_USED_KEY) || 'null')
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      return Object.fromEntries(Object.entries(value).filter(([, t]) => typeof t === 'number')) as Record<string, number>
+    }
+    const old = JSON.parse(localStorage.getItem(OLD_RECENT_KEY) || '[]')
+    const now = Date.now()
+    return Array.isArray(old) ? Object.fromEntries(old.filter((id: unknown) => typeof id === 'string').map((id: string, i: number) => [id, now - i * 1000])) : {}
   } catch {
-    return []
+    return {}
   }
 }
-const recentIds = ref<string[]>(readRecent())
+const lastUsed = ref<Record<string, number>>(readLastUsed())
 const rememberApp = (appId: string) => {
-  // One more than shown: the open app is listed but not displayed.
-  recentIds.value = [appId, ...recentIds.value.filter(id => id !== appId)].slice(0, LIMIT + 1)
+  lastUsed.value = { ...lastUsed.value, [appId]: Date.now() }
   try {
-    localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds.value))
+    localStorage.setItem(LAST_USED_KEY, JSON.stringify(lastUsed.value))
+    localStorage.removeItem(OLD_RECENT_KEY)
   } catch {
-    // storage unavailable — the row just lasts for this page
+    // storage unavailable — the order just lasts for this page
   }
 }
-const recentTiles = (q?: string) => {
-  const s = (q || '').trim().toLowerCase()
-  return recentIds.value
-    .filter(id => id !== currentApp.value.id)
-    .map(id => tiles.value.find((t: any) => t.id === id))
-    .filter((t): t is NonNullable<typeof t> => !!t && (!s || `${t.label} ${t.detail || ''} ${t.id}`.toLowerCase().includes(s)))
-    .slice(0, recentMax.value)
+/** "used 5 minutes ago" for a row; '' when never opened in this browser. */
+const usedLabel = (appId: string): string => {
+  const at = lastUsed.value[appId]
+  if (!at) return ''
+  return ($s as any).$f?.formatRelative?.(new Date(at).toISOString()) ?? new Date(at).toLocaleString()
 }
 
 const showAppsMenu = ref(false)
@@ -408,24 +413,8 @@ onMounted(() => {
           </template>
 
           <template #content="{ query }">
-            <!-- Two columns: recently opened apps on the left (when there are any), every app on the right. -->
-            <div class="apps-menu" :class="{ 'has-recent': recentTiles(query).length }">
-              <section v-if="recentTiles(query).length" class="recent-apps" data-testid="apps-recent">
-                <div class="pop-head">{{ $t('shell.recent') }}</div>
-                <div class="apps-list">
-                  <button v-for="tile in recentTiles(query)" :key="tile.key" type="button" class="apps-item group"
-                          :title="tile.detail" data-testid="recent-app" @click="tile.run()">
-                    <span class="apps-item__icon"><component :is="tile.icon" :size="16" stroke-width="1.75" /></span>
-                    <span class="apps-item__text">
-                      <span class="apps-item__name">
-                        <span class="truncate">{{ tile.label }}</span>
-                        <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title">{{ tileVersions[tile.id].label }}</span>
-                      </span>
-                      <span v-if="tile.detail" class="apps-item__detail">{{ tile.detail }}</span>
-                    </span>
-                  </button>
-                </div>
-              </section>
+            <!-- One column, one app per row: most recently used first (sapp:app-last-used). -->
+            <div class="apps-menu">
               <div class="apps-menu__all">
               <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
               <section v-for="sec in appSections(query)" :key="sec.key" class="pt-1 last:pb-3" :data-testid="`apps-section-${sec.key}`">
@@ -441,6 +430,7 @@ onMounted(() => {
                     </span>
                     <span v-if="tile.detail" class="apps-item__detail">{{ tile.detail }}</span>
                   </span>
+                  <span v-if="usedLabel(tile.id)" class="apps-item__used" :title="new Date(lastUsed[tile.id]).toLocaleString()" data-testid="tile-last-used">{{ usedLabel(tile.id) }}</span>
                   <button type="button" class="icon-btn apps-item__star"
                           :aria-pressed="isFavorite(tile.key)" :aria-label="$t('shell.toggleFavorite')" data-testid="tile-star" @click.stop="toggleFavorite(tile.key)">
                     <Star :size="14" :class="isFavorite(tile.key) ? 'fill-warning text-warning' : 'text-faint'" />
@@ -497,12 +487,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* The menu: one column of apps; with recent apps, two equal columns — recent left, every app right —
-   drawn alike, one app per row. Narrow screens stack them. Widths in tokens (scale with Theme Studio). */
-.apps-menu { width: calc(var(--sp-8) * 6); max-width: calc(100vw - var(--sp-6)); }
-.apps-menu.has-recent { width: calc(var(--sp-8) * 11); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+/* The menu: one column, one app per row, most recently used first. Widths in tokens (scale with Theme Studio). */
+.apps-menu { width: calc(var(--sp-8) * 7.5); max-width: calc(100vw - var(--sp-6)); padding-top: var(--sp-1); }
 .apps-menu__all { min-width: 0; }
-.recent-apps { padding-top: var(--sp-1); padding-bottom: var(--sp-2); border-right: 1px solid var(--border-soft); min-width: 0; }
 .apps-list { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--sp-2) var(--sp-1); }
 .apps-item {
   position: relative; display: flex; align-items: center; gap: var(--sp-3); width: 100%; min-width: 0;
@@ -521,12 +508,10 @@ onMounted(() => {
 .apps-item__name { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; font-size: var(--text-sm); font-weight: 600; }
 .apps-item:hover .apps-item__name { color: var(--primary); }
 .apps-item__detail { font-size: var(--text-xs); color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.apps-item__used { flex: none; font-size: var(--text-xs); color: var(--faint); white-space: nowrap; }
 .apps-item__star { flex: none; width: calc(var(--touch) * 0.64); height: calc(var(--touch) * 0.64); opacity: 0; }
 .apps-item:hover .apps-item__star, .apps-item__star:focus-visible, .apps-item__star[aria-pressed="true"] { opacity: 1; }
-@media (max-width: 720px) {
-  .apps-menu.has-recent { width: calc(100vw - var(--sp-6)); grid-template-columns: minmax(0, 1fr); }
-  .recent-apps { border-right: 0; border-bottom: 1px solid var(--border-soft); }
-}
+
 
 
 /* The mounted app's version, a quiet pill on the same line as its name. Tinted from the chip's own
