@@ -88,6 +88,7 @@ const loadModule = async () => {
     $superApp.runPathAction(baseModuleId, subPath)
     
     isLoaded.value = true
+    void $superApp.$hook?.emit?.('app.mount', { appId: baseModuleId, moduleId: baseModuleId })
   } catch (err: any) {
     console.error('❌ Failed to mount module:', err)
     error.value = `Module [${baseModuleId}] failed to respond: ${err.message}`

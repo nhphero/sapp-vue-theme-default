@@ -157,6 +157,8 @@ const apps = computed(() => {
  * state `shell.band` (`end`: components, rendered in order) — e.g. the navigation history toggle.
  */
 const shellBand = $superApp.getModuleState('shell.band', { end: [] as any[] })
+/** Entries in the `$hook` slot shell.menu.end — the band's end shows when either has something. */
+const menuEndCount = computed(() => $superApp?.$hook?.entries?.('shell.menu.end')?.length ?? 0)
 /** Menu of the mounted mini app, published by `layout.mini-app` (theme) through the kernel's module state. */
 const shellNav = $superApp.getModuleState('shell.nav', { moduleId: '', title: '', icon: null, items: [], active: '', navigate: null })
 /** True while a mini app is mounted (`/app/<id>/…`); Shell pages (Home, Theme Studio…) show the generic switcher. */
@@ -378,14 +380,19 @@ onMounted(() => {
           </div>
           </template>
         </div>
+        <!-- 🪝 $hook slot shell.header.start: after the logo -->
+        <component :is="$c('shell.hook-slot')" name="shell.header.start" class="flex items-center gap-1 ml-3" />
       </div>
 
       <!-- 👤 Right Section: User & Actions -->
       <div class="flex items-center gap-2 justify-self-end">
-        <!-- sidebar layout: the controls the band would hold (shell.band), e.g. the navigation history toggle -->
-        <div v-if="sidebar && shellBand.end?.length" class="flex items-center gap-1" data-testid="app-band-end">
+        <!-- sidebar layout: the controls the band would hold (shell.band, $hook slot shell.menu.end), e.g. the navigation history toggle -->
+        <div v-if="sidebar && (shellBand.end?.length || menuEndCount)" class="flex items-center gap-1" data-testid="app-band-end">
+          <component :is="$c('shell.hook-slot')" name="shell.menu.end" class="flex items-center gap-1" />
           <component :is="item" v-for="(item, i) in shellBand.end" :key="i" />
         </div>
+        <!-- 🪝 $hook slot shell.header.end: before language and the user menu -->
+        <component :is="$c('shell.hook-slot')" name="shell.header.end" class="flex items-center gap-1" />
         <div class="hidden md:flex items-center gap-1 flex-nowrap shrink-0">
            <!-- 🌐 Language switcher -->
            <component :is="$c('ui.dropdown')" v-if="i18n" :modelValue="showLangMenu" @update:modelValue="showLangMenu = $event" align="right">
@@ -435,6 +442,8 @@ onMounted(() => {
               <button type="button" class="pop-item" @click="router.push('/system/theme'); showUserMenu = false">
                  <Palette :size="15" class="text-muted-foreground" /><span>{{ $t('system.themeStudio', { default: 'Theme Studio' }) }}</span>
               </button>
+              <!-- 🪝 $hook slot shell.user-menu: items above Sign out (prop `close` shuts the menu) -->
+              <component :is="$c('shell.hook-slot')" name="shell.user-menu" tag="div" class="flex flex-col" :context="{ close: () => (showUserMenu = false) }" />
               <div class="pop-sep"></div>
               <button type="button" class="pop-item danger" @click="handleLogout">
                  <LogOut :size="15" /><span>{{ $t('shell.logout') }}</span>
@@ -491,7 +500,9 @@ onMounted(() => {
           </template>
         </nav>
 
-        <div v-if="shellBand.end?.length" class="app-band__end" data-testid="app-band-end">
+        <div v-if="shellBand.end?.length || menuEndCount" class="app-band__end" data-testid="app-band-end">
+          <!-- 🪝 $hook slot shell.menu.end: right of the menu (a chat button…) -->
+          <component :is="$c('shell.hook-slot')" name="shell.menu.end" class="flex items-center gap-1" />
           <component :is="item" v-for="(item, i) in shellBand.end" :key="i" />
         </div>
       </div>
@@ -522,6 +533,8 @@ onMounted(() => {
           </template>
         </template>
       </nav>
+      <!-- 🪝 $hook slot shell.sidebar.bottom -->
+      <component :is="$c('shell.hook-slot')" v-if="!collapsed" name="shell.sidebar.bottom" class="side-hooks" />
       <button type="button" class="side-collapse" :aria-pressed="collapsed" :title="collapsed ? 'Expand the sidebar' : 'Collapse the sidebar'"
               data-testid="sidebar-collapse" @click="toggleCollapsed">
         <component :is="collapsed ? PanelLeftOpen : PanelLeftClose" :size="16" />
@@ -820,4 +833,5 @@ onMounted(() => {
 }
 .side-collapse[aria-pressed="true"] { justify-content: center; padding-inline: 0; }
 .side-collapse:hover { background: var(--muted); color: var(--foreground); }
+.side-hooks { display: flex; flex-direction: column; gap: var(--sp-1); padding: 0 var(--sp-3) var(--sp-2); }
 </style>

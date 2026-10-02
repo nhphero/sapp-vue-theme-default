@@ -138,6 +138,10 @@ export class DefaultTheme implements ITheme {
     superApp.registerComponent({ id: 'display.markdown', category: 'Display UI', component: defineAsyncComponent(() => import('./components/markdown/Markdown.vue')) });
     // An image that opens large on click (viewer: zoom, original, Esc to close).
     superApp.registerComponent({ id: 'display.image', category: 'Display UI', component: defineAsyncComponent(() => import('./components/image-view/ImageView.vue')) });
+    // A file, through the package that can show it ($hook provider `file.viewer` — OnlyOffice…), else built-in.
+    superApp.registerComponent({ id: 'display.file', category: 'Display UI', component: defineAsyncComponent(() => import('./components/file-view/FileView.vue')) });
+    // What packages put in a `$hook` slot (contracts/hooks.ts) — themes place one per extension point.
+    superApp.registerComponent({ id: 'shell.hook-slot', category: 'Shell UI', component: defineAsyncComponent(() => import('./shell/HookSlot.vue')) });
     superApp.registerComponent({ id: 'Table', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/Table.vue')) });
     superApp.registerComponent({ id: 'TableBody', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/TableBody.vue')) });
     superApp.registerComponent({ id: 'TableCell', category: 'Table UI', component: defineAsyncComponent(() => import('./components/table/TableCell.vue')) });
