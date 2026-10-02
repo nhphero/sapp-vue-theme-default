@@ -412,12 +412,17 @@ onMounted(() => {
             <div class="apps-menu" :class="{ 'has-recent': recentTiles(query).length }">
               <section v-if="recentTiles(query).length" class="recent-apps" data-testid="apps-recent">
                 <div class="pop-head">{{ $t('shell.recent') }}</div>
-                <div class="recent-apps__list">
-                  <button v-for="tile in recentTiles(query)" :key="tile.key" type="button" class="recent-apps__item"
+                <div class="apps-list">
+                  <button v-for="tile in recentTiles(query)" :key="tile.key" type="button" class="apps-item group"
                           :title="tile.detail" data-testid="recent-app" @click="tile.run()">
-                    <span class="recent-apps__icon"><component :is="tile.icon" :size="14" stroke-width="1.75" /></span>
-                    <span class="truncate">{{ tile.label }}</span>
-                    <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title">{{ tileVersions[tile.id].label }}</span>
+                    <span class="apps-item__icon"><component :is="tile.icon" :size="16" stroke-width="1.75" /></span>
+                    <span class="apps-item__text">
+                      <span class="apps-item__name">
+                        <span class="truncate">{{ tile.label }}</span>
+                        <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title">{{ tileVersions[tile.id].label }}</span>
+                      </span>
+                      <span v-if="tile.detail" class="apps-item__detail">{{ tile.detail }}</span>
+                    </span>
                   </button>
                 </div>
               </section>
@@ -425,22 +430,18 @@ onMounted(() => {
               <div v-if="!appSections(query).length" class="px-3 py-6 text-sm text-faint text-center">{{ $t('common.empty') }}</div>
               <section v-for="sec in appSections(query)" :key="sec.key" class="pt-1 last:pb-3" :data-testid="`apps-section-${sec.key}`">
               <div v-if="sec.label" class="pop-head flex items-center gap-1.5">{{ sec.label }}<span class="text-faint font-normal">{{ sec.tiles.length }}</span></div>
-              <div class="px-2 pb-1 grid gap-1 sm:grid-cols-2">
-                <div v-for="tile in sec.tiles" :key="tile.key" role="button" tabindex="0" @click="tile.run()" @keydown.enter="tile.run()"
-                     class="group relative flex items-center gap-3 rounded-lg px-2.5 py-2 text-left hover:bg-muted transition-colors min-w-0 cursor-pointer"
-                     :aria-current="tile.id === currentApp.id ? 'true' : undefined">
-                  <span class="w-8 h-8 rounded-lg grid place-items-center shrink-0 transition-colors group-hover:bg-primary-soft group-hover:text-primary"
-                        :class="tile.id === currentApp.id ? 'bg-primary-soft text-primary' : 'bg-muted text-muted-foreground'">
-                    <component :is="tile.icon" :size="16" stroke-width="1.75" />
-                  </span>
-                  <span class="min-w-0 flex-1">
-                    <span class="flex items-center gap-1.5 min-w-0">
-                      <span class="text-sm font-semibold truncate group-hover:text-primary transition-colors">{{ tile.label }}</span>
+              <div class="apps-list">
+                <div v-for="tile in sec.tiles" :key="tile.key" role="button" tabindex="0" class="apps-item group"
+                     :aria-current="tile.id === currentApp.id ? 'true' : undefined" @click="tile.run()" @keydown.enter="tile.run()">
+                  <span class="apps-item__icon"><component :is="tile.icon" :size="16" stroke-width="1.75" /></span>
+                  <span class="apps-item__text">
+                    <span class="apps-item__name">
+                      <span class="truncate">{{ tile.label }}</span>
                       <span v-if="tileVersions[tile.id]" class="tile-version" :title="tileVersions[tile.id].title" data-testid="tile-version">{{ tileVersions[tile.id].label }}</span>
                     </span>
-                    <span class="block text-xs text-muted-foreground truncate">{{ tile.detail }}</span>
+                    <span v-if="tile.detail" class="apps-item__detail">{{ tile.detail }}</span>
                   </span>
-                  <button type="button" class="icon-btn shrink-0 opacity-0 group-hover:opacity-100 focus-visible:opacity-100 aria-pressed:opacity-100" style="width:28px;height:28px"
+                  <button type="button" class="icon-btn apps-item__star"
                           :aria-pressed="isFavorite(tile.key)" :aria-label="$t('shell.toggleFavorite')" data-testid="tile-star" @click.stop="toggleFavorite(tile.key)">
                     <Star :size="14" :class="isFavorite(tile.key) ? 'fill-warning text-warning' : 'text-faint'" />
                   </button>
@@ -496,26 +497,37 @@ onMounted(() => {
 </template>
 
 <style scoped>
-/* The menu: every app; with recent apps, two columns — recent (a narrow list) left, every app right.
-   Narrow screens stack them. Widths in tokens, so the menu scales with Theme Studio. */
-.apps-menu { width: calc(var(--sp-8) * 9); max-width: calc(100vw - var(--sp-6)); }
-.apps-menu.has-recent { width: calc(var(--sp-8) * 12.5); display: grid; grid-template-columns: calc(var(--sp-8) * 3.5) minmax(0, 1fr); }
+/* The menu: one column of apps; with recent apps, two equal columns — recent left, every app right —
+   drawn alike, one app per row. Narrow screens stack them. Widths in tokens (scale with Theme Studio). */
+.apps-menu { width: calc(var(--sp-8) * 6); max-width: calc(100vw - var(--sp-6)); }
+.apps-menu.has-recent { width: calc(var(--sp-8) * 11); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .apps-menu__all { min-width: 0; }
-.recent-apps { padding: var(--sp-1) 0 var(--sp-2); border-right: 1px solid var(--border-soft); background: var(--muted); min-width: 0; }
-.recent-apps__list { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--sp-2); }
-.recent-apps__item {
-  display: flex; align-items: center; gap: var(--sp-2); width: 100%; min-width: 0;
-  padding: var(--sp-1) var(--sp-2); border-radius: var(--radius); border: 0;
-  background: transparent; color: var(--foreground); font-size: var(--text-sm); font-weight: 500; text-align: left;
-  cursor: pointer; transition: background-color var(--dur, .15s) ease, color var(--dur, .15s) ease;
+.recent-apps { padding-top: var(--sp-1); padding-bottom: var(--sp-2); border-right: 1px solid var(--border-soft); min-width: 0; }
+.apps-list { display: flex; flex-direction: column; gap: 2px; padding: 0 var(--sp-2) var(--sp-1); }
+.apps-item {
+  position: relative; display: flex; align-items: center; gap: var(--sp-3); width: 100%; min-width: 0;
+  padding: var(--sp-2); border: 0; border-radius: var(--radius); background: transparent;
+  color: var(--foreground); text-align: left; cursor: pointer;
+  transition: background-color var(--dur, .15s) ease, color var(--dur, .15s) ease;
 }
-.recent-apps__item:hover { background: var(--card); color: var(--primary); }
-.recent-apps__icon { flex: none; width: var(--sp-6); height: var(--sp-6); border-radius: var(--radius-sm); display: grid; place-items: center; background: var(--card); color: var(--muted-foreground); }
-.recent-apps__item:hover .recent-apps__icon { color: var(--primary); }
+.apps-item:hover, .apps-item:focus-visible { background: var(--muted); }
+.apps-item__icon {
+  flex: none; width: calc(var(--touch) * 0.73); height: calc(var(--touch) * 0.73); border-radius: var(--radius);
+  display: grid; place-items: center; background: var(--muted); color: var(--muted-foreground);
+  transition: background-color var(--dur, .15s) ease, color var(--dur, .15s) ease;
+}
+.apps-item:hover .apps-item__icon, .apps-item[aria-current="true"] .apps-item__icon { background: var(--primary-soft); color: var(--primary); }
+.apps-item__text { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.apps-item__name { display: flex; align-items: center; gap: var(--sp-2); min-width: 0; font-size: var(--text-sm); font-weight: 600; }
+.apps-item:hover .apps-item__name { color: var(--primary); }
+.apps-item__detail { font-size: var(--text-xs); color: var(--muted-foreground); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.apps-item__star { flex: none; width: calc(var(--touch) * 0.64); height: calc(var(--touch) * 0.64); opacity: 0; }
+.apps-item:hover .apps-item__star, .apps-item__star:focus-visible, .apps-item__star[aria-pressed="true"] { opacity: 1; }
 @media (max-width: 720px) {
   .apps-menu.has-recent { width: calc(100vw - var(--sp-6)); grid-template-columns: minmax(0, 1fr); }
   .recent-apps { border-right: 0; border-bottom: 1px solid var(--border-soft); }
 }
+
 
 /* The mounted app's version, a quiet pill on the same line as its name. Tinted from the chip's own
    text colour, so it reads on the light plate and on the dark band alike; long versions truncate. */
