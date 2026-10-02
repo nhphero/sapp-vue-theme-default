@@ -1,24 +1,24 @@
-import { defineComponent as De, inject as Ne, computed as p, ref as _, watch as I, onMounted as Oe, openBlock as n, createElementBlock as l, createElementVNode as s, unref as i, Fragment as k, normalizeClass as H, toDisplayString as d, createCommentVNode as u, createStaticVNode as Ue, createBlock as m, resolveDynamicComponent as h, withCtx as w, renderList as C, createTextVNode as G, withKeys as Re, withModifiers as J, createVNode as g } from "vue";
+import { defineComponent as De, inject as Ne, computed as p, ref as _, watch as I, onMounted as Oe, openBlock as n, createElementBlock as l, createElementVNode as a, unref as i, Fragment as k, normalizeClass as H, toDisplayString as c, createCommentVNode as u, createStaticVNode as Ue, createBlock as m, resolveDynamicComponent as h, withCtx as w, renderList as C, createTextVNode as G, withKeys as Re, withModifiers as J, createVNode as g } from "vue";
 import { appIcon as Ie } from "../index.js";
 import { useRouter as Te, useRoute as je } from "vue-router";
 import { LayoutGrid as ie, Star as Pe, ChevronDown as T, Check as re, User as Ke, Palette as Fe, LogOut as Be } from "lucide-vue-next";
 import { SUPERAPP_EVENTS as He } from "@nhphero/vue-sapp/contracts";
-import { _ as ce } from "./LocaleFlag.vue_vue_type_script_setup_true_lang-D2eeZNym.js";
-import { _ as de } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
+import { _ as de } from "./LocaleFlag.vue_vue_type_script_setup_true_lang-D2eeZNym.js";
+import { _ as ce } from "./UserAvatar.vue_vue_type_script_setup_true_lang-AXBFwsc7.js";
 import { _ as Ge } from "./_plugin-vue_export-helper-CHgC5LLL.js";
 const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors duration-300" }, We = { class: "page-container shell-header__row flex items-center justify-between gap-4" }, Ye = { class: "flex items-center gap-3 min-w-0" }, Qe = ["title"], Xe = ["src", "alt"], Ze = ["src", "alt"], qe = {
   key: 2,
   class: "hidden lg:block text-[10px] font-bold uppercase tracking-[0.2em] hdr-faint border-l hdr-line pl-3"
-}, et = { class: "flex items-center shrink-0 min-w-0" }, tt = ["title", "aria-label"], at = {
+}, et = { class: "flex items-center shrink-0 min-w-0" }, tt = ["title", "aria-label"], st = {
   class: "text-sm font-semibold text-foreground whitespace-nowrap",
   "data-testid": "current-app"
-}, st = ["title"], nt = { class: "apps-menu" }, ot = { class: "apps-menu__all" }, lt = {
+}, at = ["title"], nt = { class: "apps-menu" }, ot = { class: "apps-menu__all" }, lt = {
   key: 0,
   class: "px-3 py-6 text-sm text-faint text-center"
 }, it = ["data-testid"], rt = {
   key: 0,
   class: "pop-head flex items-center gap-1.5"
-}, ct = { class: "text-faint font-normal" }, dt = { class: "apps-list" }, ut = ["aria-current", "onClick", "onKeydown"], pt = { class: "apps-item__icon" }, mt = { class: "apps-item__text" }, vt = { class: "apps-item__name" }, ht = { class: "truncate" }, gt = ["title"], ft = ["title"], bt = ["aria-pressed", "aria-label", "onClick"], _t = { class: "flex items-center gap-2" }, yt = { class: "hidden md:flex items-center gap-1 flex-nowrap shrink-0" }, kt = ["title", "aria-label"], wt = { class: "w-52" }, xt = { class: "pop-head" }, $t = ["aria-selected", "onClick"], St = { class: "flex items-center gap-2.5" }, At = {
+}, dt = { class: "text-faint font-normal" }, ct = { class: "apps-list" }, ut = ["aria-current", "onClick", "onKeydown"], pt = { class: "apps-item__icon" }, mt = { class: "apps-item__text" }, vt = { class: "apps-item__name" }, ht = { class: "truncate" }, gt = ["title"], ft = ["title"], bt = ["aria-pressed", "aria-label", "onClick"], _t = { class: "flex items-center gap-2" }, yt = { class: "hidden md:flex items-center gap-1 flex-nowrap shrink-0" }, kt = ["title", "aria-label"], wt = { class: "w-52" }, xt = { class: "pop-head" }, $t = ["aria-selected", "onClick"], St = { class: "flex items-center gap-2.5" }, At = {
   type: "button",
   class: "h-9 flex items-center gap-2 pl-2.5 pr-1.5 rounded-lg hdr-btn cursor-pointer transition-colors outline-none",
   "data-testid": "user-menu"
@@ -48,7 +48,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
     }, fe = p(
       () => ee.value.map((e) => ({ key: `app:${e.id}`, id: e.id, label: e.label, detail: e.detail, icon: e.icon, run: () => Me(e.path) }))
     ), Q = p(() => r?.getModuleState?.("home", { favorites: [] })), be = p(() => Q.value?.favorites ?? []), M = (e) => be.value.includes(e), _e = (e) => Q.value?.toggleFavorite?.(e), X = (e) => {
-      const t = (e || "").trim().toLowerCase(), a = (b) => !t || `${b.label} ${b.detail || ""} ${b.id}`.toLowerCase().includes(t), o = [...fe.value.filter(a)].sort((b, B) => {
+      const t = (e || "").trim().toLowerCase(), s = (b) => !t || `${b.label} ${b.detail || ""} ${b.id}`.toLowerCase().includes(t), o = [...fe.value.filter(s)].sort((b, B) => {
         const oe = Number(M(B.key)) - Number(M(b.key));
         if (oe !== 0) return oe;
         const le = (S.value[B.id] ?? 0) - (S.value[b.id] ?? 0);
@@ -59,9 +59,9 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
       try {
         const e = JSON.parse(localStorage.getItem(ue) || "null");
         if (e && typeof e == "object" && !Array.isArray(e))
-          return Object.fromEntries(Object.entries(e).filter(([, c]) => typeof c == "number"));
-        const t = JSON.parse(localStorage.getItem(pe) || "[]"), a = Date.now();
-        return Array.isArray(t) ? Object.fromEntries(t.filter((c) => typeof c == "string").map((c, o) => [c, a - o * 1e3])) : {};
+          return Object.fromEntries(Object.entries(e).filter(([, d]) => typeof d == "number"));
+        const t = JSON.parse(localStorage.getItem(pe) || "[]"), s = Date.now();
+        return Array.isArray(t) ? Object.fromEntries(t.filter((d) => typeof d == "string").map((d, o) => [d, s - o * 1e3])) : {};
       } catch {
         return {};
       }
@@ -90,32 +90,32 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
       path: typeof r.appPath == "function" ? r.appPath(t.id, (t.code ?? t.id) === "admin" ? "apps" : "") : `/app/${t.slug || t.id}`,
       icon: we(t.icon),
       detail: t.description || "Micro-Frontend App"
-    }))), te = r.getModuleState("shell.band", { end: [] }), f = r.getModuleState("shell.nav", { moduleId: "", title: "", icon: null, items: [], active: "", navigate: null }), ae = p(() => W.path.startsWith("/app/")), x = p(() => {
-      let e = ae.value ? E.current_app : null;
+    }))), te = r.getModuleState("shell.band", { end: [] }), f = r.getModuleState("shell.nav", { moduleId: "", title: "", icon: null, items: [], active: "", navigate: null }), se = p(() => W.path.startsWith("/app/")), x = p(() => {
+      let e = se.value ? E.current_app : null;
       e === "expose" && (e = "workspace");
-      const t = e && ee.value.find((a) => a.id === e);
+      const t = e && ee.value.find((s) => s.id === e);
       return t || (e && f.title ? { id: e, label: f.title, icon: f.icon || ie } : { id: "default", label: $?.t("shell.apps") ?? "Apps", icon: ie });
-    }), Se = p(() => ae.value && f.items.length > 0);
+    }), Se = p(() => se.value && f.items.length > 0);
     I(() => x.value.id, (e) => {
       e && e !== "default" && ye(e);
     }, { immediate: !0 });
-    const se = async (e) => {
+    const ae = async (e) => {
       if (!e || e === "default" || typeof r.loadAppManifest != "function") return null;
       const t = await r.loadAppManifest(e);
       if (!t) return null;
-      const a = String(t.version ?? "dev");
-      return r.getRegisteredApps?.().find((o) => o.id === e)?.channel === "stable" ? { label: "stable", title: `stable · ${a}` } : { label: a, title: a };
+      const s = String(t.version ?? "dev");
+      return r.getRegisteredApps?.().find((o) => o.id === e)?.channel === "stable" ? { label: "stable", title: `stable · ${s}` } : { label: s, title: s };
     }, U = _(""), K = _("");
     I(() => [x.value.id, x.value.version], async ([e]) => {
       U.value = "", K.value = "";
-      const t = await se(e);
+      const t = await ae(e);
       x.value.id !== e || !t || (U.value = t.label, K.value = t.title);
     }, { immediate: !0 });
     const V = _({}), Ae = () => {
       for (const e of Ce()) {
         const t = `${e.id}@${e.version ?? ""}`;
-        ne.has(t) || (ne.add(t), se(e.id).then((a) => {
-          a && (V.value = { ...V.value, [e.id]: a });
+        ne.has(t) || (ne.add(t), ae(e.id).then((s) => {
+          s && (V.value = { ...V.value, [e.id]: s });
         }));
       }
     }, ne = /* @__PURE__ */ new Set(), Ce = () => typeof r?.getRegisteredApps == "function" ? r.getRegisteredApps() : [];
@@ -129,8 +129,8 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
           e.push({ group: null, item: t });
           continue;
         }
-        const a = e.find((c) => c.group === t.group);
-        a ? (a.items.push(t), a.icon ??= t.groupIcon) : e.push({ group: t.group, icon: t.groupIcon, items: [t] });
+        const s = e.find((d) => d.group === t.group);
+        s ? (s.items.push(t), s.icon ??= t.groupIcon) : e.push({ group: t.group, icon: t.groupIcon, items: [t] });
       }
       return e;
     }), F = (e) => e.find((t) => f.active === t.path) ?? null, R = p({
@@ -140,8 +140,8 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
       }
     });
     p(() => A.value.find((e) => String(e.id) === String(R.value)) || A.value[0]), I(() => W.params.moduleId, (e) => {
-      const t = Array.isArray(e) ? e[0] : e, a = t && (r.findAppByRoute?.(t)?.id ?? t);
-      a && E.current_app !== a && (E.current_app = a);
+      const t = Array.isArray(e) ? e[0] : e, s = t && (r.findAppByRoute?.(t)?.id ?? t);
+      s && E.current_app !== s && (E.current_app = s);
     }, { immediate: !0 });
     const ze = async () => {
       try {
@@ -160,7 +160,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
       try {
         const e = await r.doAction("workspace.list");
         A.value = e || [];
-        const t = A.value.find((a) => String(a.id) === String(R.value));
+        const t = A.value.find((s) => String(s.id) === String(R.value));
         (!R.value || !t) && A.value.length > 0 && (R.value = String(A.value[0].id));
       } catch {
       }
@@ -181,13 +181,13 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
         Array.isArray(e) ? O.value = e : q();
       });
     }), (e, t) => (n(), l("header", Je, [
-      s("div", We, [
-        s("div", Ye, [
-          s("div", {
+      a("div", We, [
+        a("div", Ye, [
+          a("div", {
             class: "flex items-center gap-3 cursor-pointer group/logo",
             "data-testid": "brand",
             title: y.value?.name,
-            onClick: t[0] || (t[0] = (a) => i(z).push(y.value?.homePath || "/"))
+            onClick: t[0] || (t[0] = (s) => i(z).push(y.value?.homePath || "/"))
           }, [
             y.value?.logo ? (n(), l(k, { key: 0 }, [
               Y.value && y.value.logoDark ? (n(), l("img", {
@@ -199,70 +199,70 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                 key: 1,
                 class: H(["inline-flex items-center rounded-md", Y.value && "bg-white/95 px-2 py-1"])
               }, [
-                s("img", {
+                a("img", {
                   src: y.value.logo,
                   alt: y.value.name,
                   class: "h-7 w-auto max-w-[200px] object-contain"
                 }, null, 8, Ze)
               ], 2)),
-              y.value.tagline ? (n(), l("span", qe, d(y.value.tagline), 1)) : u("", !0)
+              y.value.tagline ? (n(), l("span", qe, c(y.value.tagline), 1)) : u("", !0)
             ], 64)) : (n(), l(k, { key: 1 }, [
-              t[8] || (t[8] = Ue('<div class="relative" data-v-8a259bce><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-8a259bce><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-8a259bce>MP</span></div></div><div class="flex flex-col text-left" data-v-8a259bce><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-8a259bce>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-8a259bce>Core OS v5</span></div>', 2))
+              t[8] || (t[8] = Ue('<div class="relative" data-v-23e920b2><div class="w-9 h-9 bg-primary rounded-xl flex items-center justify-center relative z-10 transition-transform group-hover/logo:scale-110 shadow-xl border border-border-soft" data-v-23e920b2><span class="text-primary-foreground font-black text-xs tracking-tighter" data-v-23e920b2>MP</span></div></div><div class="flex flex-col text-left" data-v-23e920b2><span class="text-[11px] font-black uppercase tracking-[0.4em] hdr-ink transition-colors leading-none mb-1" data-v-23e920b2>Antigravity</span><span class="text-[9px] font-black uppercase tracking-[0.2em] hdr-faint" data-v-23e920b2>Core OS v5</span></div>', 2))
             ], 64))
           ], 8, Qe),
-          t[9] || (t[9] = s("span", {
+          t[9] || (t[9] = a("span", {
             class: "h-6 w-px hdr-sep shrink-0",
             "aria-hidden": "true"
           }, null, -1)),
-          s("div", et, [
+          a("div", et, [
             (n(), m(h(e.$c("ui.dropdown")), {
               class: "app-switch",
               modelValue: D.value,
-              "onUpdate:modelValue": t[1] || (t[1] = (a) => ke(a)),
+              "onUpdate:modelValue": t[1] || (t[1] = (s) => ke(s)),
               search: "",
               "search-placeholder": e.$t("shell.searchApps")
             }, {
               trigger: w(() => [
-                s("button", {
+                a("button", {
                   type: "button",
                   class: "app-chip flex items-center gap-2 transition-colors outline-none group/app",
                   title: e.$t("shell.apps"),
                   "aria-label": e.$t("shell.apps"),
                   "data-testid": "apps-switch"
                 }, [
-                  s("span", {
+                  a("span", {
                     class: H(["w-7 h-7 rounded-md grid place-items-center shrink-0 transition-colors", x.value.id === "default" ? "bg-muted text-muted-foreground" : "bg-primary-soft text-primary"])
                   }, [
                     (n(), m(h(x.value.icon), { size: 16 }))
                   ], 2),
-                  s("span", at, d(x.value.label), 1),
+                  a("span", st, c(x.value.label), 1),
                   U.value ? (n(), l("span", {
                     key: 0,
                     class: "app-version",
                     "data-testid": "current-app-version",
                     title: K.value
-                  }, d(U.value), 9, st)) : u("", !0),
+                  }, c(U.value), 9, at)) : u("", !0),
                   g(i(T), {
                     size: 14,
                     class: "text-faint group-hover/app:text-foreground transition-colors"
                   })
                 ], 8, tt)
               ]),
-              content: w(({ query: a }) => [
-                s("div", nt, [
-                  s("div", ot, [
-                    X(a).length ? u("", !0) : (n(), l("div", lt, d(e.$t("common.empty")), 1)),
-                    (n(!0), l(k, null, C(X(a), (c) => (n(), l("section", {
-                      key: c.key,
+              content: w(({ query: s }) => [
+                a("div", nt, [
+                  a("div", ot, [
+                    X(s).length ? u("", !0) : (n(), l("div", lt, c(e.$t("common.empty")), 1)),
+                    (n(!0), l(k, null, C(X(s), (d) => (n(), l("section", {
+                      key: d.key,
                       class: "pt-1 last:pb-3",
-                      "data-testid": `apps-section-${c.key}`
+                      "data-testid": `apps-section-${d.key}`
                     }, [
-                      c.label ? (n(), l("div", rt, [
-                        G(d(c.label), 1),
-                        s("span", ct, d(c.tiles.length), 1)
+                      d.label ? (n(), l("div", rt, [
+                        G(c(d.label), 1),
+                        a("span", dt, c(d.tiles.length), 1)
                       ])) : u("", !0),
-                      s("div", dt, [
-                        (n(!0), l(k, null, C(c.tiles, (o) => (n(), l("div", {
+                      a("div", ct, [
+                        (n(!0), l(k, null, C(d.tiles, (o) => (n(), l("div", {
                           key: o.key,
                           role: "button",
                           tabindex: "0",
@@ -271,21 +271,21 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                           onClick: (b) => o.run(),
                           onKeydown: Re((b) => o.run(), ["enter"])
                         }, [
-                          s("span", pt, [
+                          a("span", pt, [
                             (n(), m(h(o.icon), {
                               size: 16,
                               "stroke-width": "1.75"
                             }))
                           ]),
-                          s("span", mt, [
-                            s("span", vt, [
-                              s("span", ht, d(o.label), 1),
+                          a("span", mt, [
+                            a("span", vt, [
+                              a("span", ht, c(o.label), 1),
                               V.value[o.id] ? (n(), l("span", {
                                 key: 0,
                                 class: "tile-version",
                                 title: V.value[o.id].title,
                                 "data-testid": "tile-version"
-                              }, d(V.value[o.id].label), 9, gt)) : u("", !0)
+                              }, c(V.value[o.id].label), 9, gt)) : u("", !0)
                             ])
                           ]),
                           Z(o.id) ? (n(), l("span", {
@@ -293,8 +293,8 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                             class: "apps-item__used",
                             title: new Date(S.value[o.id]).toLocaleString(),
                             "data-testid": "tile-last-used"
-                          }, d(Z(o.id)), 9, ft)) : u("", !0),
-                          s("button", {
+                          }, c(Z(o.id)), 9, ft)) : u("", !0),
+                          a("button", {
                             type: "button",
                             class: "icon-btn apps-item__star",
                             "aria-pressed": M(o.key),
@@ -317,23 +317,23 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
             }, 8, ["modelValue", "search-placeholder"]))
           ])
         ]),
-        s("div", _t, [
-          s("div", yt, [
+        a("div", _t, [
+          a("div", yt, [
             i($) ? (n(), m(h(e.$c("ui.dropdown")), {
               key: 0,
               modelValue: P.value,
-              "onUpdate:modelValue": t[2] || (t[2] = (a) => P.value = a),
+              "onUpdate:modelValue": t[2] || (t[2] = (s) => P.value = s),
               align: "right"
             }, {
               trigger: w(() => [
-                s("button", {
+                a("button", {
                   type: "button",
                   class: "h-9 px-2 rounded-lg flex items-center gap-1 whitespace-nowrap shrink-0 hdr-btn transition-colors outline-none",
                   title: e.$t("shell.language"),
                   "aria-label": e.$t("shell.language"),
                   "data-testid": "lang-switch"
                 }, [
-                  g(ce, {
+                  g(de, {
                     locale: i($).locale,
                     size: 20
                   }, null, 8, ["locale"]),
@@ -344,23 +344,23 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                 ], 8, kt)
               ]),
               content: w(() => [
-                s("div", wt, [
-                  s("div", xt, d(e.$t("shell.language")), 1),
-                  (n(!0), l(k, null, C(i($).availableLocales, (a) => (n(), l("button", {
-                    key: a,
+                a("div", wt, [
+                  a("div", xt, c(e.$t("shell.language")), 1),
+                  (n(!0), l(k, null, C(i($).availableLocales, (s) => (n(), l("button", {
+                    key: s,
                     type: "button",
                     class: "pop-item justify-between whitespace-nowrap",
-                    "aria-selected": i($).locale === a,
-                    onClick: (c) => ge(a)
+                    "aria-selected": i($).locale === s,
+                    onClick: (d) => ge(s)
                   }, [
-                    s("span", St, [
-                      g(ce, {
-                        locale: a,
+                    a("span", St, [
+                      g(de, {
+                        locale: s,
                         size: 22
                       }, null, 8, ["locale"]),
-                      s("span", null, d(he[a] ?? a), 1)
+                      a("span", null, c(he[s] ?? s), 1)
                     ]),
-                    i($).locale === a ? (n(), m(i(re), {
+                    i($).locale === s ? (n(), m(i(re), {
                       key: 0,
                       size: 14,
                       class: "text-primary"
@@ -371,16 +371,16 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
               _: 1
             }, 8, ["modelValue"])) : u("", !0)
           ]),
-          t[11] || (t[11] = s("div", { class: "h-6 w-px hdr-sep mx-1 hidden md:block" }, null, -1)),
+          t[11] || (t[11] = a("div", { class: "h-6 w-px hdr-sep mx-1 hidden md:block" }, null, -1)),
           (n(), m(h(e.$c("ui.dropdown")), {
             modelValue: N.value,
-            "onUpdate:modelValue": t[5] || (t[5] = (a) => N.value = a),
+            "onUpdate:modelValue": t[5] || (t[5] = (s) => N.value = s),
             align: "right"
           }, {
             trigger: w(() => [
-              s("button", At, [
-                s("span", Ct, d(v.value?.username || "User"), 1),
-                g(de, {
+              a("button", At, [
+                a("span", Ct, c(v.value?.username || "User"), 1),
+                g(ce, {
                   src: v.value?.avatar,
                   name: v.value?.username || "User",
                   size: 28,
@@ -393,24 +393,24 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
               ])
             ]),
             content: w(() => [
-              s("div", Lt, [
-                s("div", zt, [
-                  g(de, {
+              a("div", Lt, [
+                a("div", zt, [
+                  g(ce, {
                     src: v.value?.avatar,
                     name: v.value?.username || "User",
                     size: 36,
                     rounded: "lg"
                   }, null, 8, ["src", "name"]),
-                  s("div", Et, [
-                    s("div", Vt, d(v.value?.username), 1),
-                    s("div", Mt, d(v.value?.email || v.value?.role), 1)
+                  a("div", Et, [
+                    a("div", Vt, c(v.value?.username), 1),
+                    a("div", Mt, c(v.value?.email || v.value?.role), 1)
                   ])
                 ]),
-                s("button", {
+                a("button", {
                   type: "button",
                   class: "pop-item",
                   "data-testid": "menu-profile",
-                  onClick: t[3] || (t[3] = (a) => {
+                  onClick: t[3] || (t[3] = (s) => {
                     i(z).push("/account/profile"), N.value = !1;
                   })
                 }, [
@@ -418,12 +418,12 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                     size: 15,
                     class: "text-muted-foreground"
                   }),
-                  s("span", null, d(e.$t("shell.profile")), 1)
+                  a("span", null, c(e.$t("shell.profile")), 1)
                 ]),
-                s("button", {
+                a("button", {
                   type: "button",
                   class: "pop-item",
-                  onClick: t[4] || (t[4] = (a) => {
+                  onClick: t[4] || (t[4] = (s) => {
                     i(z).push("/system/theme"), N.value = !1;
                   })
                 }, [
@@ -431,16 +431,16 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                     size: 15,
                     class: "text-muted-foreground"
                   }),
-                  s("span", null, d(e.$t("system.themeStudio", { default: "Theme Studio" })), 1)
+                  a("span", null, c(e.$t("system.themeStudio", { default: "Theme Studio" })), 1)
                 ]),
-                t[10] || (t[10] = s("div", { class: "pop-sep" }, null, -1)),
-                s("button", {
+                t[10] || (t[10] = a("div", { class: "pop-sep" }, null, -1)),
+                a("button", {
                   type: "button",
                   class: "pop-item danger",
                   onClick: Ve
                 }, [
                   g(i(Be), { size: 15 }),
-                  s("span", null, d(e.$t("shell.logout")), 1)
+                  a("span", null, c(e.$t("shell.logout")), 1)
                 ])
               ])
             ]),
@@ -448,52 +448,52 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
           }, 8, ["modelValue"]))
         ])
       ]),
-      s("div", Dt, [
-        s("div", Nt, [
+      a("div", Dt, [
+        a("div", Nt, [
           Se.value ? (n(), l("nav", Ot, [
-            (n(!0), l(k, null, C(Le.value, (a) => (n(), l(k, {
-              key: a.group ?? a.item.path
+            (n(!0), l(k, null, C(Le.value, (s) => (n(), l(k, {
+              key: s.group ?? s.item.path
             }, [
-              a.group === null ? (n(), l("button", {
+              s.group === null ? (n(), l("button", {
                 key: 0,
                 type: "button",
                 class: "tab inline-flex items-center gap-1.5 whitespace-nowrap",
                 role: "tab",
-                "aria-selected": i(f).active === a.item.path,
+                "aria-selected": i(f).active === s.item.path,
                 onMousedown: t[6] || (t[6] = J(() => {
                 }, ["prevent"])),
-                onClick: (c) => i(f).navigate?.(a.item.path)
+                onClick: (d) => i(f).navigate?.(s.item.path)
               }, [
-                a.item.icon ? (n(), m(h(a.item.icon), {
+                s.item.icon ? (n(), m(h(s.item.icon), {
                   key: 0,
                   size: 13
                 })) : u("", !0),
-                G(" " + d(a.item.label) + " ", 1),
-                a.item.badge !== void 0 ? (n(), l("span", Rt, d(a.item.badge), 1)) : u("", !0)
+                G(" " + c(s.item.label) + " ", 1),
+                s.item.badge !== void 0 ? (n(), l("span", Rt, c(s.item.badge), 1)) : u("", !0)
               ], 40, Ut)) : (n(), m(h(e.$c("ui.popover")), {
                 key: 1,
                 class: "band-group",
                 align: "start"
               }, {
-                default: w(({ close: c }) => [
+                default: w(({ close: d }) => [
                   (n(), m(h(e.$c("ui.popover-trigger")), { class: "band-group__trigger" }, {
                     default: w(() => [
-                      s("button", {
+                      a("button", {
                         type: "button",
                         class: "tab inline-flex items-center gap-1.5 whitespace-nowrap",
                         role: "tab",
-                        "aria-selected": !!F(a.items),
+                        "aria-selected": !!F(s.items),
                         "aria-haspopup": "menu",
                         onMousedown: t[7] || (t[7] = J(() => {
                         }, ["prevent"])),
-                        "data-testid": `app-nav-group-${a.group}`
+                        "data-testid": `app-nav-group-${s.group}`
                       }, [
-                        a.icon ? (n(), m(h(a.icon), {
+                        s.icon ? (n(), m(h(s.icon), {
                           key: 0,
                           size: 13
                         })) : u("", !0),
-                        G(" " + d(a.group) + " ", 1),
-                        F(a.items) ? (n(), l("span", Tt, "· " + d(F(a.items).label), 1)) : u("", !0),
+                        G(" " + c(s.group) + " ", 1),
+                        F(s.items) ? (n(), l("span", Tt, "· " + c(F(s.items).label), 1)) : u("", !0),
                         g(i(T), { size: 12 })
                       ], 40, It)
                     ]),
@@ -504,8 +504,8 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                     class: "p-1"
                   }, {
                     default: w(() => [
-                      s("div", jt, [
-                        (n(!0), l(k, null, C(a.items, (o) => (n(), l("button", {
+                      a("div", jt, [
+                        (n(!0), l(k, null, C(s.items, (o) => (n(), l("button", {
                           key: o.path,
                           type: "button",
                           class: "pop-item whitespace-nowrap",
@@ -514,7 +514,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                           disabled: o.disabled,
                           "aria-disabled": o.disabled || void 0,
                           onClick: (b) => {
-                            c(), i(f).navigate?.(o.path);
+                            d(), i(f).navigate?.(o.path);
                           }
                         }, [
                           o.icon ? (n(), m(h(o.icon), {
@@ -522,7 +522,7 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
                             size: 15,
                             class: "text-muted-foreground"
                           })) : u("", !0),
-                          s("span", Kt, d(o.label), 1),
+                          a("span", Kt, c(o.label), 1),
                           i(f).active === o.path ? (n(), m(i(re), {
                             key: 1,
                             size: 14,
@@ -539,14 +539,14 @@ const Je = { class: "shell-header w-full sticky top-0 z-[100] transition-colors 
             ], 64))), 128))
           ])) : u("", !0),
           i(te).end?.length ? (n(), l("div", Ft, [
-            (n(!0), l(k, null, C(i(te).end, (a, c) => (n(), m(h(a), { key: c }))), 128))
+            (n(!0), l(k, null, C(i(te).end, (s, d) => (n(), m(h(s), { key: d }))), 128))
           ])) : u("", !0)
         ])
       ])
     ]));
   }
-}), ta = /* @__PURE__ */ Ge(Bt, [["__scopeId", "data-v-8a259bce"]]);
+}), ts = /* @__PURE__ */ Ge(Bt, [["__scopeId", "data-v-23e920b2"]]);
 export {
-  ta as default
+  ts as default
 };
-//# sourceMappingURL=Header-Dq6iXNaV.js.map
+//# sourceMappingURL=Header-VmSySscN.js.map

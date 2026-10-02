@@ -580,8 +580,8 @@ onMounted(() => {
 /* Two thin rows on one surface: the brand row (logo, language, user) and the app band (switcher +
    the app's pages). Heights scale with the header token, so Theme Studio's size / density carry. */
 .shell-header {
-  --header-row-h:  calc(var(--header-h) * 0.85);
-  --header-band-h: calc(var(--header-h) * 0.77);
+  --header-row-h:  var(--header-h);
+  --header-band-h: calc(var(--header-h) * 0.85);
   /* Surface and ink from the header preset (tokens.css `--header-*`, Theme Studio → Header). A Shell
      theme that paints one surface behind the header and a bar under it sets `--shell-header-bg: transparent`. */
   background: var(--shell-header-bg, var(--header-bg));
@@ -607,6 +607,8 @@ onMounted(() => {
   background: transparent;
   border: 0;
 }
+/* A hairline parts the two rows, inset to the container so it lines up with the content. */
+.app-band .page-container { border-top: 1px solid var(--header-border); }
 .app-band .page-container { height: var(--header-band-h); }
 
 /* The switcher names the app, right after the logo: plain text on the brand row (a plate on hover),
