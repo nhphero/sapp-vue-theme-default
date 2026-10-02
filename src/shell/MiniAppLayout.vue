@@ -128,10 +128,12 @@ onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign
 <template>
   <!-- root takes the Shell's fall-through classes (AppContainer passes `flex flex-col`); the row lives inside.
        Sidebar + content share `.page-container`, so the sidebar starts under the Shell logo and content ends under the user menu. -->
-  <div class="mini-layout flex flex-col h-full min-h-0 bg-background" :data-variant="variant">
-    <div :class="wrap" class="flex flex-1 min-h-0 gap-8">
+  <!-- The full-width root scrolls (its scrollbar at the window edge, not beside the centred column);
+       sideways the page never scrolls — a wide table scrolls inside its own box. -->
+  <div class="mini-layout flex flex-col h-full min-h-0 overflow-y-auto overflow-x-hidden bg-background" :data-variant="variant">
+    <div :class="wrap" class="flex flex-1 gap-8">
       <!-- sidebar: app identity + navigation -->
-      <aside v-if="variant === 'sidebar'" class="w-[220px] shrink-0 py-6 pr-6 border-r border-border-soft flex flex-col min-h-0 overflow-auto">
+      <aside v-if="variant === 'sidebar'" class="mini-aside w-[220px] shrink-0 py-6 pr-6 border-r border-border-soft flex flex-col">
         <div class="flex items-center gap-3 px-2 mb-4">
           <span class="w-9 h-9 rounded-lg bg-primary-soft text-primary grid place-items-center shrink-0">
             <component :is="iconComp" :size="18" />
@@ -170,7 +172,7 @@ onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign
       </aside>
 
       <!-- content column -->
-      <main class="flex-1 min-w-0 min-h-0 overflow-auto py-6 flex flex-col">
+      <main class="flex-1 min-w-0 py-6 flex flex-col">
         <div v-if="showHeading || $slots.actions" class="flex items-start justify-between gap-4 mb-5">
           <div class="min-w-0">
             <h1 v-if="showHeading" class="text-xl font-semibold leading-tight truncate">{{ heading }}</h1>
@@ -195,6 +197,14 @@ onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign
 </template>
 
 <style scoped>
+/* One thin scrollbar in the theme's colours, its room kept so content never shifts when it appears. */
+.mini-layout { scrollbar-width: thin; scrollbar-color: var(--border) transparent; scrollbar-gutter: stable; }
+.mini-layout::-webkit-scrollbar { width: var(--sp-2); }
+.mini-layout::-webkit-scrollbar-thumb { background: var(--border); border-radius: var(--radius-sm); }
+.mini-layout::-webkit-scrollbar-thumb:hover { background: var(--muted-foreground); }
+.mini-layout::-webkit-scrollbar-track { background: transparent; }
+/* The sidebar stays in view while the page scrolls. */
+.mini-aside { position: sticky; top: 0; align-self: flex-start; max-height: 100%; overflow-y: auto; }
 /* A sidebar section: an uppercase label that folds its items, like the Shell's own menu groups. */
 .mini-nav-group { display: flex; flex-direction: column; gap: 2px; margin-top: var(--sp-3); }
 .mini-nav-group__head {

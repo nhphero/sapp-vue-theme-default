@@ -111,6 +111,10 @@ const html = computed(() => {
     a.setAttribute('rel', 'noopener noreferrer');
   });
   root.querySelectorAll('img[src]').forEach(img => img.setAttribute('src', resolve(img.getAttribute('src') ?? '')));
+  // A facts table written `| | |` has an empty header row: drop it.
+  root.querySelectorAll('thead').forEach(head => {
+    if (![...head.querySelectorAll('th')].some(th => th.textContent?.trim())) head.remove();
+  });
   return root.innerHTML;
 });
 </script>
