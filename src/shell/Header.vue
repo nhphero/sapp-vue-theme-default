@@ -761,7 +761,11 @@ onMounted(() => {
 .side-switch .apps-menu { width: auto; max-width: none; }
 /* At sidebar width a row keeps the name and version; "used …" is left out (the order still says it). */
 .side-switch .apps-item__used { display: none; }
-.side-switch .apps-item__name { min-width: 0; font-size: var(--text-base); font-weight: 500; }
+.side-switch .apps-item { position: relative; }
+.side-switch .apps-item__name { min-width: 0; font-weight: 500; }
+/* The star floats over the row's end (on hover, or when set) instead of taking width from the name. */
+.side-switch .apps-item__star { position: absolute; right: var(--sp-2); top: 50%; transform: translateY(-50%); background: var(--card); }
+.side-switch .apps-item:hover .apps-item__star { background: var(--muted); }
 .side-switch.is-collapsed :deep(.pop) { right: auto; }
 .side-switch.is-collapsed .apps-menu { width: calc(var(--touch) * 7); }
 .side-switch .app-chip > span:nth-child(2) { font-size: var(--text-base); font-weight: 500; }
