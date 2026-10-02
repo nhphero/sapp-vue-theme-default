@@ -758,11 +758,14 @@ onMounted(() => {
 .shell-header__wide.is-classic { grid-template-columns: auto minmax(0, 1fr); max-width: var(--container); padding-inline: var(--sp-5); }
 .hdr-tagline { padding-left: var(--sp-3); font-size: calc(var(--text-xs) * 0.9); font-weight: 600; letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--header-faint); }
 .app-band--classic {
-  --header-fg: #fff;                      --header-muted-fg: rgb(255 255 255 / .8);
-  --header-faint: rgb(255 255 255 / .6);  --header-hover-bg: rgb(255 255 255 / .1);
-  --header-active-bg: rgb(255 255 255 / .16);  --header-active-fg: #fff;
-  --header-accent: #fff;                  --header-border: rgb(255 255 255 / .18);
-  --app-band: var(--brand-800);           --app-band-fg: #fff;
+  /* ink: the contrast pick for --brand-800 (themeConfig `--on-brand-800`), every tone mixed from it */
+  --header-fg: var(--on-brand-800, #fff);
+  --header-muted-fg: color-mix(in srgb, var(--header-fg) 80%, transparent);
+  --header-faint: color-mix(in srgb, var(--header-fg) 60%, transparent);
+  --header-hover-bg: color-mix(in srgb, var(--header-fg) 10%, transparent);
+  --header-active-bg: color-mix(in srgb, var(--header-fg) 16%, transparent);  --header-active-fg: var(--header-fg);
+  --header-accent: var(--header-fg);      --header-border: color-mix(in srgb, var(--header-fg) 18%, transparent);
+  --app-band: var(--brand-800);           --app-band-fg: var(--header-fg);
   background: var(--brand-800);
 }
 .app-band__sep { align-self: center; width: 1px; height: 50%; flex: none; background: var(--header-border); }

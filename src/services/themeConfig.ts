@@ -126,7 +126,29 @@ const hexToHsl = (hex: string) => {
   return { h, s: s * 100, l: l * 100 };
 };
 
-/** Derive the 11-step brand scale from one colour (lighter steps are desaturated). */
+/** WCAG relative luminance of an HSL colour (h 0–360, s / l 0–100). */
+const luminance = (h: number, s: number, l: number): number => {
+  const S = s / 100, L = l / 100;
+  const k = (n: number) => (n + h / 30) % 12;
+  const a = S * Math.min(L, 1 - L);
+  const f = (n: number) => L - a * Math.max(-1, Math.min(k(n) - 3, 9 - k(n), 1));
+  const lin = (c: number) => (c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4);
+  return 0.2126 * lin(f(0)) + 0.7152 * lin(f(8)) + 0.0722 * lin(f(4));
+};
+/** The dark ink used on light brand shades (tokens.css --gray-950). */
+const INK_DARK = '#0E151A';
+const INK_DARK_LUM = 0.0083;
+/** White or dark ink, whichever contrasts more with the shade (WCAG contrast ratio). */
+const inkOn = (h: number, s: number, l: number): string => {
+  const lum = luminance(h, s, l);
+  return (1.05 / (lum + 0.05)) >= ((lum + 0.05) / (INK_DARK_LUM + 0.05)) ? '#fff' : INK_DARK;
+};
+
+/**
+ * Derive the 11-step brand scale from one colour (lighter steps are desaturated), and for each step the
+ * ink that reads on it (`--on-brand-<step>`): a fixed lightness is not a fixed contrast — a yellow at
+ * L 39% is light, a blue at L 39% is dark — so text on a brand surface is picked per hue, never assumed white.
+ */
 export const brandScale = (hex: string): Record<string, string> | null => {
   const c = hexToHsl(hex);
   if (!c) return null;
@@ -135,6 +157,7 @@ export const brandScale = (hex: string): Record<string, string> | null => {
     const L = STEPS[step];
     const S = c.s * (L > 85 ? 0.55 : L > 70 ? 0.75 : 1);
     out[`--brand-${step}`] = `hsl(${c.h.toFixed(0)} ${S.toFixed(0)}% ${L}%)`;
+    out[`--on-brand-${step}`] = inkOn(c.h, S, L);
   }
   return out;
 };
@@ -206,8 +229,13 @@ export function createThemeConfig(): IThemeConfig {
 
     const sc = look.brand ? brandScale(look.brand) : null;
     for (const s of Object.keys(STEPS)) {
-      if (sc) el.style.setProperty(`--brand-${s}`, sc[`--brand-${s}`]);
-      else el.style.removeProperty(`--brand-${s}`);
+      if (sc) {
+        el.style.setProperty(`--brand-${s}`, sc[`--brand-${s}`]);
+        el.style.setProperty(`--on-brand-${s}`, sc[`--on-brand-${s}`]);
+      } else {
+        el.style.removeProperty(`--brand-${s}`);
+        el.style.removeProperty(`--on-brand-${s}`);
+      }
     }
 
     const mText = Number(look.font) || 1;

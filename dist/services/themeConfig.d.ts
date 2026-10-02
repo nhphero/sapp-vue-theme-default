@@ -38,7 +38,11 @@ export declare const CONTROLS: ReadonlyArray<{
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export declare const FONT_STACKS: Record<string, string>;
 export declare const THEME_CONFIG_DEFAULTS: ThemeConfigState;
-/** Derive the 11-step brand scale from one colour (lighter steps are desaturated). */
+/**
+ * Derive the 11-step brand scale from one colour (lighter steps are desaturated), and for each step the
+ * ink that reads on it (`--on-brand-<step>`): a fixed lightness is not a fixed contrast — a yellow at
+ * L 39% is light, a blue at L 39% is dark — so text on a brand surface is picked per hue, never assumed white.
+ */
 export declare const brandScale: (hex: string) => Record<string, string> | null;
 export declare function createThemeConfig(): IThemeConfig;
 //# sourceMappingURL=themeConfig.d.ts.map

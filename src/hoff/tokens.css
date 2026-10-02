@@ -67,7 +67,7 @@
   /* hành động chính — MỘT màu, dùng tiết chế */
   --primary:            var(--brand-600);
   --primary-hover:      var(--brand-700);
-  --primary-foreground: #FFFFFF;          /* chữ trên nền primary */
+  --primary-foreground: var(--on-brand-600, #FFFFFF);   /* chữ trên nền primary — theo độ tương phản của màu brand (themeConfig) */
   --primary-soft:       var(--brand-100); /* hàng chọn, chip nhẹ */
   --link:               var(--brand-600);
 
@@ -156,7 +156,7 @@
     --border: var(--gray-700);       --border-soft: var(--gray-800);
     --input: var(--gray-700);        --ring: var(--brand-400);
     --primary: var(--brand-400);     --primary-hover: var(--brand-300);
-    --primary-foreground: var(--gray-950);
+    --primary-foreground: var(--on-brand-400, var(--gray-950));
     --primary-soft: var(--brand-950);
     --link: var(--brand-300);
     --success: #66B57F; --success-soft: #14281B; --success-border: #2C5138;
@@ -181,7 +181,7 @@
   --border: var(--gray-700);       --border-soft: var(--gray-800);
   --input: var(--gray-700);        --ring: var(--brand-400);
   --primary: var(--brand-400);     --primary-hover: var(--brand-300);
-  --primary-foreground: var(--gray-950);
+  --primary-foreground: var(--on-brand-400, var(--gray-950));
   --primary-soft: var(--brand-950);
   --link: var(--brand-300);
   --success: #66B57F; --success-soft: #14281B; --success-border: #2C5138;
@@ -261,18 +261,20 @@
   --header-active-bg: var(--card);
   --header-border: color-mix(in srgb, var(--primary) 16%, var(--card));
 }
-/* Brand / gradient / dark: a dark surface with light ink; the active item a solid plate. */
+/* Brand / gradient / dark: a coloured surface; its ink is the contrast pick for that shade
+   (`--on-brand-*`, themeConfig — white on a dark shade, dark on a light one), every other tone mixed from it. */
 :root[data-header="brand"], [data-header-preview="brand"], :root[data-header="gradient"], [data-header-preview="gradient"], :root[data-header="dark"], [data-header-preview="dark"] {
-  --header-fg: #fff;                     --header-muted-fg: rgb(255 255 255 / .78);
-  --header-faint: rgb(255 255 255 / .58);
-  --header-hover-bg: rgb(255 255 255 / .12);  --header-chip-bg: rgb(0 0 0 / .16);
-  --header-active-bg: #fff;              --header-active-fg: var(--brand-700);
-  --header-border: rgb(255 255 255 / .14);   --header-shadow: var(--shadow);
-  --header-accent: #fff;
+  --header-fg: #fff;
+  --header-muted-fg: color-mix(in srgb, var(--header-fg) 78%, transparent);
+  --header-faint: color-mix(in srgb, var(--header-fg) 58%, transparent);
+  --header-hover-bg: color-mix(in srgb, var(--header-fg) 12%, transparent);  --header-chip-bg: rgb(0 0 0 / .16);
+  --header-active-bg: var(--header-fg);  --header-active-fg: var(--brand-700);
+  --header-border: color-mix(in srgb, var(--header-fg) 14%, transparent);   --header-shadow: var(--shadow);
+  --header-accent: var(--header-fg);
   --header-on-dark: 1;
 }
-:root[data-header="brand"], [data-header-preview="brand"]    { --header-bg: var(--brand-700); }
-:root[data-header="gradient"], [data-header-preview="gradient"] { --header-bg: linear-gradient(115deg, var(--brand-800) 0%, var(--brand-600) 100%); }
+:root[data-header="brand"], [data-header-preview="brand"]    { --header-bg: var(--brand-700); --header-fg: var(--on-brand-700, #fff); }
+:root[data-header="gradient"], [data-header-preview="gradient"] { --header-bg: linear-gradient(115deg, var(--brand-800) 0%, var(--brand-600) 100%); --header-fg: var(--on-brand-700, #fff); }
 :root[data-header="dark"], [data-header-preview="dark"] {
   --header-bg: var(--gray-950);
   --header-chip-bg: rgb(255 255 255 / .06);  --header-hover-bg: rgb(255 255 255 / .08);
