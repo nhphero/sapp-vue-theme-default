@@ -190,6 +190,52 @@
   --shadow-lg: 0 4px 14px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
 }
 
+/* ═══ CONTRAST — Theme Studio `contrast` (data-contrast on <html>) ═══════════
+   Steps the layout apart where it reads flat: page vs card, secondary / faint text, borders,
+   table heads, the menu band. Light first; system dark and explicit dark after (same specificity,
+   later wins). A page-surface preset (--page-surface) still decides the page colour. */
+:root[data-contrast="high"]:not([data-theme="dark"]) {
+  --background: var(--page-surface, var(--gray-300));
+  --muted: var(--gray-200);
+  --muted-foreground: var(--gray-800);  --faint: var(--gray-700);
+  --border: var(--gray-500);            --border-soft: var(--gray-400);  --input: var(--gray-500);
+  --table-head-bg: var(--gray-200);
+}
+:root[data-contrast="max"]:not([data-theme="dark"]) {
+  --background: var(--page-surface, var(--gray-300));
+  --muted: var(--gray-200);
+  --foreground: var(--gray-950);
+  --muted-foreground: var(--gray-900);  --faint: var(--gray-800);
+  --border: var(--gray-600);            --border-soft: var(--gray-500);  --input: var(--gray-600);
+  --table-head-bg: var(--gray-300);
+  --secondary: color-mix(in srgb, var(--brand-800) 45%, var(--gray-800));
+  --secondary-hover: color-mix(in srgb, var(--brand-800) 60%, var(--gray-800));
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-contrast="high"]:not([data-theme="light"]) {
+    --background: var(--page-surface-dark, #070B0E);
+    --muted-foreground: var(--gray-300);  --faint: var(--gray-400);
+    --border: var(--gray-600);            --border-soft: var(--gray-700);  --input: var(--gray-600);
+  }
+  :root[data-contrast="max"]:not([data-theme="light"]) {
+    --background: var(--page-surface-dark, #000);
+    --foreground: var(--gray-50);
+    --muted-foreground: var(--gray-200);  --faint: var(--gray-300);
+    --border: var(--gray-500);            --border-soft: var(--gray-600);  --input: var(--gray-500);
+  }
+}
+:root[data-theme="dark"][data-contrast="high"] {
+  --background: var(--page-surface-dark, #070B0E);
+  --muted-foreground: var(--gray-300);  --faint: var(--gray-400);
+  --border: var(--gray-600);            --border-soft: var(--gray-700);  --input: var(--gray-600);
+}
+:root[data-theme="dark"][data-contrast="max"] {
+  --background: var(--page-surface-dark, #000);
+  --foreground: var(--gray-50);
+  --muted-foreground: var(--gray-200);  --faint: var(--gray-300);
+  --border: var(--gray-500);            --border-soft: var(--gray-600);  --input: var(--gray-500);
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root { --dur-fast: 0ms; --dur: 0ms; --dur-slow: 0ms; }
 }

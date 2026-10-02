@@ -92,6 +92,14 @@ const fill = (value: number, min: number, max: number) => `${((value - min) / (m
           </div>
 
           <div class="tp-row">
+            <span>{{ $t('theme.contrast') }}</span>
+            <div class="tp-seg" role="group">
+              <button v-for="c in config.contrasts" :key="c.id" type="button" :aria-pressed="state.contrast === c.id"
+                      @click="config.set({ contrast: c.id })">{{ $t(c.label) }}</button>
+            </div>
+          </div>
+
+          <div class="tp-row">
             <span>{{ $t('theme.radius') }} <output class="tp-out">{{ state.radius }}px</output></span>
             <input class="tp-range" type="range" min="0" max="14" step="1" :value="state.radius"
                    :style="{ '--tp-fill': fill(state.radius, 0, 14) }"

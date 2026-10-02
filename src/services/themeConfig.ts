@@ -67,6 +67,13 @@ export const SURFACES: ReadonlyArray<{ id: string; label: string; light: string;
   { id: 'tint',  label: 'theme.surfaceTint',    light: 'var(--brand-100)', dark: 'var(--brand-950)' },
 ];
 
+/** Contrast presets (data-contrast on <html>, tokens.css): how far apart page, card, text and borders sit. */
+export const CONTRASTS: ReadonlyArray<{ id: string; label: string }> = [
+  { id: '',     label: 'theme.contrastDefault' },
+  { id: 'high', label: 'theme.contrastHigh' },
+  { id: 'max',  label: 'theme.contrastMax' },
+];
+
 /** Local font stacks (Modern Font Stacks) — no network, the machine uses what it has. */
 export const FONT_STACKS: Record<string, string> = {
   // The machine's own UI font (the default is Roboto, so this one is spelled out).
@@ -82,6 +89,7 @@ export const FONT_STACKS: Record<string, string> = {
 export const THEME_CONFIG_DEFAULTS: ThemeConfigState = Object.freeze({
   mode: 'light', brand: '', font: 1, density: 1, fontFamily: 'Roboto', radius: RADIUS_DEFAULT, shadow: SHADOW_DEFAULT,
   surface: '',
+  contrast: '',
 });
 
 const hexToHsl = (hex: string) => {
@@ -202,6 +210,9 @@ export function createThemeConfig(): IThemeConfig {
       el.style.removeProperty('--page-surface-dark');
     }
 
+    if (CONTRASTS.some(c => c.id && c.id === look.contrast)) el.setAttribute('data-contrast', look.contrast);
+    else el.removeAttribute('data-contrast');
+
     const ff = fontStack(look.fontFamily);
     if (ff) el.style.setProperty('--font-sans', ff); else el.style.removeProperty('--font-sans');
 
@@ -228,6 +239,7 @@ export function createThemeConfig(): IThemeConfig {
     if (surf?.light) lines.push(`--background: ${surf.light};   /* dark: ${surf.dark} */`);
     const ff = fontStack(state.fontFamily);
     if (ff) lines.push(`--font-sans: ${ff};`);
+    if (state.contrast) lines.push(`/* contrast: ${state.contrast} — the [data-contrast="${state.contrast}"] values of tokens.css */`);
     if (lines.length === 1) lines.push('/* nothing differs from the defaults */');
     return lines.join('\n');
   };
@@ -242,6 +254,7 @@ export function createThemeConfig(): IThemeConfig {
     fontStacks: FONT_STACKS,
     webFonts: WEB_FONTS,
     surfaces: SURFACES,
+    contrasts: CONTRASTS,
     set(patch) { if (!ui.locked) Object.assign(state, patch); },
     reset() { if (!ui.locked) Object.assign(state, base); },
     useDefaults(patch, options) {
