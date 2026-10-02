@@ -16,13 +16,17 @@ import UserAvatar from '../components/avatar/UserAvatar.vue'
  *
  * `layout`:
  * - `band` (default): the menu is a band of tabs under the header.
+ * - `classic`: logo and tagline left, language and user right; under it a brand-coloured band (--brand-800)
+ *   with the app switcher (teleported into `#shell-band-switch`) and the menu as uppercase tabs.
  * - `sidebar`: the logo goes left; the app switcher and the menu are teleported into the Shell's
  *   `#shell-sidebar` element (the Shell theme's layout renders it, left of the page), the menu as a
  *   vertical list (groups as headings); collapsible to icons (localStorage `sapp:sidebar-collapsed`).
  *   The `shell.band` controls move to the header's right side.
  */
-const props = withDefaults(defineProps<{ layout?: 'band' | 'sidebar' }>(), { layout: 'band' })
+const props = withDefaults(defineProps<{ layout?: 'band' | 'sidebar' | 'classic' }>(), { layout: 'band' })
 const sidebar = computed(() => props.layout === 'sidebar')
+/** `classic`: logo (+ tagline) left on the brand row; a brand-coloured band under it with the app switcher and the menu tabs. */
+const classic = computed(() => props.layout === 'classic')
 const COLLAPSED_KEY = 'sapp:sidebar-collapsed'
 const readCollapsed = () => { try { return localStorage.getItem(COLLAPSED_KEY) === 'true' } catch { return false } }
 const collapsed = ref(readCollapsed())
@@ -333,12 +337,12 @@ onMounted(() => {
   <header class="shell-header w-full transition-colors duration-300">
     <!-- Brand row: the app switcher left, the logo centred, language and user right. Wider than the
          menu row below (its own container), so the logo reads as the platform's and the menu as the app's. -->
-    <div class="shell-header__row shell-header__wide" :class="sidebar && 'is-sidebar'">
+    <div class="shell-header__row shell-header__wide" :class="[sidebar && 'is-sidebar', classic && 'is-classic']">
       <!-- 📱 App switcher: the app you are in; its pages are the band below. -->
-      <div class="flex items-center min-w-0 justify-self-start" :class="sidebar && 'hidden'">
-        <!-- sidebar layout: at the top of the sidebar (Teleport renders in place when disabled) -->
-        <Teleport defer to="#shell-sidebar" :disabled="!sidebar">
-        <div class="flex items-center shrink-0 min-w-0" :class="sidebar && ['side-switch', collapsed && 'is-collapsed']">
+      <div class="flex items-center min-w-0 justify-self-start" :class="(sidebar || classic) && 'hidden'">
+        <!-- sidebar layout: at the top of the sidebar; classic: at the start of the band (Teleport renders in place when disabled) -->
+        <Teleport defer :to="sidebar ? '#shell-sidebar' : '#shell-band-switch'" :disabled="!sidebar && !classic">
+        <div class="flex items-center shrink-0 min-w-0" :class="[sidebar && ['side-switch', collapsed && 'is-collapsed'], classic && 'band-switch']">
           <component :is="$c('ui.dropdown')" class="app-switch" :modelValue="showAppsMenu" @update:modelValue="setAppsMenu($event)" search :search-placeholder="$t('shell.searchApps')">
           <template #trigger>
             <!-- 📱 Apps Switcher Button -->
@@ -396,6 +400,7 @@ onMounted(() => {
             <span v-else class="inline-flex items-center rounded-md" :class="headerDark && 'bg-white/95 px-2 py-1'">
               <img :src="branding.logo" :alt="branding.name" class="h-7 w-auto max-w-[200px] object-contain" />
             </span>
+            <span v-if="classic && branding.tagline" class="hidden lg:block hdr-tagline border-l hdr-line">{{ branding.tagline }}</span>
           </template>
           <template v-else>
           <div class="relative">
@@ -480,8 +485,11 @@ onMounted(() => {
   </header>
 
     <!-- 🧭 App band: the open app's pages (tabs), outside the header block, on the page surface. -->
-    <div v-if="!sidebar" class="app-band">
+    <div v-if="!sidebar" class="app-band" :class="classic && 'app-band--classic'">
       <div class="page-container flex items-stretch gap-3">
+        <!-- classic: the app switcher lands here (teleported), then a separator before the tabs -->
+        <div v-if="classic" id="shell-band-switch" class="flex items-stretch shrink-0"></div>
+        <div v-if="classic && showAppNav" class="app-band__sep" aria-hidden="true"></div>
 
         <nav v-if="showAppNav" class="tabs tabs--band min-w-0 overflow-x-auto no-scrollbar" role="tablist" data-testid="app-nav">
           <template v-for="section in bandSections" :key="section.group ?? section.item.path">
@@ -745,6 +753,31 @@ onMounted(() => {
 
 /* The active page's name after a group label reads quieter than the group itself. */
 .band-group__current { font-weight: 500; opacity: .8; }
+
+/* ── Classic layout: brand row (logo + tagline left) and a brand-coloured band (switcher + tabs) ── */
+.shell-header__wide.is-classic { grid-template-columns: auto minmax(0, 1fr); max-width: var(--container); padding-inline: var(--sp-5); }
+.hdr-tagline { padding-left: var(--sp-3); font-size: calc(var(--text-xs) * 0.9); font-weight: 600; letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--header-faint); }
+.app-band--classic {
+  --header-fg: #fff;                      --header-muted-fg: rgb(255 255 255 / .8);
+  --header-faint: rgb(255 255 255 / .6);  --header-hover-bg: rgb(255 255 255 / .1);
+  --header-active-bg: rgb(255 255 255 / .16);  --header-active-fg: #fff;
+  --header-accent: #fff;                  --header-border: rgb(255 255 255 / .18);
+  --app-band: var(--brand-800);           --app-band-fg: #fff;
+  background: var(--brand-800);
+}
+.app-band__sep { align-self: center; width: 1px; height: 50%; flex: none; background: var(--header-border); }
+/* The switcher: the band's leading segment, a shade darker, full band height. */
+.band-switch { align-self: stretch; }
+.band-switch .app-chip { height: 100%; padding: 0 var(--sp-3); border-radius: 0; background: rgb(0 0 0 / .18); }
+.band-switch .app-chip:hover { background: rgb(0 0 0 / .26); }
+/* Tabs: uppercase pills centred on the band; the page on screen a light plate. */
+.app-band--classic .tabs--band { align-items: center; margin-left: 0; }
+.app-band--classic .tabs--band .tab {
+  height: calc(var(--touch) * 0.75); padding: 0.3em var(--sp-3) 0; border-radius: var(--radius);
+  font-size: calc(var(--text-xs) * 0.95); font-weight: 650; text-transform: uppercase; letter-spacing: var(--tracking-wide);
+}
+.app-band--classic .tabs--band .tab:hover { background: var(--header-hover-bg); }
+.app-band--classic .tabs--band .tab[aria-selected="true"] { box-shadow: none; background: var(--header-active-bg); color: var(--header-active-fg); }
 
 /* ── Sidebar layout (#shell-sidebar, rendered by the Shell theme's layout) ─────────────────── */
 .side-switch { width: 100%; padding: var(--sp-3) var(--sp-3) var(--sp-2); }
