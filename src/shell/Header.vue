@@ -309,8 +309,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- One block: the brand row and the app band share the header surface; the menu's active item is colour. -->
-  <header class="shell-header w-full sticky top-0 z-[100] transition-colors duration-300">
+  <!-- The header block (brand row, its preset colours) and, below it on the page surface, the open app's menu. -->
+  <div class="shell-head w-full sticky top-0 z-[100]">
+  <header class="shell-header w-full transition-colors duration-300">
     <!-- Brand row: the app switcher left, the logo centred, language and user right. Wider than the
          menu row below (its own container), so the logo reads as the platform's and the menu as the app's. -->
     <div class="shell-header__row shell-header__wide">
@@ -451,8 +452,9 @@ onMounted(() => {
     </div>
 
 
-    <!-- 🧭 App band: which app you are in (switcher) + its pages (tabs).
-         Recessed surface so it reads as nested inside the Shell row above, not as a sibling of it. -->
+  </header>
+
+    <!-- 🧭 App band: the open app's pages (tabs), outside the header block, on the page surface. -->
     <div class="app-band">
       <div class="page-container flex items-stretch gap-3">
 
@@ -497,7 +499,7 @@ onMounted(() => {
         </div>
       </div>
     </div>
-  </header>
+  </div>
 </template>
 
 <style scoped>
@@ -591,6 +593,8 @@ onMounted(() => {
   /* No lines: one soft shadow below. A Shell theme that adds a bar under the header (navigation
      history) moves the shadow below that bar instead: `--shell-header-shadow: none`. */
   box-shadow: var(--shell-header-shadow, var(--header-shadow));
+  /* its shadow falls on the menu below */
+  position: relative; z-index: 1;
 }
 .shell-header__row { height: var(--header-row-h); }
 /* Three columns: the centre (logo) stays centred whatever the sides hold. The row is wider than the
@@ -609,10 +613,16 @@ onMounted(() => {
 .hdr-btn:hover { color: var(--header-fg); background: var(--header-hover-bg); }
 
 .app-band {
-  /* The band sits on the header's surface: controls on it (shell.band) read these. */
-  --app-band:    var(--header-bg);
-  --app-band-fg: var(--header-fg);
-  background: transparent;
+  /* Outside the header block: the menu sits on the page surface, in the page's colours — the
+     `--header-*` its tabs read are reset to the semantic tokens here, whatever the header preset. */
+  --header-fg: var(--foreground);        --header-muted-fg: var(--muted-foreground);
+  --header-faint: var(--faint);          --header-hover-bg: var(--muted);
+  --header-active-bg: var(--primary-soft);  --header-active-fg: var(--primary);
+  --header-accent: var(--primary);       --header-border: var(--border-soft);
+  /* controls on it (shell.band) read these */
+  --app-band:    var(--shell-band-bg, var(--background));
+  --app-band-fg: var(--foreground);
+  background: var(--shell-band-bg, var(--background));
   border: 0;
 }
 .app-band .page-container { height: var(--header-band-h); }
