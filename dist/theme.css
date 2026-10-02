@@ -1,0 +1,134 @@
+/*
+ * 🎨 Tailwind v4 theme of the default theme (hoff-kit design system).
+ * ONLY @theme blocks live here so mini apps can import it with `theme(reference)`.
+ * Every value points at a semantic token of hoff/tokens.css (:root), so light/dark and
+ * brand changes happen in tokens.css only. Tailwind v4 opacity modifiers (bg-primary/10)
+ * keep working because v4 uses color-mix().
+ */
+@theme inline {
+  /* ── semantic colors (hoff) ─────────────────────────────────── */
+  --color-background: var(--background);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--card);
+  --color-popover-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-sunken: var(--sunken);
+  --color-foreground: var(--foreground);
+  --color-faint: var(--faint);
+  --color-border: var(--border);
+  --color-border-soft: var(--border-soft);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+  --color-link: var(--link);
+  --color-secondary: var(--muted);
+  --color-secondary-foreground: var(--foreground);
+  --color-accent: var(--primary-soft);
+  --color-accent-foreground: var(--primary);
+  --color-destructive: var(--danger);
+  --color-destructive-foreground: var(--primary-foreground);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-success-border: var(--success-border);
+  --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
+  --color-warning-border: var(--warning-border);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-border: var(--danger-border);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-info-border: var(--info-border);
+
+  /* ── primitive scales exposed for the rare justified case ───── */
+  --color-gray-50: var(--gray-50);   --color-gray-100: var(--gray-100); --color-gray-200: var(--gray-200);
+  --color-gray-300: var(--gray-300); --color-gray-400: var(--gray-400); --color-gray-500: var(--gray-500);
+  --color-gray-600: var(--gray-600); --color-gray-700: var(--gray-700); --color-gray-800: var(--gray-800);
+  --color-gray-900: var(--gray-900); --color-gray-950: var(--gray-950);
+  --color-brand-50: var(--brand-50);   --color-brand-100: var(--brand-100); --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300); --color-brand-400: var(--brand-400); --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600); --color-brand-700: var(--brand-700); --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900); --color-brand-950: var(--brand-950);
+
+  /* ── legacy palette aliases: existing markup written with Tailwind's default
+       slate/indigo/emerald/rose/amber/blue palettes now renders with hoff tokens ── */
+  /* slate/zinc 300–700 shift one step darker: legacy `text-slate-400` labels and `border-slate-300`
+     lines were too faint for comfortable reading (contrast < 3:1). */
+  --color-slate-50: var(--gray-50);   --color-slate-100: var(--gray-100); --color-slate-200: var(--gray-200);
+  --color-slate-300: var(--gray-400); --color-slate-400: var(--gray-500); --color-slate-500: var(--gray-600);
+  --color-slate-600: var(--gray-700); --color-slate-700: var(--gray-800); --color-slate-800: var(--gray-800);
+  --color-slate-900: var(--gray-900); --color-slate-950: var(--gray-950);
+  --color-zinc-50: var(--gray-50);    --color-zinc-100: var(--gray-100); --color-zinc-200: var(--gray-200);
+  --color-zinc-300: var(--gray-400);  --color-zinc-400: var(--gray-500); --color-zinc-500: var(--gray-600);
+  --color-zinc-600: var(--gray-700);  --color-zinc-700: var(--gray-800); --color-zinc-800: var(--gray-800);
+  --color-zinc-900: var(--gray-900);  --color-zinc-950: var(--gray-950);
+  --color-indigo-50: var(--brand-50);   --color-indigo-100: var(--brand-100); --color-indigo-200: var(--brand-200);
+  --color-indigo-300: var(--brand-300); --color-indigo-400: var(--brand-400); --color-indigo-500: var(--brand-500);
+  --color-indigo-600: var(--brand-600); --color-indigo-700: var(--brand-700); --color-indigo-800: var(--brand-800);
+  --color-indigo-900: var(--brand-900); --color-indigo-950: var(--brand-950);
+  --color-sky-500: var(--brand-500);    --color-sky-600: var(--brand-600);   --color-sky-400: var(--brand-400);
+  --color-emerald-50: var(--success-soft);  --color-emerald-100: var(--success-soft); --color-emerald-200: var(--success-border);
+  --color-emerald-300: var(--success-border); --color-emerald-400: var(--success); --color-emerald-500: var(--success);
+  --color-emerald-600: var(--success);  --color-emerald-700: var(--success);  --color-emerald-800: var(--success);
+  --color-green-50: var(--success-soft); --color-green-100: var(--success-soft); --color-green-500: var(--success);
+  --color-green-600: var(--success);    --color-green-700: var(--success);
+  --color-amber-50: var(--warning-soft);  --color-amber-100: var(--warning-soft); --color-amber-200: var(--warning-border);
+  --color-amber-300: var(--warning-border); --color-amber-400: var(--warning); --color-amber-500: var(--warning);
+  --color-amber-600: var(--warning);    --color-amber-700: var(--warning);    --color-amber-800: var(--warning);
+  --color-yellow-500: var(--warning);   --color-orange-500: var(--warning);   --color-orange-600: var(--warning);
+  --color-rose-50: var(--danger-soft);  --color-rose-100: var(--danger-soft); --color-rose-200: var(--danger-border);
+  --color-rose-300: var(--danger-border); --color-rose-400: var(--danger); --color-rose-500: var(--danger);
+  --color-rose-600: var(--danger);      --color-rose-700: var(--danger);      --color-rose-800: var(--danger);
+  --color-red-50: var(--danger-soft);   --color-red-100: var(--danger-soft);  --color-red-200: var(--danger-border);
+  --color-red-300: var(--danger-border); --color-red-400: var(--danger);      --color-red-500: var(--danger);
+  --color-red-600: var(--danger);       --color-red-700: var(--danger);       --color-red-800: var(--danger);
+  --color-blue-50: var(--info-soft);    --color-blue-100: var(--info-soft);   --color-blue-200: var(--info-border);
+  --color-blue-300: var(--info-border); --color-blue-400: var(--info);        --color-blue-500: var(--info);
+  --color-blue-600: var(--info);        --color-blue-700: var(--info);        --color-blue-800: var(--info);
+
+  /* ── typography ─────────────────────────────────────────────── */
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+  --font-inter: var(--font-sans);
+  --font-outfit: var(--font-sans);
+  --text-xs: var(--text-xs);     --text-xs--line-height: var(--leading);
+  --text-sm: var(--text-sm);     --text-sm--line-height: var(--leading);
+  --text-base: var(--text-base); --text-base--line-height: var(--leading);
+  --text-lg: var(--text-lg);     --text-lg--line-height: var(--leading);
+  --text-xl: var(--text-xl);     --text-xl--line-height: var(--leading-tight);
+  --text-2xl: var(--text-2xl);   --text-2xl--line-height: var(--leading-tight);
+  --text-3xl: var(--text-3xl);   --text-3xl--line-height: var(--leading-tight);
+  --tracking-wider: var(--tracking-wide);
+  --tracking-widest: var(--tracking-wide);
+
+  /* ── shape · elevation · motion ─────────────────────────────── */
+  --radius-xs: var(--radius-sm);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-lg);
+  --radius-2xl: calc(var(--radius-lg) + 4px);
+  --radius-3xl: calc(var(--radius-lg) + 8px);
+  --radius-4xl: calc(var(--radius-lg) + 12px);
+  --shadow-xs: var(--shadow-sm);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow);
+  --shadow-lg: var(--shadow-lg);
+  --shadow-xl: var(--shadow-lg);
+  --shadow-2xl: var(--shadow-lg);
+  --ease-out: var(--ease);
+  --ease-in-out: var(--ease);
+  --spacing-touch: var(--touch);
+  --container-container: var(--container);
+}
+
+@theme {
+  /* NOTE: never add --spacing-xs/sm/md/lg/xl here: Tailwind would resolve max-w-xl, w-lg, gap-md…
+     against the spacing namespace and break them. Semantic paddings live in utilities.css. */
+  --spacing-rail: 84px;
+}

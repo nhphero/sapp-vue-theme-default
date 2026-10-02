@@ -1,0 +1,281 @@
+/* Copied from hoff-kit (ai-agents/template/UI-TEMPLATES/hoff-kit/tokens.css). Edit brand here: the 11 --brand-* values. */
+/*
+ * Design tokens — NGUỒN SỰ THẬT duy nhất cho UI của dự án.
+ * File CỦA BẠN: sửa theo brand, `hoff update` không đè.
+ *
+ * KIẾN TRÚC 2 TẦNG (theo cách shadcn/ui · Tailwind Catalyst · Radix làm):
+ *
+ *   Tầng 1 · PRIMITIVE  — thang màu thô 50→950. KHÔNG dùng trực tiếp trong component.
+ *   Tầng 2 · SEMANTIC   — tên theo VAI TRÒ (--background, --primary, --border…).
+ *                         Component CHỈ dùng tầng này.
+ *
+ *   Dark mode chỉ remap tầng semantic — primitive giữ nguyên. Nhờ vậy đổi brand = sửa
+ *   thang --brand-*, đổi cảm giác sáng/tối = sửa mapping, không đụng component nào.
+ *
+ * Đổi brand nhanh: thay 11 giá trị --brand-* (sinh thang từ màu gốc bằng uicolors.app
+ * hoặc tints.dev), xong. Mọi thứ khác tự theo.
+ */
+
+:root {
+  /* ═══ TẦNG 1 · PRIMITIVE — không dùng trực tiếp ═══════════════════ */
+
+  /* xám lạnh có sắc xanh (kiểu slate) — nền, chữ, viền */
+  --gray-50:  #F6F8F9;  --gray-100: #EDF1F3;  --gray-200: #DFE5E8;
+  --gray-300: #C8D1D6;  --gray-400: #9AA7AF;  --gray-500: #6E7D87;
+  --gray-600: #51606A;  --gray-700: #3D4B54;  --gray-800: #26313A;
+  --gray-900: #172128;  --gray-950: #0E151A;
+
+  /* brand — teal trầm. ĐỔI BRAND = ĐỔI 11 DÒNG NÀY */
+  --brand-50:  #EFF7F6;  --brand-100: #D8ECEA;  --brand-200: #B3DAD6;
+  --brand-300: #83C0BA;  --brand-400: #52A29B;  --brand-500: #33857E;
+  --brand-600: #256B65;  --brand-700: #215751;  --brand-800: #1E4642;
+  --brand-900: #1C3B38;  --brand-950: #0C2220;
+
+  /* trạng thái — mỗi màu 3 nấc: đậm (chữ/icon) · nền nhạt · viền nhạt */
+  --green-600: #1F7A3D;  --green-100: #DFF0E4;  --green-300: #A9D8B8;
+  --amber-700: #935F0C;  --amber-100: #F6EBD3;  --amber-300: #E3C88E;
+  --red-600:   #A63A2E;  --red-100:   #F7E2DE;  --red-300:   #E4AFA7;
+  --blue-600:  #2F5E8F;  --blue-100:  #E0EAF4;  --blue-300:  #A9C4DD;
+
+  /* ═══ TẦNG 2 · SEMANTIC — component chỉ dùng từ đây trở xuống ═════ */
+
+  /* nền & bề mặt */
+  /* Ba bậc bề mặt phải là BA giá trị khác nhau, nếu không card/bảng sẽ tan vào nền:
+         --background  gray-200  nền trang      (dưới cùng)
+         --card        #FFFFFF   card, bảng     (nổi lên trên)
+         --muted       gray-100  vùng chìm TRONG card: thead, hover, code
+     Trước đây --background và --muted cùng là gray-100, nên thead tô --muted
+     trùng đúng màu nền trang và mép bảng biến mất.
+     --page-surface do Theme Studio ghi đè (mỗi preset có giá trị riêng cho sáng/tối),
+     nên lựa chọn ở chế độ sáng không rò sang chế độ tối. */
+  --background:        var(--page-surface, var(--gray-200));
+  --card:              #FFFFFF;           /* card, bảng, form, popover */
+  --muted:             var(--gray-100);   /* vùng chìm: thead, hover, code (trong card trắng) */
+  --sunken:            var(--gray-300);   /* chìm sâu hơn: track, well */
+
+  /* chữ */
+  --foreground:        var(--gray-900);   /* chữ chính */
+  --muted-foreground:  var(--gray-700);   /* chữ phụ — 8.9:1 trên trắng */
+  --faint:             var(--gray-600);   /* chú thích, placeholder, disabled — 6.4:1 trên trắng */
+
+  /* viền & input */
+  --border:            var(--gray-400);   /* viền control, phân vùng chính — thấy rõ trên trắng */
+  --border-soft:       var(--gray-300);   /* kẻ bảng, viền card */
+  --input:             var(--gray-400);   /* viền field */
+  --ring:              var(--brand-500);  /* focus ring */
+
+  /* hành động chính — MỘT màu, dùng tiết chế */
+  --primary:            var(--brand-600);
+  --primary-hover:      var(--brand-700);
+  --primary-foreground: #FFFFFF;          /* chữ trên nền primary */
+  --primary-soft:       var(--brand-100); /* hàng chọn, chip nhẹ */
+  --link:               var(--brand-600);
+
+  /* hành động phụ / BỀ MẶT CẤU TRÚC — dải menu, header bảng, sidebar.
+     Là màu brand PHA XÁM: giữ sắc thương hiệu nhưng hạ chroma, nên trải rộng
+     cả một vạch ngang vẫn không chói như --primary. Hai núm độc lập:
+       · nấc brand (900 → 800 → 700…)  = đậm/nhạt
+       · tỉ lệ %                        = rực/trầm (brand % thấp = trầm hơn) */
+  --secondary:            color-mix(in srgb, var(--brand-700) 40%, var(--gray-600));
+  --secondary-hover:      color-mix(in srgb, var(--brand-700) 55%, var(--gray-600));
+  --secondary-foreground: #FFFFFF;          /* chữ trên nền secondary */
+  --secondary-soft:       var(--brand-50);  /* nền chip/hàng nhấn rất nhẹ */
+
+  /* trạng thái — nói TRẠNG THÁI, không trang trí */
+  --success:      var(--green-600);  --success-soft: var(--green-100);  --success-border: var(--green-300);
+  --warning:      var(--amber-700);  --warning-soft: var(--amber-100);  --warning-border: var(--amber-300);
+  --danger:       var(--red-600);    --danger-soft:  var(--red-100);    --danger-border:  var(--red-300);
+  --info:         var(--blue-600);   --info-soft:    var(--blue-100);   --info-border:    var(--blue-300);
+
+  /* ═══ CHỮ ═════════════════════════════════════════════════════════ */
+  /* Default font: Roboto (loaded from Google Fonts by the theme config, vietnamese subset). */
+  --font-sans: Roboto, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  /* thang chuẩn gốc 16px (đọc thoải mái trên màn lớn); Theme Studio scale bằng --scale-text */
+  --text-xs: 12px;   --text-sm: 14px;    --text-base: 16px;
+  --text-lg: 18px;   --text-xl: 20px;    --text-2xl: 24px;   --text-3xl: 30px;
+  --leading-tight: 1.25;  --leading: 1.55;
+  --tracking-wide: .08em;            /* nhãn uppercase */
+  --tabular: tabular-nums;           /* bắt buộc cho cột số */
+
+  /* ═══ KHOẢNG CÁCH — thang 4px ═════════════════════════════════════ */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px;  --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px;  --sp-8: 64px;
+
+  /* ═══ HÌNH KHỐI ═══════════════════════════════════════════════════ */
+  --radius-sm: 3px;   /* badge, chip */
+  --radius:    6px;   /* nút, input, cell */
+  --radius-lg: 10px;  /* card, modal */
+  --radius-full: 999px;
+  --shadow-sm: 0 1px 2px rgba(14,21,26,.06);
+  --shadow:    0 1px 2px rgba(14,21,26,.08), 0 2px 8px rgba(14,21,26,.07);
+  --shadow-lg: 0 4px 12px rgba(14,21,26,.08), 0 12px 32px rgba(14,21,26,.10);
+
+  /* ═══ CHUYỂN ĐỘNG · LAYOUT · Z ════════════════════════════════════ */
+  --ease: cubic-bezier(.2,.7,.3,1);
+  --dur-fast: 120ms;  --dur: 200ms;  --dur-slow: 320ms;
+  --container: 1680px;               /* header + trang Shell (.page-container) */
+  --touch: 44px;
+  --header-h: 52px;                  /* shell bar; scale theo cỡ chữ + mật độ */
+  /* table header — xám nhẹ (--muted là vùng chìm trong card trắng); đường kẻ dày ở
+     dưới neo nó xuống thân bảng. Mực lấy --brand-900 chứ KHÔNG dùng --secondary:
+     --secondary là màu của một BỀ MẶT rộng (dải menu) nên phải trầm và nhạt, còn
+     mực chữ cần đậm. Buộc chung một token thì mỗi lần chỉnh dải menu là header bảng
+     lại phai theo. */
+  --table-head-bg: var(--muted);  --table-head-fg: var(--brand-900);
+  --z-sticky: 30; --z-overlay: 40; --z-modal: 50; --z-toast: 60;
+
+  /* ═══ ALIAS CŨ — tương thích bản trước, sẽ bỏ; đừng dùng cho UI mới ═ */
+  --bg: var(--background);      --surface: var(--card);      --surface-2: var(--muted);
+  --ink: var(--foreground);     --ink-2: var(--muted-foreground);  --ink-3: var(--faint);
+  --line: var(--border);        --line-2: var(--border-soft);
+  --accent: var(--primary);     --accent-ink: var(--primary-foreground);
+  --accent-soft: var(--primary-soft);
+  --ok: var(--success);         --ok-soft: var(--success-soft);
+  --warn: var(--warning);       --warn-soft: var(--warning-soft);
+  --danger-soft-alias: var(--danger-soft);
+  --text-md: var(--text-base);
+}
+
+/* ═══ DARK — chỉ remap SEMANTIC, primitive giữ nguyên ═══════════════ */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --background: var(--page-surface-dark, var(--gray-950));   --card: var(--gray-900);
+    /* dark: bề mặt cấu trúc phải SÁNG hơn nền trang thì mới nổi lên được */
+    --secondary: color-mix(in srgb, var(--brand-700) 40%, var(--gray-600));
+    --secondary-hover: color-mix(in srgb, var(--brand-600) 40%, var(--gray-600));
+    --secondary-foreground: var(--gray-100);
+    --secondary-soft: var(--brand-950);
+    --table-head-bg: var(--muted); --table-head-fg: var(--brand-200);
+    --muted: var(--gray-800);        --sunken: #0B1116;
+    --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
+    --faint: var(--gray-500);
+    --border: var(--gray-700);       --border-soft: var(--gray-800);
+    --input: var(--gray-700);        --ring: var(--brand-400);
+    --primary: var(--brand-400);     --primary-hover: var(--brand-300);
+    --primary-foreground: var(--gray-950);
+    --primary-soft: var(--brand-950);
+    --link: var(--brand-300);
+    --success: #66B57F; --success-soft: #14281B; --success-border: #2C5138;
+    --warning: #D9A75A; --warning-soft: #2B2210; --warning-border: #5C4A22;
+    --danger:  #DA8578; --danger-soft:  #2E1B17; --danger-border:  #613229;
+    --info:    #7BA7D0; --info-soft:    #152230; --info-border:    #2F4A66;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
+    --shadow:    0 1px 2px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.35);
+    --shadow-lg: 0 4px 14px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
+  }
+}
+:root[data-theme="dark"] {
+  --background: var(--page-surface-dark, var(--gray-950));   --card: var(--gray-900);
+  --secondary: color-mix(in srgb, var(--brand-700) 40%, var(--gray-600));
+  --secondary-hover: color-mix(in srgb, var(--brand-600) 40%, var(--gray-600));
+  --secondary-foreground: var(--gray-100);
+  --secondary-soft: var(--brand-950);
+  --table-head-bg: var(--muted); --table-head-fg: var(--brand-200);
+  --muted: var(--gray-800);        --sunken: #0B1116;
+  --foreground: var(--gray-100);   --muted-foreground: var(--gray-400);
+  --faint: var(--gray-500);
+  --border: var(--gray-700);       --border-soft: var(--gray-800);
+  --input: var(--gray-700);        --ring: var(--brand-400);
+  --primary: var(--brand-400);     --primary-hover: var(--brand-300);
+  --primary-foreground: var(--gray-950);
+  --primary-soft: var(--brand-950);
+  --link: var(--brand-300);
+  --success: #66B57F; --success-soft: #14281B; --success-border: #2C5138;
+  --warning: #D9A75A; --warning-soft: #2B2210; --warning-border: #5C4A22;
+  --danger:  #DA8578; --danger-soft:  #2E1B17; --danger-border:  #613229;
+  --info:    #7BA7D0; --info-soft:    #152230; --info-border:    #2F4A66;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.5);
+  --shadow:    0 1px 2px rgba(0,0,0,.5), 0 2px 10px rgba(0,0,0,.35);
+  --shadow-lg: 0 4px 14px rgba(0,0,0,.5), 0 16px 40px rgba(0,0,0,.45);
+}
+
+/* ═══ CONTRAST — Theme Studio `contrast` (data-contrast on <html>) ═══════════
+   Steps the layout apart where it reads flat: page vs card, secondary / faint text, borders,
+   table heads, the menu band. Light first; system dark and explicit dark after (same specificity,
+   later wins). A page-surface preset (--page-surface) still decides the page colour. */
+:root[data-contrast="high"]:not([data-theme="dark"]) {
+  --background: var(--page-surface, var(--gray-300));
+  --muted: var(--gray-200);
+  --muted-foreground: var(--gray-800);  --faint: var(--gray-700);
+  --border: var(--gray-500);            --border-soft: var(--gray-400);  --input: var(--gray-500);
+  --table-head-bg: var(--gray-200);
+}
+:root[data-contrast="max"]:not([data-theme="dark"]) {
+  --background: var(--page-surface, var(--gray-300));
+  --muted: var(--gray-200);
+  --foreground: var(--gray-950);
+  --muted-foreground: var(--gray-900);  --faint: var(--gray-800);
+  --border: var(--gray-600);            --border-soft: var(--gray-500);  --input: var(--gray-600);
+  --table-head-bg: var(--gray-300);
+  --secondary: color-mix(in srgb, var(--brand-800) 45%, var(--gray-800));
+  --secondary-hover: color-mix(in srgb, var(--brand-800) 60%, var(--gray-800));
+}
+@media (prefers-color-scheme: dark) {
+  :root[data-contrast="high"]:not([data-theme="light"]) {
+    --background: var(--page-surface-dark, #070B0E);
+    --muted-foreground: var(--gray-300);  --faint: var(--gray-400);
+    --border: var(--gray-600);            --border-soft: var(--gray-700);  --input: var(--gray-600);
+  }
+  :root[data-contrast="max"]:not([data-theme="light"]) {
+    --background: var(--page-surface-dark, #000);
+    --foreground: var(--gray-50);
+    --muted-foreground: var(--gray-200);  --faint: var(--gray-300);
+    --border: var(--gray-500);            --border-soft: var(--gray-600);  --input: var(--gray-500);
+  }
+}
+:root[data-theme="dark"][data-contrast="high"] {
+  --background: var(--page-surface-dark, #070B0E);
+  --muted-foreground: var(--gray-300);  --faint: var(--gray-400);
+  --border: var(--gray-600);            --border-soft: var(--gray-700);  --input: var(--gray-600);
+}
+:root[data-theme="dark"][data-contrast="max"] {
+  --background: var(--page-surface-dark, #000);
+  --foreground: var(--gray-50);
+  --muted-foreground: var(--gray-200);  --faint: var(--gray-300);
+  --border: var(--gray-500);            --border-soft: var(--gray-600);  --input: var(--gray-500);
+}
+
+/* ═══ HEADER BLOCK — Theme Studio `header` (data-header on <html>) ═════════════
+   The Shell's header block (brand row, app band, the bar under it) reads only `--header-*`, so its
+   surface and ink are one preset away from the page's. Default: the card surface — these follow
+   the semantic tokens, so light / dark / contrast carry through. A coloured preset sets its own ink.
+   `data-header-preview="<id>"` on any element gives it that preset's values (preset pickers, `.header-swatch`). */
+:root, [data-header-preview] {
+  --header-bg: var(--card);              --header-fg: var(--foreground);
+  --header-muted-fg: var(--muted-foreground);  --header-faint: var(--faint);
+  --header-hover-bg: var(--muted);       --header-chip-bg: var(--muted);
+  --header-active-bg: var(--primary-soft);  --header-active-fg: var(--primary);
+  --header-border: var(--border-soft);   --header-shadow: var(--shadow-sm);
+  /* the brand logo needs a light plate on a dark header surface (Header.vue) */
+  --header-on-dark: 0;
+}
+/* Tint: the card washed with the brand — still a light surface, the active item a white plate. */
+:root[data-header="tint"], [data-header-preview="tint"] {
+  --header-bg: color-mix(in srgb, var(--primary) 8%, var(--card));
+  --header-hover-bg: color-mix(in srgb, var(--primary) 14%, var(--card));
+  --header-chip-bg: color-mix(in srgb, var(--primary) 13%, var(--card));
+  --header-active-bg: var(--card);
+  --header-border: color-mix(in srgb, var(--primary) 16%, var(--card));
+}
+/* Brand / gradient / dark: a dark surface with light ink; the active item a solid plate. */
+:root[data-header="brand"], [data-header-preview="brand"], :root[data-header="gradient"], [data-header-preview="gradient"], :root[data-header="dark"], [data-header-preview="dark"] {
+  --header-fg: #fff;                     --header-muted-fg: rgb(255 255 255 / .78);
+  --header-faint: rgb(255 255 255 / .58);
+  --header-hover-bg: rgb(255 255 255 / .12);  --header-chip-bg: rgb(0 0 0 / .16);
+  --header-active-bg: #fff;              --header-active-fg: var(--brand-700);
+  --header-border: rgb(255 255 255 / .14);   --header-shadow: var(--shadow);
+  --header-on-dark: 1;
+}
+:root[data-header="brand"], [data-header-preview="brand"]    { --header-bg: var(--brand-700); }
+:root[data-header="gradient"], [data-header-preview="gradient"] { --header-bg: linear-gradient(115deg, var(--brand-800) 0%, var(--brand-600) 100%); }
+:root[data-header="dark"], [data-header-preview="dark"] {
+  --header-bg: var(--gray-950);
+  --header-chip-bg: rgb(255 255 255 / .06);  --header-hover-bg: rgb(255 255 255 / .08);
+  --header-active-bg: color-mix(in srgb, var(--brand-400) 24%, transparent);  --header-active-fg: var(--brand-200);
+  --header-border: rgb(255 255 255 / .08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --dur-fast: 0ms; --dur: 0ms; --dur-slow: 0ms; }
+}
