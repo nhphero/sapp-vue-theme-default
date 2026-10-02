@@ -102,15 +102,22 @@ const subheading = computed(() => (props.variant === 'tabs' ? props.subtitle : p
  */
 const showHeading = computed(() => {
   if (!heading.value || props.pageTitle === '') return false
-  if (props.variant === 'shell' && props.pageTitle == null) return heading.value !== activeItem.value?.label
+  if (mode.value === 'shell' && props.pageTitle == null) return heading.value !== activeItem.value?.label
   return true
 })
+
+/**
+ * The Shell has a sidebar of its own (theme Header in `sidebar` layout, module state `shell.layout`):
+ * an in-app sidebar menu goes there instead — one menu column, not two side by side.
+ */
+const shellLayout = $s?.getModuleState?.('shell.layout', { sidebar: false })
+const mode = computed(() => (props.variant === 'sidebar' && shellLayout?.sidebar ? 'shell' : props.variant))
 
 // variant "shell": publish the menu to the Shell header (kernel module state `shell.nav`), clear it on unmount
 const shellNav = $s?.getModuleState?.('shell.nav', { moduleId: '', title: '', icon: null, items: [], active: '', navigate: null })
 const publish = () => {
   if (!shellNav) return
-  if (props.variant !== 'shell') { if (shellNav.items.length) Object.assign(shellNav, { title: '', icon: null, items: [], active: '', navigate: null }); return }
+  if (mode.value !== 'shell') { if (shellNav.items.length) Object.assign(shellNav, { title: '', icon: null, items: [], active: '', navigate: null }); return }
   shellNav.title = props.title ?? ''
   shellNav.icon = markRaw(iconComp.value)
   shellNav.items = props.nav.map(n => ({
@@ -121,7 +128,7 @@ const publish = () => {
   shellNav.active = activeNavPath.value ?? ''
   shellNav.navigate = go
 }
-watch(() => [props.nav, props.active, props.variant, props.title, props.icon], publish, { immediate: true, deep: true })
+watch(() => [props.nav, props.active, mode.value, props.title, props.icon], publish, { immediate: true, deep: true })
 
 /**
  * The page on screen, for the Shell (kernel module state `shell.page`: `{ app, name }`) — every variant:
@@ -148,10 +155,10 @@ onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign
        Sidebar + content share `.page-container`, so the sidebar starts under the Shell logo and content ends under the user menu. -->
   <!-- The full-width root scrolls (its scrollbar at the window edge, not beside the centred column);
        sideways the page never scrolls — a wide table scrolls inside its own box. -->
-  <div class="mini-layout flex flex-col h-full min-h-0 overflow-y-auto overflow-x-hidden bg-background" :data-variant="variant">
+  <div class="mini-layout flex flex-col h-full min-h-0 overflow-y-auto overflow-x-hidden bg-background" :data-variant="mode">
     <div :class="wrap" class="flex flex-1 gap-8">
       <!-- sidebar: app identity + navigation -->
-      <aside v-if="variant === 'sidebar'" class="mini-aside w-[220px] shrink-0 py-6 pr-6 border-r border-border-soft flex flex-col">
+      <aside v-if="mode === 'sidebar'" class="mini-aside w-[220px] shrink-0 py-6 pr-6 border-r border-border-soft flex flex-col">
         <div class="flex items-center gap-3 px-2 mb-4">
           <span class="w-9 h-9 rounded-lg bg-primary-soft text-primary grid place-items-center shrink-0">
             <component :is="iconComp" :size="18" />
@@ -199,7 +206,7 @@ onBeforeUnmount(() => { if (shellNav && props.variant === 'shell') Object.assign
           <div v-if="$slots.actions" class="flex items-center gap-2 shrink-0"><slot name="actions" /></div>
         </div>
 
-        <nav v-if="variant === 'tabs' && nav.length" class="tabs mb-5" role="tablist">
+        <nav v-if="mode === 'tabs' && nav.length" class="tabs mb-5" role="tablist">
           <button v-for="item in nav" :key="item.path" type="button" class="tab inline-flex items-center gap-1.5" role="tab"
                   :aria-selected="isActive(item.path)" @click="go(item.path)">
             <component :is="item.icon" v-if="item.icon" :size="14" />

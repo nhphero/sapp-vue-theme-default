@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { appIcon } from '../services/appIcons'
-import { inject, ref, onMounted, computed, watch } from 'vue'
+import { inject, ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { 
   User, LayoutGrid, ChevronDown, Building2, LogOut, Zap, Globe, Shield,
@@ -31,6 +31,10 @@ const toggleCollapsed = () => {
   try { localStorage.setItem(COLLAPSED_KEY, String(collapsed.value)) } catch { /* storage unavailable — lasts for the page */ }
 }
 const $superApp = inject<any>('$superApp')
+/** Tells the mini apps' layout the Shell has a sidebar (module state `shell.layout`): their in-app sidebar menu comes here. */
+const shellLayout = $superApp.getModuleState('shell.layout', { sidebar: false }) as { sidebar: boolean }
+watch(sidebar, on => { shellLayout.sidebar = on }, { immediate: true })
+onBeforeUnmount(() => { if (sidebar.value) shellLayout.sidebar = false })
 const $s = $superApp
 const router = useRouter()
 const route = useRoute()
